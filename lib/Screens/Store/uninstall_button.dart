@@ -2,7 +2,7 @@ import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:flutter/material.dart';
 
-class UninstallButton extends StatelessWidget {
+class UninstallButton extends StatefulWidget {
   const UninstallButton(
       {super.key,
       required this.buttonStyle,
@@ -16,36 +16,70 @@ class UninstallButton extends StatelessWidget {
   final Function handle;
 
   @override
+  State<UninstallButton> createState() => _UninstallButtonState();
+}
+
+class _UninstallButtonState extends State<UninstallButton> {
+  bool stateWillDeleteAppData = false;
+
+  @override
   Widget build(BuildContext context) {
     return FilledButton.icon(
-      style: buttonStyle,
+      style: widget.buttonStyle,
       onPressed: () {
         showDialog(
             context: context,
-            builder: (context) => AlertDialog(
+            builder: (BuildContext context) {
+              return StatefulBuilder(builder: (context, StateSetter setState) {
+                return AlertDialog(
                   backgroundColor: Theme.of(context).primaryColorLight,
                   buttonPadding: const EdgeInsets.all(10),
                   actions: [
                     FilledButton(
-                        style: dialogButtonStyle,
+                        style: widget.dialogButtonStyle,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                         child: Text(AppLocalizations().tr('cancel'))),
                     FilledButton(
-                        style: dialogButtonStyle,
+                        style: widget.dialogButtonStyle,
                         onPressed: () {
                           Navigator.of(context).pop();
 
-                          handle(stateAppStream!.id);
+                          widget.handle(widget.stateAppStream!.id,
+                              stateWillDeleteAppData);
                         },
                         child: Text(AppLocalizations().tr('confirm'))),
                   ],
                   title: Text(AppLocalizations().tr('confirmation_title')),
                   contentPadding: const EdgeInsets.all(20.0),
-                  content: Text(
-                      '${AppLocalizations().tr('do_you_confirm_uninstallation_of')} ${stateAppStream!.name} ?'),
-                ));
+                  content: SizedBox(
+                      height: 100,
+                      child: Column(
+                        children: [
+                          Text(
+                              '${AppLocalizations().tr('do_you_confirm_uninstallation_of')} ${widget.stateAppStream!.name} ?'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Switch(
+                                value: stateWillDeleteAppData,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    stateWillDeleteAppData = value;
+                                  });
+                                },
+                              ),
+                              Text(AppLocalizations().tr('delete_all_app_data'))
+                            ],
+                          )
+                        ],
+                      )),
+                );
+              });
+            });
 
         //install(application);
       },

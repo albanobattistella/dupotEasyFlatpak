@@ -33,6 +33,7 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
   String stateSearch = '';
   String stateDefaultSearch = '';
   Locale stateLocale = const Locale.fromSubtags(languageCode: 'en');
+  bool stateWillDeleteAppData = false;
 
   String statePreviousPageSelected = '';
   String statePreviousSearch = '';
@@ -275,9 +276,9 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                 key: const ValueKey(constPageApplication),
                 child: ContentWithSidemenu(
                   content: UninstallationView(
-                    applicationIdSelected: stateApplicationIdSelected,
-                    handleGoToApplication: _handleGoToApplication,
-                  ),
+                      applicationIdSelected: stateApplicationIdSelected,
+                      handleGoToApplication: _handleGoToApplication,
+                      willDeleteAppData: stateWillDeleteAppData),
                   handleGoToHome: _handleGoToHome,
                   handleGoToCategory: _handleGoToCategory,
                   handleGoToSearch: _handleGoToSearch,
@@ -438,10 +439,11 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
     });
   }
 
-  void _handleGoToUninstallation(String applicationId) {
+  void _handleGoToUninstallation(String applicationId, bool willDeleteAppData) {
     setState(() {
       statePageSelected = constPageUninstallation;
       stateApplicationIdSelected = applicationId;
+      stateWillDeleteAppData = willDeleteAppData;
     });
   }
 

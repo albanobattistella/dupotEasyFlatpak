@@ -16,14 +16,14 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 
 class UninstallationView extends StatefulWidget {
   String applicationIdSelected;
-
   Function handleGoToApplication;
+  bool willDeleteAppData;
 
-  UninstallationView({
-    super.key,
-    required this.applicationIdSelected,
-    required this.handleGoToApplication,
-  });
+  UninstallationView(
+      {super.key,
+      required this.applicationIdSelected,
+      required this.handleGoToApplication,
+      required this.willDeleteAppData});
 
   @override
   State<UninstallationView> createState() => _UninstallationViewState();
@@ -63,12 +63,12 @@ class _UninstallationViewState extends State<UninstallationView> {
     Commands command = Commands();
 
     String commandBin = 'flatpak';
-    List<String> commandArgList = [
-      'uninstall',
-      '-y',
-      '--system',
-      applicationIdSelected
-    ];
+
+    List<String> commandArgList = ['uninstall', '-y', '--system'];
+    if (widget.willDeleteAppData) {
+      commandArgList.add('--delete-data');
+    }
+    commandArgList.add(applicationIdSelected);
 
     Process.start(command.getCommand(commandBin),
             command.getFlatpakSpawnArgumentList(commandBin, commandArgList))

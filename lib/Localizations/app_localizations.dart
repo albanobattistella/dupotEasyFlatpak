@@ -74,7 +74,8 @@ class AppLocalizations {
       'Updates': 'Updates availables',
       'NoUpdates': 'No updates availables',
       'Update': 'Update',
-      'update_finished': 'Update finished'
+      'update_finished': 'Update finished',
+      'delete_all_app_data': 'Delete all application\'s data'
     },
     'fr': {
       'loading': 'Chargement',
@@ -135,7 +136,8 @@ class AppLocalizations {
       'Updates': 'Mises à jour',
       'NoUpdates': 'Aucune mise à jour',
       'Update': 'Mettre à jour',
-      'update_finished': 'Mise à jour terminée'
+      'update_finished': 'Mise à jour terminée',
+      'delete_all_app_data': 'Supprimer aussi les données de l\'application'
     },
     'it': {
       'loading': 'Caricamento',
@@ -194,7 +196,8 @@ class AppLocalizations {
       'Updates': 'Aggiornamenti',
       'NoUpdates': 'Nessun aggiornamento disponibile',
       'Update': 'Aggiornamento',
-      'update_finished': 'Aggiornamento completato'
+      'update_finished': 'Aggiornamento completato',
+      'delete_all_app_data': 'Delete all application\'s data'
     }
   };
 
