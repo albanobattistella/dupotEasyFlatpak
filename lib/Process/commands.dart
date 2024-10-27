@@ -62,6 +62,10 @@ class Commands {
     return result.stdout.toString();
   }
 
+  bool hasApplicationInDatabase(String appId) {
+    return dbApplicationIdList.contains(appId.toLowerCase());
+  }
+
   Future<void> checkUpdates() async {
     ProcessResult result = await runProcess(
         'flatpak', ['remote-ls', '--updates', '--columns=application,version']);
@@ -71,20 +75,15 @@ class Commands {
 
     List<String> lineList = updatesAvailableOutput.split("\n");
     if (lineList.isNotEmpty) {
-      //lineList.removeAt(0);
       for (String lineLoop in lineList) {
         if (RegExp(r'\t').hasMatch(lineLoop)) {
           List<String> lineLoopList = lineLoop.split("\t");
 
-          if (dbApplicationIdList
-                  .contains(lineLoopList[0].toString().toLowerCase()) &&
+          if (hasApplicationInDatabase(lineLoopList[0]) &&
               hasApplicationInstalledVersionDifferentThan(
                   lineLoopList[0], lineLoopList[1])) {
             appUpdateAvailableList
                 .add(AppUpdate(lineLoopList[0], lineLoopList[1]));
-          } else {
-            print('not find ' + lineLoopList[0].toString().toLowerCase());
-            print(dbApplicationIdList);
           }
         }
       }
@@ -172,13 +171,11 @@ class Commands {
 
     List<String> lineList = appInstalledOutput.split("\n");
     if (lineList.isNotEmpty) {
-      //lineList.removeAt(0);
       for (String lineLoop in lineList) {
         if (RegExp(r'\t').hasMatch(lineLoop)) {
           List<String> lineLoopList = lineLoop.split("\t");
 
-          if (dbApplicationIdList
-              .contains(lineLoopList[0].toString().toLowerCase())) {
+          if (hasApplicationInDatabase(lineLoopList[0])) {
             appInstalledList
                 .add(AppInstalled(lineLoopList[0], lineLoopList[1]));
           }
@@ -234,8 +231,14 @@ class Commands {
         await runProcessSync(flatpakCommand, ['list', '--columns=application']);
 
     String outputString = result.stdout;
+
+    List<String> appIdList = [];
     List<String> lineList = outputString.split('\n');
-    return lineList;
+    for (String lineLoop in lineList) {
+      appIdList.add(lineLoop.toLowerCase());
+    }
+
+    return appIdList;
   }
 
   Future<void> run(String applicationId) async {

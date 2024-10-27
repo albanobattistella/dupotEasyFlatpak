@@ -92,7 +92,9 @@ class _InstalledAppsViewState extends State<InstalledAppsView> {
                         children: [
                           Row(
                             children: [
+                              const SizedBox(width: 10),
                               Image.file(
+                                  height: 80,
                                   File('$appPath/${appStreamLoop.getIcon()}')),
                               const SizedBox(width: 20),
                               Expanded(
@@ -102,7 +104,7 @@ class _InstalledAppsViewState extends State<InstalledAppsView> {
                                     Text(
                                       appStreamLoop.name,
                                       style: TextStyle(
-                                          fontSize: 32,
+                                          fontSize: 28,
                                           color: Theme.of(context)
                                               .textTheme
                                               .headlineLarge!

@@ -69,10 +69,10 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenu> {
 
     if (Commands().getNumberOfUpdates() > 0) {
       menuItemList.add(MenuItem('Updates', widget.handleGoToUpdatesAvailable,
-          'updates', '', Commands().getNumberOfUpdates().toString()));
+          'updatesAvailable', '', Commands().getNumberOfUpdates().toString()));
     } else {
-      menuItemList.add(MenuItem('NoUpdates', () {}, 'updates', '',
-          Commands().getNumberOfUpdates().toString()));
+      menuItemList.add(MenuItem('NoUpdates', widget.handleGoToUpdatesAvailable,
+          'updatesAvailable', '', Commands().getNumberOfUpdates().toString()));
     }
 
     List<String> categoryIdList = await appStreamFactory.findAllCategoryList();

@@ -53,9 +53,17 @@
     <releases>
 
 
+      <release date="2024-10-27" version="2.11.2">
+            <description>
+              <ul>
+                <li>Bug fix on application installed list</li>
+                <li>Improve display</li>
+               </ul>
+             
+            </description>
+        </release>
 
-
-<release date="2024-10-27" version="2.11.1">
+        <release date="2024-10-27" version="2.11.1">
             <description>
               <ul>
                 <li>Bug fix on update application </li>

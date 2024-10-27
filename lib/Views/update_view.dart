@@ -82,6 +82,7 @@ class _UpdateViewState extends State<UpdateView> {
 
       process.exitCode.then((exitCode) {
         print('Exit code: $exitCode');
+        Commands().loadApplicationInstalledList();
         Commands().checkUpdates();
         setState(() {
           stateInstallationOutput =

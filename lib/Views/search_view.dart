@@ -81,7 +81,7 @@ class _SearchViewState extends State<SearchView> {
                 );
               } else {
                 return InkWell(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(10.0),
                     onTap: () {
                       widget.handleGoToApplication(appStreamLoop.id);
                     },
@@ -92,6 +92,7 @@ class _SearchViewState extends State<SearchView> {
                           Row(
                             children: [
                               Image.file(
+                                  height: 80,
                                   File('$appPath/${appStreamLoop.getIcon()}')),
                               const SizedBox(width: 20),
                               Expanded(
@@ -101,7 +102,7 @@ class _SearchViewState extends State<SearchView> {
                                     Text(
                                       appStreamLoop.name,
                                       style: TextStyle(
-                                          fontSize: 32,
+                                          fontSize: 28,
                                           color: Theme.of(context)
                                               .textTheme
                                               .headlineLarge!

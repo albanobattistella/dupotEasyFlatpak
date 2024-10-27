@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
@@ -50,79 +51,88 @@ class _UpdatesAvailablesAppsViewState extends State<UpdatesAvailablesAppsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-        interactive: false,
-        thumbVisibility: true,
-        controller: scrollController,
-        child: ListView.builder(
-            itemCount: stateAppStreamList.length,
+    return stateAppStreamList.length == 0
+        ? Center(
+            child: Text(
+            AppLocalizations().tr('NoUpdates'),
+          ))
+        : Scrollbar(
+            interactive: false,
+            thumbVisibility: true,
             controller: scrollController,
-            itemBuilder: (context, index) {
-              AppStream appStreamLoop = stateAppStreamList[index];
+            child: ListView.builder(
+                itemCount: stateAppStreamList.length,
+                controller: scrollController,
+                itemBuilder: (context, index) {
+                  AppStream appStreamLoop = stateAppStreamList[index];
 
-              String icon = appStreamLoop.icon;
-              if (icon.length < 10) {
-                return Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                          title: Text(
-                        stateAppStreamList[index].id,
-                        style: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .headlineLarge!
-                                .color),
-                      )),
-                    ],
-                  ),
-                );
-              } else {
-                return InkWell(
-                    borderRadius: BorderRadius.circular(12.0),
-                    onTap: () {
-                      widget.handleGoToApplication(appStreamLoop.id);
-                    },
-                    child: Card(
-                      color: Theme.of(context).cardColor,
+                  String icon = appStreamLoop.icon;
+                  if (icon.length < 10) {
+                    return Card(
                       child: Column(
                         children: [
-                          Row(
-                            children: [
-                              Image.file(
-                                  File('$appPath/${appStreamLoop.getIcon()}')),
-                              const SizedBox(width: 20),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      appStreamLoop.name,
-                                      style: TextStyle(
-                                          fontSize: 32,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .headlineLarge!
-                                              .color),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      appStreamLoop.summary,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(Commands().getAppUpdateVersionByAppId(
-                                  appStreamLoop.id)),
-                              const SizedBox(width: 20),
-                            ],
-                          ),
+                          ListTile(
+                              title: Text(
+                            stateAppStreamList[index].id,
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headlineLarge!
+                                    .color),
+                          )),
                         ],
                       ),
-                    ));
-              }
-            }));
+                    );
+                  } else {
+                    return InkWell(
+                        borderRadius: BorderRadius.circular(10.0),
+                        onTap: () {
+                          widget.handleGoToApplication(appStreamLoop.id);
+                        },
+                        child: Card(
+                          color: Theme.of(context).cardColor,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const SizedBox(width: 10),
+                                  Image.file(
+                                      height: 80,
+                                      File(
+                                          '$appPath/${appStreamLoop.getIcon()}')),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          appStreamLoop.name,
+                                          style: TextStyle(
+                                              fontSize: 32,
+                                              color: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineLarge!
+                                                  .color),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          appStreamLoop.summary,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Text(Commands().getAppUpdateVersionByAppId(
+                                      appStreamLoop.id)),
+                                  const SizedBox(width: 20),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ));
+                  }
+                }));
   }
 }

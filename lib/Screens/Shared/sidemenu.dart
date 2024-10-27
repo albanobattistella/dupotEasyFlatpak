@@ -20,7 +20,7 @@ class SideMenu extends StatelessWidget {
       return Icon(Icons.search);
     } else if (menuItem.pageSelected == 'installedApps') {
       return Icon(Icons.install_desktop);
-    } else if (menuItem.pageSelected == 'updates') {
+    } else if (menuItem.pageSelected == 'updatesAvailable') {
       return Badge(
         label: Text(menuItem.badge),
         backgroundColor: Colors.blueAccent,
