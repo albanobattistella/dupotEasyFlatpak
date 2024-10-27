@@ -24,25 +24,25 @@
 
    <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_01.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_01.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_02.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_02.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_03.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_03.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_04.png</image> 
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_04.png</image> 
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_05.png</image> 
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_05.png</image> 
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_06.png</image> 
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_06.png</image> 
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/38a2692018fb605b831a033825c00df45c7b4ebf/export/screenshots/Screenshot_07.png</image> 
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/068d2c6e2308308908b507e4061fd288af0d7dcd/export/screenshots/Screenshot_07.png</image> 
     </screenshot>
     </screenshots>
 
@@ -52,15 +52,23 @@
     <content_rating type="oars-1.1"/>
     <releases>
 
-
-
-      <release date="2024-10-27" version="2.11.3">
+      <release date="2024-10-27" version="2.11.4">
             <description>
               <ul>
                 <li>Bug fix on application installed list</li>
                 <li>Improve display</li>
                 <li>Update flathub screenshosts</li>
                </ul>
+             
+            </description>
+        </release>
+
+      <release date="2024-10-27" version="2.11.3">
+            <description>
+              <ul>
+                <li>Bug fix on application installed list</li>
+                <li>Improve display</li>
+                </ul>
              
             </description>
         </release>
