@@ -175,6 +175,7 @@ class _InstallationWithRecipeViewState
         for (List<String> argListLoop in processList) {
           await command.runProcess(flatpakCommand, argListLoop);
         }
+        await Commands().loadApplicationInstalledList();
 
         setState(() {
           stateInstallationOutput =

@@ -89,6 +89,8 @@ class _UninstallationViewState extends State<UninstallationView> {
 
       process.exitCode.then((exitCode) {
         print('Exit code: $exitCode');
+        Commands().loadApplicationInstalledList();
+
         setState(() {
           stateInstallationOutput =
               "$stateInstallationOutput \n ${AppLocalizations().tr('uninstallation_finished')}";

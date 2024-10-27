@@ -89,6 +89,8 @@ class _InstallationViewState extends State<InstallationView> {
 
       process.exitCode.then((exitCode) {
         print('Exit code: $exitCode');
+        Commands().loadApplicationInstalledList();
+
         setState(() {
           stateInstallationOutput =
               "$stateInstallationOutput \n ${AppLocalizations().tr('installation_finished')}";

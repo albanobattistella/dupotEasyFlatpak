@@ -42,6 +42,7 @@ class _Loading extends State<Loading> {
         await appStreamFactory.findAllApplicationIdList();
 
     Commands().setDbApplicationIdList(dbApplicationIdList);
+    await Commands().loadApplicationInstalledList();
     await Commands().checkUpdates();
 
     setState(() {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dupot_easy_flatpak/Models/app_installed.dart';
 import 'package:dupot_easy_flatpak/Models/app_update.dart';
 import 'package:dupot_easy_flatpak/Models/settings.dart';
 
@@ -11,6 +12,7 @@ class Commands {
   late String updatesAvailableOutput;
   List<AppUpdate> appUpdateAvailableList = [];
   List<String> dbApplicationIdList = [];
+  List<AppInstalled> appInstalledList = [];
 
   static final Commands _singleton = Commands._internal();
 
@@ -75,7 +77,9 @@ class Commands {
           List<String> lineLoopList = lineLoop.split("\t");
 
           if (dbApplicationIdList
-              .contains(lineLoopList[0].toString().toLowerCase())) {
+                  .contains(lineLoopList[0].toString().toLowerCase()) &&
+              hasApplicationInstalledVersionDifferentThan(
+                  lineLoopList[0], lineLoopList[1])) {
             appUpdateAvailableList
                 .add(AppUpdate(lineLoopList[0], lineLoopList[1]));
           } else {
@@ -85,6 +89,17 @@ class Commands {
         }
       }
     }
+  }
+
+  bool hasApplicationInstalledVersionDifferentThan(
+      String appId, String versionToUpdate) {
+    for (AppInstalled appInstalledLoop in appInstalledList) {
+      if (appInstalledLoop.id == appId &&
+          appInstalledLoop.version != versionToUpdate) {
+        return true;
+      }
+    }
+    return false;
   }
 
   bool hasUpdateAvailableByAppId(String appId) {
@@ -146,6 +161,30 @@ class Commands {
       return argumentList;
     }
     return subArgumentList;
+  }
+
+  Future<void> loadApplicationInstalledList() async {
+    ProcessResult result =
+        await runProcess('flatpak', ['list', '--columns=application,version']);
+    String appInstalledOutput = result.stdout.toString();
+
+    appInstalledList.clear();
+
+    List<String> lineList = appInstalledOutput.split("\n");
+    if (lineList.isNotEmpty) {
+      //lineList.removeAt(0);
+      for (String lineLoop in lineList) {
+        if (RegExp(r'\t').hasMatch(lineLoop)) {
+          List<String> lineLoopList = lineLoop.split("\t");
+
+          if (dbApplicationIdList
+              .contains(lineLoopList[0].toString().toLowerCase())) {
+            appInstalledList
+                .add(AppInstalled(lineLoopList[0], lineLoopList[1]));
+          }
+        }
+      }
+    }
   }
 
   Future<FlatpakApplication> isApplicationAlreadyInstalled(

@@ -54,6 +54,18 @@
 
 
 
+
+<release date="2024-10-27" version="2.11.1">
+            <description>
+              <ul>
+                <li>Bug fix on update application </li>
+                <li>Bug fix on back button when click on application to update </li>
+               </ul>
+             
+            </description>
+        </release>
+
+
       <release date="2024-10-26" version="2.11.0">
             <description>
               <ul>

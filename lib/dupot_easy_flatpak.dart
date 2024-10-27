@@ -466,6 +466,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
       _handleGoToInstalledApps();
     } else if (statePreviousPageSelected == constPageHome) {
       _handleGoToHome();
+    } else if (statePreviousPageSelected == constPageUpdatesAvailable) {
+      _handleGoToUpdatesAvailable();
     } else {
       print('Error: got back not expected');
     }
