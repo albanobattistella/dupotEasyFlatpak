@@ -15,19 +15,39 @@ class SideMenu extends StatelessWidget {
 
   Widget getIcon(MenuItem menuItem) {
     if (menuItem.pageSelected == 'home') {
-      return Icon(Icons.home);
+      return const Icon(Icons.home);
     } else if (menuItem.pageSelected == 'search') {
-      return Icon(Icons.search);
+      return const Icon(Icons.search);
     } else if (menuItem.pageSelected == 'installedApps') {
-      return Icon(Icons.install_desktop);
+      return const Icon(Icons.install_desktop);
     } else if (menuItem.pageSelected == 'updatesAvailable') {
       return Badge(
         label: Text(menuItem.badge),
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.notifications),
       );
+    } else if (menuItem.categoryIdSelected == 'AudioVideo') {
+      return const Icon(Icons.music_note);
+    } else if (menuItem.categoryIdSelected == 'Development') {
+      return const Icon(Icons.developer_board);
+    } else if (menuItem.categoryIdSelected == 'Education') {
+      return const Icon(Icons.school);
+    } else if (menuItem.categoryIdSelected == 'Game') {
+      return const Icon(Icons.gamepad);
+    } else if (menuItem.categoryIdSelected == 'Graphics') {
+      return const Icon(Icons.draw);
+    } else if (menuItem.categoryIdSelected == 'Network') {
+      return const Icon(Icons.network_check);
+    } else if (menuItem.categoryIdSelected == 'Office') {
+      return const Icon(Icons.document_scanner);
+    } else if (menuItem.categoryIdSelected == 'Science') {
+      return const Icon(Icons.science);
+    } else if (menuItem.categoryIdSelected == 'System') {
+      return const Icon(Icons.system_update_tv);
+    } else if (menuItem.categoryIdSelected == 'Utility') {
+      return const Icon(Icons.build);
     }
-    return Icon(Icons.category);
+    return const Icon(Icons.category);
   }
 
   @override
