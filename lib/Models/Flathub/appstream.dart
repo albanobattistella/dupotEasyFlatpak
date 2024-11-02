@@ -5,14 +5,14 @@ class AppStream {
   final String id;
   final String name;
   final String summary;
-  final String icon;
+  final String httpIcon;
 
   List<String> categoryIdList = [];
   String description = '';
 
   Map<String, dynamic> metadataObj = {};
   Map<String, dynamic> urlObj = {};
-  List<Map<String, dynamic>> releaseObjList = [];
+  List<dynamic> releaseObjList = [];
   int lastUpdate = 0;
 
   String developer_name;
@@ -21,11 +21,13 @@ class AppStream {
 
   List<dynamic> screenshotObjList = [];
 
+  int lastReleaseTimestamp = 0;
+
   AppStream(
       {required this.id,
       required this.name,
       required this.summary,
-      required this.icon,
+      required this.httpIcon,
       required this.categoryIdList,
       required this.description,
       required this.metadataObj,
@@ -34,14 +36,15 @@ class AppStream {
       required this.lastUpdate,
       required this.projectLicense,
       required this.developer_name,
-      required this.screenshotObjList});
+      required this.screenshotObjList,
+      required this.lastReleaseTimestamp});
 
   Map<String, Object?> toMap() {
     return {
       'id': id,
       'name': name,
       'summary': summary,
-      'icon': icon,
+      'icon': httpIcon,
       'categoryIdList': jsonEncode(categoryIdList),
       'description': description,
       'metadataObj': jsonEncode(metadataObj),
@@ -50,7 +53,8 @@ class AppStream {
       'lastUpdate': lastUpdate,
       'projectLicense': projectLicense,
       'developer_name': developer_name,
-      'screenshotList': jsonEncode(screenshotObjList)
+      'screenshotList': jsonEncode(screenshotObjList),
+      'lastReleaseTimestamp': lastReleaseTimestamp
     };
   }
 
@@ -84,6 +88,23 @@ class AppStream {
     return '';
   }
 
+  List<Map<String, dynamic>> getReleaseObjList() {
+    List<Map<String, dynamic>> releaseMapList = [];
+
+    int limit = 0;
+    for (dynamic rawReleaseObjLoop in releaseObjList) {
+      releaseMapList.add({
+        'version': rawReleaseObjLoop['version'],
+        'timestamp': rawReleaseObjLoop['timestamp']
+      });
+
+      limit++;
+      if (limit > 6) break;
+    }
+
+    return releaseMapList;
+  }
+
   List<Map<String, String>> getUrlObjList() {
     List<Map<String, String>> urlObjList = [];
 
@@ -103,8 +124,12 @@ class AppStream {
     return urlObjList;
   }
 
-  String getIcon() {
-    return p.basename(icon);
+  bool hasAppIcon() {
+    return httpIcon.length > 10;
+  }
+
+  String getAppIcon() {
+    return '${id.toLowerCase()}.png';
   }
 
   bool lastUpdateIsOlderThan(int days) {

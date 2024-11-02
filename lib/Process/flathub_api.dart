@@ -44,7 +44,7 @@ class FlathubApi {
       if (applicationIdList.contains(appStreamIdLoop.toLowerCase())) {
         continue;
       }
-      print('$appStreamIdLoop missing, should insert');
+      //print('$appStreamIdLoop missing, should insert');
       AppStream appStream = await getAppStream(appStreamIdLoop);
 
       downloadIcon(appStream, appDocumentsDirPath);
@@ -73,7 +73,7 @@ class FlathubApi {
   }
 
   Future<void> downloadIcon(AppStream appStream, appDocumentsDirPath) async {
-    String httpIconPath = appStream.icon;
+    String httpIconPath = appStream.httpIcon;
 
     if (httpIconPath.length < 10) {
       return;
@@ -83,8 +83,8 @@ class FlathubApi {
 
     Dio dioDownload = Dio();
 
-    await dioDownload.download(
-        httpIconPath, p.join(appDocumentsDirPath, 'EasyFlatpak', iconName));
+    await dioDownload.download(httpIconPath,
+        p.join(appDocumentsDirPath, 'EasyFlatpak', appStream.getAppIcon()));
   }
 
   Future<List<dynamic>> getAppStreamList() async {
@@ -154,6 +154,13 @@ class FlathubApi {
           List<Map<String, dynamic>>.from(rawAppStream['releases'] as List);
     }
 
+    int lastReleaseTimestamp = 0;
+    for (Map<String, dynamic> rawReleaseObjLoop in rawReleaseObjList) {
+      if (int.parse(rawReleaseObjLoop['timestamp']) > lastReleaseTimestamp) {
+        lastReleaseTimestamp = int.parse(rawReleaseObjLoop['timestamp']);
+      }
+    }
+
     String developer_name = '';
     if (rawAppStream.containsKey('developer_name')) {
       developer_name = rawAppStream['developer_name'];
@@ -193,7 +200,7 @@ class FlathubApi {
         id: rawAppStream['id'],
         name: rawAppStream['name'],
         summary: rawAppStream['summary'],
-        icon: icon,
+        httpIcon: icon,
         categoryIdList: categoryList,
         description: rawAppStream['description'],
         lastUpdate: DateTime.now().millisecondsSinceEpoch,
@@ -202,6 +209,7 @@ class FlathubApi {
         releaseObjList: rawReleaseObjList,
         projectLicense: projectLicense,
         developer_name: developer_name,
-        screenshotObjList: screenshotObjList);
+        screenshotObjList: screenshotObjList,
+        lastReleaseTimestamp: lastReleaseTimestamp);
   }
 }

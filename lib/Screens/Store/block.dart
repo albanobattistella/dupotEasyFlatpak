@@ -21,8 +21,8 @@ class Block extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> widgetList = appStreamList.map((appStreamLoop) {
       String icon = '';
-      if (appStreamLoop.getIcon().length > 3) {
-        icon = '$appPath/${appStreamLoop.getIcon()}';
+      if (appStreamLoop.hasAppIcon()) {
+        icon = '$appPath/${appStreamLoop.getAppIcon()}';
       }
 
       return Container(
@@ -38,7 +38,7 @@ class Block extends StatelessWidget {
 
     widgetList.add(Container(
         width: 200,
-        height: 250,
+        height: 240,
         child: TextButton(
           child: Text(AppLocalizations().tr('More')),
           // icon: Icon(Icons.more),

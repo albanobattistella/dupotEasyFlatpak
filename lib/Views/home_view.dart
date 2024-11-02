@@ -39,7 +39,7 @@ class _HomeViewState extends State<HomeView> {
 
     for (String categoryIdLoop in categoryIdList) {
       List<AppStream> appStreamList = await appStreamFactory
-          .findListAppStreamByCategoryLimited(categoryIdLoop, 9);
+          .findListAppStreamByCategoryOderedAndLimited(categoryIdLoop, 9);
 
       appStreamListList.add(appStreamList);
     }

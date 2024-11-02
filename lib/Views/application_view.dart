@@ -8,11 +8,13 @@ import 'package:dupot_easy_flatpak/Process/commands.dart';
 import 'package:dupot_easy_flatpak/Process/flathub_api.dart';
 import 'package:dupot_easy_flatpak/Screens/Store/install_button.dart';
 import 'package:dupot_easy_flatpak/Screens/Store/install_button_with_recipe.dart';
+import 'package:dupot_easy_flatpak/Screens/Store/override_button.dart';
 import 'package:dupot_easy_flatpak/Screens/Store/run_button.dart';
 import 'package:dupot_easy_flatpak/Screens/Store/uninstall_button.dart';
 import 'package:dupot_easy_flatpak/Screens/Store/update_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ApplicationView extends StatefulWidget {
@@ -82,6 +84,15 @@ class _ApplicationViewState extends State<ApplicationView> {
     });
   }
 
+  ButtonStyle getButtonStyle(BuildContext context) {
+    return ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        padding: const EdgeInsets.all(16),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white));
+  }
+
   @override
   Widget build(BuildContext context) {
     if (applicationIdSelected != widget.applicationIdSelected) {
@@ -103,11 +114,11 @@ class _ApplicationViewState extends State<ApplicationView> {
                   children: [
                     Row(
                       children: [
-                        if (stateAppStream!.icon.length > 10)
+                        if (stateAppStream!.hasAppIcon())
                           Padding(
                               padding: const EdgeInsets.all(20),
                               child: Image.file(File(
-                                  '$appPath/${stateAppStream!.getIcon()}'))),
+                                  '$appPath/${stateAppStream!.getAppIcon()}'))),
                         const SizedBox(width: 20),
                         Expanded(
                           child: Column(
@@ -158,11 +169,14 @@ class _ApplicationViewState extends State<ApplicationView> {
                             ],
                           ),
                         ),
+                        getOverrideButton(),
+                        const SizedBox(width: 5),
                         getButton(),
                         const SizedBox(width: 5),
                         getRunButton(),
                         const SizedBox(width: 5),
-                        getUpdateButton()
+                        getUpdateButton(),
+                        const SizedBox(width: 10)
                       ],
                     ),
                     if (stateAppStream!.screenshotObjList.isNotEmpty)
@@ -229,6 +243,37 @@ class _ApplicationViewState extends State<ApplicationView> {
                         )),
                     ListTile(
                         title: Text(
+                      'Last releases',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              Theme.of(context).textTheme.headlineLarge!.color),
+                    )),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            top: 5, bottom: 5, right: 5, left: 25),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: stateAppStream!
+                                .getReleaseObjList()
+                                .map((realeaseObjLoop) {
+                              DateTime dateVersion =
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      int.parse(realeaseObjLoop['timestamp']) *
+                                          1000);
+
+                              return Row(children: [
+                                Text(DateFormat('dd/MM/yyyy ')
+                                    .format(dateVersion)),
+                                const SizedBox(width: 2),
+                                Text(':'),
+                                const SizedBox(width: 10),
+                                Text(realeaseObjLoop['version'])
+                              ]);
+                            }).toList())),
+                    ListTile(
+                        title: Text(
                       'Links',
                       style: TextStyle(
                           fontSize: 20,
@@ -260,11 +305,6 @@ class _ApplicationViewState extends State<ApplicationView> {
   }
 
   Widget getUpdateButton() {
-    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        padding: const EdgeInsets.all(20),
-        textStyle: const TextStyle(fontSize: 14, color: Colors.white));
-
     final ButtonStyle dialogButtonStyle = FilledButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         padding: const EdgeInsets.all(20),
@@ -272,7 +312,7 @@ class _ApplicationViewState extends State<ApplicationView> {
 
     if (Commands().hasUpdateAvailableByAppId(stateAppStream!.id)) {
       return UpdateButton(
-          buttonStyle: buttonStyle,
+          buttonStyle: getButtonStyle(context),
           dialogButtonStyle: dialogButtonStyle,
           stateAppStream: stateAppStream,
           handle: widget.handleGoToUpdate);
@@ -281,15 +321,21 @@ class _ApplicationViewState extends State<ApplicationView> {
     }
   }
 
-  Widget getRunButton() {
-    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        padding: const EdgeInsets.all(20),
-        textStyle: const TextStyle(fontSize: 14, color: Colors.white));
+  Widget getOverrideButton() {
+    if (stateIsAlreadyInstalled) {
+      return OverrideButton(
+        buttonStyle: getButtonStyle(context),
+        stateAppStream: stateAppStream,
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
 
+  Widget getRunButton() {
     if (stateIsAlreadyInstalled) {
       return RunButton(
-        buttonStyle: buttonStyle,
+        buttonStyle: getButtonStyle(context),
         stateAppStream: stateAppStream,
       );
     } else {
@@ -298,11 +344,6 @@ class _ApplicationViewState extends State<ApplicationView> {
   }
 
   Widget getButton() {
-    final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        padding: const EdgeInsets.all(20),
-        textStyle: const TextStyle(fontSize: 14, color: Colors.white));
-
     final ButtonStyle dialogButtonStyle = FilledButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
         padding: const EdgeInsets.all(20),
@@ -310,20 +351,20 @@ class _ApplicationViewState extends State<ApplicationView> {
 
     if (stateIsAlreadyInstalled) {
       return UninstallButton(
-          buttonStyle: buttonStyle,
+          buttonStyle: getButtonStyle(context),
           dialogButtonStyle: dialogButtonStyle,
           stateAppStream: stateAppStream,
           handle: widget.handleGoToUninstallation);
     } else if (stateHasRecipe) {
       return InstallWithRecipeButton(
-          buttonStyle: buttonStyle,
+          buttonStyle: getButtonStyle(context),
           dialogButtonStyle: dialogButtonStyle,
           stateAppStream: stateAppStream,
           handle: widget.handleGoToInstallationWithRecipe);
     }
 
     return InstallButton(
-      buttonStyle: buttonStyle,
+      buttonStyle: getButtonStyle(context),
       dialogButtonStyle: dialogButtonStyle,
       stateAppStream: stateAppStream,
       handle: widget.handleGoToInstallation,

@@ -51,7 +51,7 @@ class _UpdatesAvailablesAppsViewState extends State<UpdatesAvailablesAppsView> {
 
   @override
   Widget build(BuildContext context) {
-    return stateAppStreamList.length == 0
+    return stateAppStreamList.isEmpty
         ? Center(
             child: Text(
             AppLocalizations().tr('NoUpdates'),
@@ -66,8 +66,7 @@ class _UpdatesAvailablesAppsViewState extends State<UpdatesAvailablesAppsView> {
                 itemBuilder: (context, index) {
                   AppStream appStreamLoop = stateAppStreamList[index];
 
-                  String icon = appStreamLoop.icon;
-                  if (icon.length < 10) {
+                  if (!appStreamLoop.hasAppIcon()) {
                     return Card(
                       child: Column(
                         children: [
@@ -99,7 +98,7 @@ class _UpdatesAvailablesAppsViewState extends State<UpdatesAvailablesAppsView> {
                                   Image.file(
                                       height: 80,
                                       File(
-                                          '$appPath/${appStreamLoop.getIcon()}')),
+                                          '$appPath/${appStreamLoop.getAppIcon()}')),
                                   const SizedBox(width: 20),
                                   Expanded(
                                     child: Column(

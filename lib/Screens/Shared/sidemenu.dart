@@ -27,7 +27,7 @@ class SideMenu extends StatelessWidget {
         child: const Icon(Icons.notifications),
       );
     } else if (menuItem.categoryIdSelected == 'AudioVideo') {
-      return const Icon(Icons.music_note);
+      return const Icon(Icons.play_circle);
     } else if (menuItem.categoryIdSelected == 'Development') {
       return const Icon(Icons.developer_board);
     } else if (menuItem.categoryIdSelected == 'Education') {
@@ -81,7 +81,7 @@ class SideMenu extends StatelessWidget {
                     title: Row(
                       children: [
                         getIcon(menuItemLoop),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
                           AppLocalizations().tr(menuItemLoop.label),
                           style: isSelected

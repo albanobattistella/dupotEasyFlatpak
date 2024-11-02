@@ -214,9 +214,9 @@ class _InstallationWithRecipeViewState
                   children: [
                     Row(
                       children: [
-                        if (stateAppStream!.icon.length > 10)
+                        if (stateAppStream!.hasAppIcon())
                           Image.file(
-                              File('$appPath/${stateAppStream!.getIcon()}')),
+                              File('$appPath/${stateAppStream!.getAppIcon()}')),
                         const SizedBox(width: 20),
                         Expanded(
                           child: Column(

@@ -155,13 +155,14 @@ class AppStreamFactory {
             'summary': summary as String,
             'icon': icon as String,
             'description': description as String,
-            'lastUpdate': lastUpdate as int
+            'lastUpdate': lastUpdate as int,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
           } in appStreamList)
         AppStream(
             id: id,
             name: name,
             summary: summary,
-            icon: icon,
+            httpIcon: icon,
             categoryIdList: [],
             description: description,
             lastUpdate: lastUpdate,
@@ -170,7 +171,8 @@ class AppStreamFactory {
             urlObj: {},
             projectLicense: '',
             developer_name: '',
-            screenshotObjList: []),
+            screenshotObjList: [],
+            lastReleaseTimestamp: lastReleaseTimestamp),
     ];
   }
 
@@ -193,23 +195,25 @@ class AppStreamFactory {
             'projectLicense': projectLicense as String,
             'developer_name': developer_name as String,
             'metadataObj': metadataObjString as String,
-            'screenshotList': screenshotObjString as String
+            'releaseObjList': releaseObjListString as String,
+            'screenshotList': screenshotObjString as String,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
           } in appStreamList)
         AppStream(
             id: id,
             name: name,
             summary: summary,
-            icon: icon,
+            httpIcon: icon,
             categoryIdList: [],
             description: description,
             lastUpdate: lastUpdate,
             metadataObj: jsonDecode(metadataObjString),
-            releaseObjList: [],
+            releaseObjList: jsonDecode(releaseObjListString),
             urlObj: jsonDecode(urlObjString),
             projectLicense: projectLicense,
             developer_name: developer_name,
-            screenshotObjList:
-                jsonDecode(screenshotObjString) as List<dynamic>),
+            screenshotObjList: jsonDecode(screenshotObjString) as List<dynamic>,
+            lastReleaseTimestamp: lastReleaseTimestamp),
     ];
 
     return rowList[0];
@@ -239,7 +243,7 @@ class AppStreamFactory {
 
     // Query the table for all the dogs.
     final List<Map<String, Object?>> appStreamList = await db.rawQuery(
-        '''SELECT distinct $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id 
+        '''SELECT distinct $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id 
         where LOWER(id) in (${whereApplicationIdStringList.join(',')}) ORDER by name asc''',
         []);
 
@@ -250,13 +254,14 @@ class AppStreamFactory {
             'name': name as String,
             'summary': summary as String,
             'icon': icon as String,
-            'lastUpdate': lastUpdate as int
+            'lastUpdate': lastUpdate as int,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
           } in appStreamList)
         AppStream(
             id: id,
             name: name,
             summary: summary,
-            icon: icon,
+            httpIcon: icon,
             categoryIdList: [],
             description: '',
             lastUpdate: lastUpdate,
@@ -265,7 +270,8 @@ class AppStreamFactory {
             urlObj: {},
             projectLicense: '',
             developer_name: '',
-            screenshotObjList: []),
+            screenshotObjList: [],
+            lastReleaseTimestamp: lastReleaseTimestamp),
     ];
   }
 
@@ -273,7 +279,7 @@ class AppStreamFactory {
     final db = await getDb();
     // Query the table for all the dogs.
     final List<Map<String, Object?>> appStreamList = await db.rawQuery(
-        'SELECT $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id where category_id=? ORDER by name asc',
+        'SELECT $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id where category_id=? ORDER by name asc',
         [categoryId]);
 
     // Convert the list of each dog's fields into a list of `Dog` objects.
@@ -283,13 +289,14 @@ class AppStreamFactory {
             'name': name as String,
             'summary': summary as String,
             'icon': icon as String,
-            'lastUpdate': lastUpdate as int
+            'lastUpdate': lastUpdate as int,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
           } in appStreamList)
         AppStream(
             id: id,
             name: name,
             summary: summary,
-            icon: icon,
+            httpIcon: icon,
             categoryIdList: [],
             description: '',
             lastUpdate: lastUpdate,
@@ -298,7 +305,8 @@ class AppStreamFactory {
             urlObj: {},
             projectLicense: '',
             developer_name: '',
-            screenshotObjList: []),
+            screenshotObjList: [],
+            lastReleaseTimestamp: lastReleaseTimestamp),
     ];
   }
 
@@ -343,7 +351,8 @@ class AppStreamFactory {
           'name': name as String,
           'summary': summary as String,
           'icon': icon as String,
-          'lastUpdate': lastUpdate as int
+          'lastUpdate': lastUpdate as int,
+          'lastReleaseTimestamp': lastReleaseTimestamp as int
         } in appStreamList) {
       if (appIdList.contains(id)) {
         continue;
@@ -353,7 +362,7 @@ class AppStreamFactory {
           id: id,
           name: name,
           summary: summary,
-          icon: icon,
+          httpIcon: icon,
           categoryIdList: [],
           description: '',
           lastUpdate: lastUpdate,
@@ -362,7 +371,8 @@ class AppStreamFactory {
           urlObj: {},
           projectLicense: '',
           developer_name: '',
-          screenshotObjList: []));
+          screenshotObjList: [],
+          lastReleaseTimestamp: lastReleaseTimestamp));
 
       appIdList.add(id);
     }
@@ -370,12 +380,12 @@ class AppStreamFactory {
     return distinctAppStreamList;
   }
 
-  Future<List<AppStream>> findListAppStreamByCategoryLimited(
+  Future<List<AppStream>> findListAppStreamByCategoryOderedAndLimited(
       String categoryId, int limit) async {
     final db = await getDb();
     // Query the table for all the dogs.
     final List<Map<String, Object?>> appStreamList = await db.rawQuery(
-        'SELECT $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id where category_id=? ORDER by name asc LIMIT $limit',
+        'SELECT $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id where category_id=? ORDER by lastReleaseTimestamp desc LIMIT $limit',
         [categoryId]);
 
     // Convert the list of each dog's fields into a list of `Dog` objects.
@@ -385,13 +395,14 @@ class AppStreamFactory {
             'name': name as String,
             'summary': summary as String,
             'icon': icon as String,
-            'lastUpdate': lastUpdate as int
+            'lastUpdate': lastUpdate as int,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
           } in appStreamList)
         AppStream(
             id: id,
             name: name,
             summary: summary,
-            icon: icon,
+            httpIcon: icon,
             categoryIdList: [],
             description: '',
             lastUpdate: lastUpdate,
@@ -400,7 +411,44 @@ class AppStreamFactory {
             urlObj: {},
             projectLicense: '',
             developer_name: '',
-            screenshotObjList: []),
+            screenshotObjList: [],
+            lastReleaseTimestamp: lastReleaseTimestamp),
+    ];
+  }
+
+  Future<List<AppStream>> findListAppStreamByCategoryLimited(
+      String categoryId, int limit) async {
+    final db = await getDb();
+    // Query the table for all the dogs.
+    final List<Map<String, Object?>> appStreamList = await db.rawQuery(
+        'SELECT $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id where category_id=? ORDER by name asc LIMIT $limit',
+        [categoryId]);
+
+    // Convert the list of each dog's fields into a list of `Dog` objects.
+    return [
+      for (final {
+            'id': id as String,
+            'name': name as String,
+            'summary': summary as String,
+            'icon': icon as String,
+            'lastUpdate': lastUpdate as int,
+            'lastReleaseTimestamp': lastReleaseTimestamp as int
+          } in appStreamList)
+        AppStream(
+            id: id,
+            name: name,
+            summary: summary,
+            httpIcon: icon,
+            categoryIdList: [],
+            description: '',
+            lastUpdate: lastUpdate,
+            metadataObj: {},
+            releaseObjList: [],
+            urlObj: {},
+            projectLicense: '',
+            developer_name: '',
+            screenshotObjList: [],
+            lastReleaseTimestamp: lastReleaseTimestamp),
     ];
   }
 

@@ -64,8 +64,7 @@ class _CategoryViewState extends State<CategoryView> {
             itemBuilder: (context, index) {
               AppStream appStreamLoop = stateAppStreamList[index];
 
-              String icon = appStreamLoop.icon;
-              if (icon.length < 10) {
+              if (!appStreamLoop.hasAppIcon()) {
                 return Card(
                   child: Column(
                     children: [
@@ -88,7 +87,8 @@ class _CategoryViewState extends State<CategoryView> {
                               const SizedBox(width: 10),
                               Image.file(
                                   height: 80,
-                                  File('$appPath/${appStreamLoop.getIcon()}')),
+                                  File(
+                                      '$appPath/${appStreamLoop.getAppIcon()}')),
                               const SizedBox(width: 20),
                               Expanded(
                                 child: Column(
