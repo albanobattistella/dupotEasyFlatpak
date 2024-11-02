@@ -55,6 +55,27 @@
     <content_rating type="oars-1.1"/>
     <releases>
 
+      <release date="2024-11-02" version="2.13.0">
+            <description>
+              <ul>
+                <li>Modify DB: add new column to store last release</li>
+                <li>Update home page to use this new column to order applications</li>
+                <li>In application page, display last releases</li>
+               </ul>
+             
+            </description>
+        </release>
+
+        <release date="2024-10-30" version="2.12.2">
+            <description>
+              <ul>
+                <li>Improve side menu icons</li>
+                <li>Update applications data</li>
+               </ul>
+             
+            </description>
+        </release>
+
       <release date="2024-10-29" version="2.12.0">
             <description>
               <ul>
