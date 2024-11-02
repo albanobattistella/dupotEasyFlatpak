@@ -26,8 +26,8 @@ class Block extends StatelessWidget {
       }
 
       return Container(
-          width: 200,
-          height: 250,
+          width: 150,
+          height: 150,
           child: AppButton(
               id: appStreamLoop.id,
               title: appStreamLoop.name,
@@ -37,8 +37,8 @@ class Block extends StatelessWidget {
     }).toList();
 
     widgetList.add(Container(
-        width: 200,
-        height: 240,
+        width: 150,
+        height: 150,
         child: TextButton(
           child: Text(AppLocalizations().tr('More')),
           // icon: Icon(Icons.more),

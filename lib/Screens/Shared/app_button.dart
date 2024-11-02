@@ -45,7 +45,7 @@ class AppButton extends StatelessWidget {
                 Expanded(
                     child: Image.file(
                   File(icon),
-                  width: 110,
+                  width: 80,
                 ))
               ])));
     }
