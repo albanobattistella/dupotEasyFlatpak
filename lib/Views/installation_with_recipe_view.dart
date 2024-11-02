@@ -7,12 +7,7 @@ import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
 import 'package:dupot_easy_flatpak/Models/permission.dart';
 import 'package:dupot_easy_flatpak/Models/recipe.dart';
 import 'package:dupot_easy_flatpak/Models/recipe_factory.dart';
-import 'package:dupot_easy_flatpak/Models/settings.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
-import 'package:dupot_easy_flatpak/Screens/Store/block.dart';
-import 'package:dupot_easy_flatpak/Screens/Store/install_button.dart';
-import 'package:dupot_easy_flatpak/Screens/Store/install_button_with_recipe.dart';
-import 'package:dupot_easy_flatpak/Screens/Store/uninstall_button.dart';
 import 'package:flutter/material.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 

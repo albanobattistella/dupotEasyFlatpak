@@ -116,7 +116,7 @@ class Commands {
         return appUpdateAvailableLoop.version;
       }
     }
-    throw new Exception('Cannot find app version available for id: $appId');
+    throw Exception('Cannot find app version available for id: $appId');
   }
 
   Future<void> setupFlathub() async {

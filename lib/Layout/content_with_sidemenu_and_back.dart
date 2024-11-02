@@ -60,7 +60,7 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenuAndBack> {
     AppStreamFactory appStreamFactory = AppStreamFactory();
     List<MenuItem> menuItemList = [
       MenuItem('Search', () {
-        widget.handleGoToSearch();
+        widget.handleGoToSearch('');
       }, 'search', '', ''),
       MenuItem('Home', () {
         widget.handleGoToHome();

@@ -76,7 +76,10 @@ class AppLocalizations {
       'Update': 'Update',
       'update_finished': 'Update finished',
       'delete_all_app_data': 'Delete all application\'s data',
-      'Edit_override': 'Edit override permissions'
+      'Edit_override': 'Edit override permissions',
+      'Screenshots': 'Screenshots',
+      'Links': 'Links',
+      'Last_releases': 'Last releases'
     },
     'fr': {
       'loading': 'Chargement',
@@ -139,7 +142,10 @@ class AppLocalizations {
       'Update': 'Mettre à jour',
       'update_finished': 'Mise à jour terminée',
       'delete_all_app_data': 'Supprimer aussi les données de l\'application',
-      'Edit_override': 'Editer les permissions ajoutées'
+      'Edit_override': 'Editer les permissions ajoutées',
+      'Screenshots': 'Copies d\'écrans',
+      'Links': 'Liens',
+      'Last_releases': 'Dernières versions'
     },
     'it': {
       'loading': 'Caricamento',
@@ -200,7 +206,10 @@ class AppLocalizations {
       'Update': 'Aggiornamento',
       'update_finished': 'Aggiornamento completato',
       'delete_all_app_data': 'Delete all application\'s data',
-      'Edit_override': 'Edit override permissions'
+      'Edit_override': 'Edit override permissions',
+      'Screenshots': 'Screenshots',
+      'Links': 'Links',
+      'Last_releases': 'Last_releases'
     }
   };
 

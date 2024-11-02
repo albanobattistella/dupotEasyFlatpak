@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:path/path.dart' as p;
 
 class AppStream {
   final String id;

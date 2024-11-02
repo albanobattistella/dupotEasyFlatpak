@@ -181,7 +181,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                     ),
                     if (stateAppStream!.screenshotObjList.isNotEmpty)
                       ListTile(
-                        title: Text('Screenshots',
+                        title: Text(AppLocalizations().tr('Screenshots'),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -243,7 +243,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                         )),
                     ListTile(
                         title: Text(
-                      'Last releases',
+                      AppLocalizations().tr('Last_releases'),
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -267,14 +267,16 @@ class _ApplicationViewState extends State<ApplicationView> {
                                 Text(DateFormat('dd/MM/yyyy ')
                                     .format(dateVersion)),
                                 const SizedBox(width: 2),
-                                Text(':'),
+                                const Text(':'),
                                 const SizedBox(width: 10),
-                                Text(realeaseObjLoop['version'])
+                                Text(realeaseObjLoop['version'],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold))
                               ]);
                             }).toList())),
                     ListTile(
                         title: Text(
-                      'Links',
+                      AppLocalizations().tr('Links'),
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -322,6 +324,8 @@ class _ApplicationViewState extends State<ApplicationView> {
   }
 
   Widget getOverrideButton() {
+    return const SizedBox();
+/*
     if (stateIsAlreadyInstalled) {
       return OverrideButton(
         buttonStyle: getButtonStyle(context),
@@ -329,7 +333,7 @@ class _ApplicationViewState extends State<ApplicationView> {
       );
     } else {
       return const SizedBox();
-    }
+    }*/
   }
 
   Widget getRunButton() {

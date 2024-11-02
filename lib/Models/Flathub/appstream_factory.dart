@@ -320,7 +320,8 @@ class AppStreamFactory {
           $constTableAppStream.name,
           $constTableAppStream.summary,
           $constTableAppStream.icon,
-          $constTableAppStream.lastUpdate 
+          $constTableAppStream.lastUpdate,
+          $constTableAppStream.lastReleaseTimestamp 
           
           from $constTableAppStream  
           
@@ -333,7 +334,8 @@ class AppStreamFactory {
           $constTableAppStream.name,
           $constTableAppStream.summary,
           $constTableAppStream.icon,
-          $constTableAppStream.lastUpdate 
+          $constTableAppStream.lastUpdate,
+          $constTableAppStream.lastReleaseTimestamp 
           
           from $constTableAppStream  
           

@@ -115,7 +115,7 @@ class _UpdateViewState extends State<UpdateView> {
                     children: [
                       if (stateAppStream!.hasAppIcon())
                         Image.file(
-                            File(appPath + '/' + stateAppStream!.getAppIcon())),
+                            File('$appPath/${stateAppStream!.getAppIcon()}')),
                       const SizedBox(width: 20),
                       Expanded(
                         child: Column(

@@ -118,7 +118,7 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenu> {
                 widget.handleToggleDarkMode();
                 print('siwth dark');
               },
-              icon: Icon(Icons.dark_mode)),
+              icon: const Icon(Icons.dark_mode)),
         ],
       ),
       resizeToAvoidBottomInset: true,
