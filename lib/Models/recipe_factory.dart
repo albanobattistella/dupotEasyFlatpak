@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
@@ -25,8 +26,7 @@ class RecipeFactory {
   static bool isDebug = true;
 
   Future<List<String>> getApplicationList() async {
-    String recipiesString =
-        await DefaultAssetBundle.of(context).loadString("assets/recipies.json");
+    String recipiesString = await rootBundle.loadString("assets/recipies.json");
     List<String> recipeList = List<String>.from(json.decode(recipiesString));
 
     final directory = await getApplicationDocumentsDirectory();
@@ -64,8 +64,8 @@ class RecipeFactory {
     if (await userFile.exists()) {
       applicaitonRecipieString = await userFile.readAsString();
     } else {
-      applicaitonRecipieString = await DefaultAssetBundle.of(context)
-          .loadString("assets/recipies/$id.json");
+      applicaitonRecipieString =
+          await rootBundle.loadString("assets/recipies/$id.json");
     }
 
     Map jsonApp = json.decode(applicaitonRecipieString);

@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 
 class OverrideButton extends StatelessWidget {
   const OverrideButton(
-      {super.key, required this.buttonStyle, required this.stateAppStream});
+      {super.key,
+      required this.buttonStyle,
+      required this.stateAppStream,
+      required this.handle});
 
   final ButtonStyle buttonStyle;
   final AppStream? stateAppStream;
+  final Function handle;
 
   Future<void> run(String applicationId) async {
     Commands commands = Commands();
@@ -20,7 +24,7 @@ class OverrideButton extends StatelessWidget {
     return FilledButton.icon(
       style: buttonStyle,
       onPressed: () {
-        run(stateAppStream!.id);
+        handle(stateAppStream!.id);
       },
       label: Text(AppLocalizations().tr('Edit_override')),
       icon: const Icon(Icons.settings),

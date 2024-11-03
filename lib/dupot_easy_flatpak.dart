@@ -12,6 +12,7 @@ import 'package:dupot_easy_flatpak/Views/home_view.dart';
 import 'package:dupot_easy_flatpak/Views/installation_view.dart';
 import 'package:dupot_easy_flatpak/Views/installation_with_recipe_view.dart';
 import 'package:dupot_easy_flatpak/Views/installedapps_view.dart';
+import 'package:dupot_easy_flatpak/Views/override_view.dart';
 import 'package:dupot_easy_flatpak/Views/search_view.dart';
 import 'package:dupot_easy_flatpak/Views/uninstallation_view.dart';
 import 'package:dupot_easy_flatpak/Views/update_view.dart';
@@ -48,6 +49,7 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
   static const String constPageHome = 'home';
   static const String constPageSearch = 'search';
   static const String constPageInstallation = 'installation';
+  static const String constPageOverride = 'override';
   static const String constPageInstallationWithRecipe =
       'installationWithRecipe';
   static const String constPageUninstallation = 'uninstallation';
@@ -214,13 +216,13 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                 key: const ValueKey(constPageApplication),
                 child: ContentWithSidemenuAndBack(
                   content: ApplicationView(
-                    applicationIdSelected: stateApplicationIdSelected,
-                    handleGoToInstallation: _handleGoToInstallation,
-                    handleGoToInstallationWithRecipe:
-                        _handleGoToInstallationWithRecipe,
-                    handleGoToUninstallation: _handleGoToUninstallation,
-                    handleGoToUpdate: _handleGoToUpdate,
-                  ),
+                      applicationIdSelected: stateApplicationIdSelected,
+                      handleGoToInstallation: _handleGoToInstallation,
+                      handleGoToInstallationWithRecipe:
+                          _handleGoToInstallationWithRecipe,
+                      handleGoToUninstallation: _handleGoToUninstallation,
+                      handleGoToUpdate: _handleGoToUpdate,
+                      handleGoToOverride: _handleGoToOverride),
                   handleGoToHome: _handleGoToHome,
                   handleGoToCategory: _handleGoToCategory,
                   handleGoToSearch: _handleGoToSearch,
@@ -238,6 +240,25 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                 key: const ValueKey(constPageApplication),
                 child: ContentWithSidemenu(
                   content: InstallationView(
+                    applicationIdSelected: stateApplicationIdSelected,
+                    handleGoToApplication: _handleGoToApplication,
+                  ),
+                  handleGoToHome: _handleGoToHome,
+                  handleGoToCategory: _handleGoToCategory,
+                  handleGoToSearch: _handleGoToSearch,
+                  handleToggleDarkMode: _handleToggleDarkMode,
+                  handleGoToInstalledApps: _handleGoToInstalledApps,
+                  handleGoToUpdatesAvailable: _handleGoToUpdatesAvailable,
+                  handleSetLocale: _handleSetLocale,
+                  pageSelected: statePageSelected,
+                  categoryIdSelected: stateCategoryIdSelected,
+                ))
+          else if (statePageSelected == constPageOverride &&
+              stateApplicationIdSelected != '')
+            MaterialPage(
+                key: const ValueKey(constPageApplication),
+                child: ContentWithSidemenu(
+                  content: OverrideView(
                     applicationIdSelected: stateApplicationIdSelected,
                     handleGoToApplication: _handleGoToApplication,
                   ),
@@ -415,6 +436,13 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
   void _handleSearch(String newSearch) {
     setState(() {
       stateSearch = newSearch;
+    });
+  }
+
+  void _handleGoToOverride(String applicationId) {
+    setState(() {
+      statePageSelected = constPageOverride;
+      stateApplicationIdSelected = applicationId;
     });
   }
 

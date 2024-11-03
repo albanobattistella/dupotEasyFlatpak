@@ -127,7 +127,8 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenu> {
           focusNode: _focusNode,
           autofocus: true,
           onKeyEvent: (event) {
-            if (event is KeyDownEvent &&
+            if (widget.pageSelected != 'override' &&
+                event is KeyDownEvent &&
                 alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
               widget.handleGoToSearch(event.logicalKey.keyLabel.toString());
             }

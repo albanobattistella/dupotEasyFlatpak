@@ -200,6 +200,26 @@ class Commands {
     return FlatpakApplication(isAlreadyInstalled, result.stdout.toString());
   }
 
+  Future<FlatpakOverrideApplication> isApplicationOverrided(
+      String applicationId) async {
+    ProcessResult result = await runProcess(
+        flatpakCommand, ['override', '--show', '--user', applicationId]);
+
+    stdout.write(result.stdout);
+
+    var isOverrided = false;
+
+    print('stdout override');
+    print(result.stdout.toString());
+    print('stdout override FIN');
+
+    if (result.stdout.toString().length > 2) {
+      isOverrided = true;
+    }
+
+    return FlatpakOverrideApplication(isOverrided, result.stdout.toString());
+  }
+
   Future<String> installApplicationThenOverrideList(
       String applicationId, List<List<String>> subProcessList) async {
     ProcessResult result = await runProcess(
@@ -251,4 +271,11 @@ class FlatpakApplication {
   final String flatpakOutput;
 
   FlatpakApplication(this.isInstalled, this.flatpakOutput);
+}
+
+class FlatpakOverrideApplication {
+  final bool isOverrided;
+  final String flatpakOutput;
+
+  FlatpakOverrideApplication(this.isOverrided, this.flatpakOutput);
 }

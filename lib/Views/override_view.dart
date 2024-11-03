@@ -1,98 +1,86 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dupot_easy_flatpak/Controls/override_control.dart';
+import 'package:dupot_easy_flatpak/Entities/override_form_control.dart';
 import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
-import 'package:dupot_easy_flatpak/Process/commands.dart';
+import 'package:dupot_easy_flatpak/Models/permission.dart';
 import 'package:flutter/material.dart';
+import "package:ini/ini.dart";
 
-class UninstallationView extends StatefulWidget {
+class OverrideView extends StatefulWidget {
   String applicationIdSelected;
-  Function handleGoToApplication;
-  bool willDeleteAppData;
 
-  UninstallationView(
-      {super.key,
-      required this.applicationIdSelected,
-      required this.handleGoToApplication,
-      required this.willDeleteAppData});
+  Function handleGoToApplication;
+
+  OverrideView({
+    super.key,
+    required this.applicationIdSelected,
+    required this.handleGoToApplication,
+  });
 
   @override
-  State<UninstallationView> createState() => _UninstallationViewState();
+  State<OverrideView> createState() => _OverrideViewState();
 }
 
-class _UninstallationViewState extends State<UninstallationView> {
+class _OverrideViewState extends State<OverrideView> {
   AppStream? stateAppStream;
-  bool stateIsInstalling = true;
+  bool stateIsLoaded = true;
   String stateInstallationOutput = '';
 
   String applicationIdSelected = '';
+
+  late Permission statePermission = Permission('', 'label');
+  Config stateOverrideConfig = Config();
 
   String appPath = '';
 
   final ScrollController scrollController = ScrollController();
 
+  List<OverrideFormControl> stateOverrideFormControlList = [];
+
+  late OverrideControl overrideControl;
+
   @override
   void initState() {
     super.initState();
-
-    install();
   }
 
-  Future<void> install() async {
+  Future<void> loadData() async {
     applicationIdSelected = widget.applicationIdSelected;
-
     AppStreamFactory appStreamFactory = AppStreamFactory();
     appPath = await appStreamFactory.getPath();
 
     AppStream appStream =
         await appStreamFactory.findAppStreamById(applicationIdSelected);
 
+    await loadApplicationRecipeOverride(applicationIdSelected);
+
     setState(() {
       stateAppStream = appStream;
     });
+  }
 
-    Commands command = Commands();
+  Future<void> loadApplicationRecipeOverride(String applicationId) async {
+    overrideControl = OverrideControl();
+    List<OverrideFormControl> overrideFormControlList =
+        await overrideControl.getOverrideControlList(applicationId);
 
-    String commandBin = 'flatpak';
-
-    List<String> commandArgList = ['uninstall', '-y', '--system'];
-    if (widget.willDeleteAppData) {
-      commandArgList.add('--delete-data');
-    }
-    commandArgList.add(applicationIdSelected);
-
-    Process.start(command.getCommand(commandBin),
-            command.getFlatpakSpawnArgumentList(commandBin, commandArgList))
-        .then((Process process) {
-      process.stdout.transform(utf8.decoder).listen((data) {
-        print('STDOUT: $data');
-        setState(() {
-          stateInstallationOutput = data;
-        });
-      });
-
-      process.stderr.transform(utf8.decoder).listen((data) {
-        print('STDERR: $data');
-        setState(() {
-          stateInstallationOutput = data;
-        });
-      });
-
-      process.exitCode.then((exitCode) {
-        print('Exit code: $exitCode');
-        Commands().loadApplicationInstalledList();
-
-        setState(() {
-          stateInstallationOutput =
-              "$stateInstallationOutput \n ${AppLocalizations().tr('uninstallation_finished')}";
-          stateIsInstalling = false;
-        });
-      });
-    }).catchError((e) {
-      print('Error starting process: $e');
+    setState(() {
+      stateOverrideFormControlList = overrideFormControlList;
+      stateIsLoaded = false;
     });
+
+    //print(flatpakOverrideApplication);
+  }
+
+  @override
+  @mustCallSuper
+  void didChangeDependencies() {
+    loadData();
+    super.didChangeDependencies();
   }
 
   @override
@@ -100,15 +88,17 @@ class _UninstallationViewState extends State<UninstallationView> {
     const TextStyle outputTextStyle =
         TextStyle(color: Colors.white, fontSize: 14.0);
 
-    return Card(
-        color: Theme.of(context).cardColor,
-        child: stateAppStream == null
-            ? const CircularProgressIndicator()
-            : Scrollbar(
-                interactive: false,
-                thumbVisibility: true,
+    return stateAppStream == null
+        ? const CircularProgressIndicator()
+        : Card(
+            color: Theme.of(context).cardColor,
+            child: Scrollbar(
+              interactive: false,
+              thumbVisibility: true,
+              controller: scrollController,
+              child: ListView(
                 controller: scrollController,
-                child: ListView(controller: scrollController, children: [
+                children: [
                   Row(
                     children: [
                       if (stateAppStream!.hasAppIcon())
@@ -153,30 +143,44 @@ class _UninstallationViewState extends State<UninstallationView> {
                           ],
                         ),
                       ),
-                      stateIsInstalling
+                      stateIsLoaded
                           ? const CircularProgressIndicator()
                           : getButton(),
+                      const SizedBox(width: 10),
+                      stateIsLoaded ? SizedBox() : getSaveButton(),
                       const SizedBox(width: 20)
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Container(
                         constraints: const BoxConstraints(minHeight: 800),
-                        decoration: const BoxDecoration(color: Colors.blueGrey),
                         child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: RichText(
-                              overflow: TextOverflow.clip,
-                              text: TextSpan(
-                                style: outputTextStyle,
-                                children: <TextSpan>[
-                                  TextSpan(text: stateInstallationOutput),
-                                ],
-                              ),
-                            ))),
-                  ),
-                ])));
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: stateOverrideFormControlList.map(
+                                  (OverrideFormControl
+                                      stateOverrideFormControlLoop) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(stateOverrideFormControlLoop.label,
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold)),
+                                    TextField(
+                                      controller: stateOverrideFormControlLoop
+                                          .textEditingController,
+                                    )
+                                  ],
+                                );
+                              }).toList()),
+                        ),
+                      )),
+                ],
+              ),
+            ));
   }
 
   Widget getButton() {
@@ -192,6 +196,25 @@ class _UninstallationViewState extends State<UninstallationView> {
       },
       label: Text(AppLocalizations().tr('close')),
       icon: const Icon(Icons.close),
+    );
+  }
+
+  Widget getSaveButton() {
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+        backgroundColor: Colors.blueGrey,
+        padding: const EdgeInsets.all(20),
+        textStyle: const TextStyle(fontSize: 14));
+
+    return FilledButton.icon(
+      style: buttonStyle,
+      onPressed: () async {
+        await overrideControl.save(
+            widget.applicationIdSelected, stateOverrideFormControlList);
+
+        widget.handleGoToApplication(widget.applicationIdSelected);
+      },
+      label: Text(AppLocalizations().tr('save')),
+      icon: const Icon(Icons.save),
     );
   }
 }

@@ -157,7 +157,8 @@ class _InstallationViewState extends State<InstallationView> {
                       ),
                       stateIsInstalling
                           ? const CircularProgressIndicator()
-                          : getButton()
+                          : getButton(),
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Padding(

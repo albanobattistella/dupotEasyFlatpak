@@ -152,9 +152,11 @@ class _InstallationWithRecipeViewState
         .then((Process process) {
       process.stdout.transform(utf8.decoder).listen((data) {
         print('STDOUT: $data');
-        setState(() {
-          stateInstallationOutput = data;
-        });
+        if (mounted) {
+          setState(() {
+            stateInstallationOutput = data;
+          });
+        }
       });
 
       process.stderr.transform(utf8.decoder).listen((data) {
@@ -253,7 +255,8 @@ class _InstallationWithRecipeViewState
                         ),
                         stateIsInstalling
                             ? const CircularProgressIndicator()
-                            : getButton()
+                            : getButton(),
+                        const SizedBox(width: 20)
                       ],
                     ),
                     Padding(

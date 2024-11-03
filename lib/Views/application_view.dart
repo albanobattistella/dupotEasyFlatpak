@@ -24,6 +24,7 @@ class ApplicationView extends StatefulWidget {
   Function handleGoToInstallationWithRecipe;
   Function handleGoToUninstallation;
   Function handleGoToUpdate;
+  Function handleGoToOverride;
 
   ApplicationView({
     super.key,
@@ -32,6 +33,7 @@ class ApplicationView extends StatefulWidget {
     required this.handleGoToInstallationWithRecipe,
     required this.handleGoToUninstallation,
     required this.handleGoToUpdate,
+    required this.handleGoToOverride,
   });
 
   @override
@@ -42,6 +44,8 @@ class _ApplicationViewState extends State<ApplicationView> {
   AppStream? stateAppStream;
   bool stateIsAlreadyInstalled = false;
   bool stateHasRecipe = false;
+
+  bool stateIsOverrided = false;
 
   String applicationIdSelected = '';
 
@@ -76,6 +80,7 @@ class _ApplicationViewState extends State<ApplicationView> {
     }
 
     checkAlreadyInstalled(applicationIdSelected);
+    checkIsOverrided(applicationIdSelected);
 
     checkHasRecipe(applicationIdSelected);
 
@@ -264,7 +269,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                                           1000);
 
                               return Row(children: [
-                                Text(DateFormat('dd/MM/yyyy ')
+                                Text(DateFormat('dd/MM/yyyy')
                                     .format(dateVersion)),
                                 const SizedBox(width: 2),
                                 const Text(':'),
@@ -324,16 +329,15 @@ class _ApplicationViewState extends State<ApplicationView> {
   }
 
   Widget getOverrideButton() {
-    return const SizedBox();
-/*
-    if (stateIsAlreadyInstalled) {
+    if (stateIsOverrided) {
       return OverrideButton(
         buttonStyle: getButtonStyle(context),
         stateAppStream: stateAppStream,
+        handle: widget.handleGoToOverride,
       );
     } else {
       return const SizedBox();
-    }*/
+    }
   }
 
   Widget getRunButton() {
@@ -399,6 +403,16 @@ class _ApplicationViewState extends State<ApplicationView> {
         .then((flatpakApplication) {
       setState(() {
         stateIsAlreadyInstalled = flatpakApplication.isInstalled;
+      });
+    });
+  }
+
+  void checkIsOverrided(String applicationId) async {
+    print('override ?');
+    Commands().isApplicationOverrided(applicationId).then((flatpakApplication) {
+      print(flatpakApplication.flatpakOutput);
+      setState(() {
+        stateIsOverrided = flatpakApplication.isOverrided;
       });
     });
   }

@@ -157,7 +157,8 @@ class _UpdateViewState extends State<UpdateView> {
                       ),
                       stateIsInstalling
                           ? const CircularProgressIndicator()
-                          : getButton()
+                          : getButton(),
+                      const SizedBox(width: 20)
                     ],
                   ),
                   Padding(
