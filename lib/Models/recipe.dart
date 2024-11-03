@@ -13,11 +13,22 @@ class Recipe {
       if (rawPermissionLoop.containsKey('value')) {
         value = rawPermissionLoop['value'];
       }
+      String subValueYes = "";
+      String subValueNo = "";
+
+      if (rawPermissionLoop.containsKey('subValueYes')) {
+        subValueYes = rawPermissionLoop['subValueYes'];
+      }
+      if (rawPermissionLoop.containsKey('subValueNo')) {
+        subValueNo = rawPermissionLoop['subValueNo'];
+      }
 
       flatpakPermissionToOverrideList.add(Permission(
           rawPermissionLoop['type'].toString(),
           rawPermissionLoop['label']!,
-          value));
+          value,
+          subValueYes,
+          subValueNo));
     }
   }
 

@@ -2,13 +2,16 @@ class Permission {
   final String type;
   final String label;
   final String? value;
+  final String? subValueYes;
+  final String? subValueNo;
 
   static const constTypeFileSystem = 'filesystem';
   static const constTypeFileSystemNoPrompt = 'filesystem_noprompt';
 
   static const constTypeInstallYesNo = 'install_flatpak_yesno';
 
-  Permission(this.type, this.label, [this.value]);
+  Permission(this.type, this.label,
+      [this.value, this.subValueYes, this.subValueNo]);
 
   bool isFileSystem() {
     return (type == constTypeFileSystem);
@@ -32,6 +35,14 @@ class Permission {
 
   String? getValue() {
     return value;
+  }
+
+  String? getSubValueYes() {
+    return subValueYes;
+  }
+
+  String? getSubValueNo() {
+    return subValueNo;
   }
 
   String getFlatpakOverrideType() {

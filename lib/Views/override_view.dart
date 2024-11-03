@@ -162,19 +162,59 @@ class _OverrideViewState extends State<OverrideView> {
                               children: stateOverrideFormControlList.map(
                                   (OverrideFormControl
                                       stateOverrideFormControlLoop) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(stateOverrideFormControlLoop.label,
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                    TextField(
-                                      controller: stateOverrideFormControlLoop
-                                          .textEditingController,
-                                    )
-                                  ],
-                                );
+                                if (stateOverrideFormControlLoop
+                                    .isTypeFileSystem()) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(stateOverrideFormControlLoop.label,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
+                                      TextField(
+                                        controller: stateOverrideFormControlLoop
+                                            .textEditingController,
+                                      )
+                                    ],
+                                  );
+                                } else if (stateOverrideFormControlLoop
+                                    .isTypeEnv()) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(stateOverrideFormControlLoop.label,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
+                                      Row(
+                                        children: [
+                                          Switch(
+                                            value: stateOverrideFormControlLoop
+                                                .boolValue,
+                                            onChanged: (bool value) {
+                                              stateOverrideFormControlLoop
+                                                  .boolValue = value;
+
+                                              List<OverrideFormControl>
+                                                  tmpOverrideFormControlList =
+                                                  stateOverrideFormControlList;
+
+                                              setState(() {
+                                                stateOverrideFormControlList =
+                                                    tmpOverrideFormControlList;
+                                              });
+                                            },
+                                          ),
+                                          Text(AppLocalizations().tr('Yes'))
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                }
+
+                                return SizedBox();
                               }).toList()),
                         ),
                       )),

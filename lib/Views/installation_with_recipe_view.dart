@@ -288,7 +288,8 @@ class _InstallationWithRecipeViewState
                       ],
                     );
                   } else if (stateOverrideFormControlLoop
-                      .isTypeInstallFlatpak()) {
+                          .isTypeInstallFlatpak() ||
+                      stateOverrideFormControlLoop.isTypeEnv()) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

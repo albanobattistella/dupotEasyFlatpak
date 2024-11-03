@@ -9,9 +9,13 @@ class OverrideControl {
   Config overrideConfig = Config();
 
   static const String constFileSystems = 'filesystems';
+  static const String constEnvs = 'envs';
 
   List<String> overridedFileSystemList = [];
   int overridedFileSystemIndex = 0;
+
+  List<String> overridedEnvList = [];
+  int overridedEnvIndex = 0;
 
   Future<List<OverrideFormControl>> getOverrideControlList(
       applicationId) async {
@@ -30,12 +34,34 @@ class OverrideControl {
       }
       OverrideFormControl overrideFormControlLoop = OverrideFormControl();
       overrideFormControlLoop.setLabel(recipePermissionLoop.label);
-
-      String textValue = await getOverridedConfig(recipePermissionLoop.type);
-
-      overrideFormControlLoop.setValue(textValue);
-
       overrideFormControlLoop.setType(recipePermissionLoop.type);
+
+      if (overrideFormControlLoop.isTypeFileSystem()) {
+        String textValue = await getOverridedConfig(recipePermissionLoop.type);
+
+        overrideFormControlLoop.setValue(textValue);
+      } else if (overrideFormControlLoop.isTypeEnv()) {
+        overrideFormControlLoop
+            .setValue(recipePermissionLoop.getValue().toString());
+        overrideFormControlLoop
+            .setSubValueYes(recipePermissionLoop.subValueYes.toString());
+        overrideFormControlLoop
+            .setSubValueNo(recipePermissionLoop.subValueNo.toString());
+
+        if (await hasOverridedConfig(
+            recipePermissionLoop.type, recipePermissionLoop.value.toString())) {
+          String textValue = await getOverridedSubConfig(
+              recipePermissionLoop.type, recipePermissionLoop.value.toString());
+
+          overrideFormControlLoop.setValue(textValue);
+
+          if (textValue == recipePermissionLoop.subValueYes) {
+            overrideFormControlLoop.boolValue = true;
+          }
+        } else {
+          overrideFormControlLoop.boolValue = false;
+        }
+      }
 
       overrideFormControlList.add(overrideFormControlLoop);
     }
@@ -91,9 +117,37 @@ class OverrideControl {
       overridedFileSystemIndex++;
 
       return overridedFileSystemFound;
+    } else if (['env_yesno', 'env'].contains(type)) {
+      if (overridedFileSystemList.isEmpty) {
+        overridedEnvList =
+            overrideConfig.get('Context', constEnvs).toString().split(';');
+      }
+
+      String overridedEnvFound = overridedEnvList[overridedEnvIndex];
+
+      overridedEnvIndex++;
+
+      return overridedEnvFound;
     }
 
     throw Exception('getOverridedConfig for type "$type" Not implemented');
+  }
+
+  Future<String> getOverridedSubConfig(String type, String value) async {
+    if (['env_yesno', 'env'].contains(type)) {
+      return overrideConfig.get('Environment', value).toString();
+    }
+
+    throw Exception('getOverridedConfig for type "$type" Not implemented');
+  }
+
+  Future<bool> hasOverridedConfig(String type, String value) async {
+    if (['filesystem_noprompt', 'filesystem'].contains(type)) {
+      return overrideConfig.hasOption('Context', constFileSystems);
+    } else if (['env_yesno', 'env'].contains(type)) {
+      return overrideConfig.hasOption('Environment', value);
+    }
+    throw Exception('hasOverridedConfig for type "$type" Not implemented');
   }
 
   Future<void> save(String applicationId,
@@ -124,6 +178,18 @@ class OverrideControl {
           argList.add(overrideFormControlLoop.getValue());
           await Commands().runProcess('flatpak', argList);
         }
+      } else if (overrideFormControlLoop.isTypeEnv()) {
+        List<String> argList = [
+          'override',
+          '--user',
+        ];
+
+        argList.add(
+            '--env=${overrideFormControlLoop.getValue()}=${overrideFormControlLoop.getSubValueYesNo()}');
+
+        argList.add(applicationId);
+
+        await Commands().runProcess('flatpak', argList);
       } else {
         throw Exception(
             'save overrideFormControlLoop.type ${overrideFormControlLoop.type} not implemented ');
