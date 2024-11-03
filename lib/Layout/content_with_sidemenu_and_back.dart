@@ -20,6 +20,7 @@ class ContentWithSidemenuAndBack extends StatefulWidget {
 
   final Function handleToggleDarkMode;
   final Function handleSetLocale;
+  final Function handleSetUserScopeInstallation;
 
   final Function handleGoBack;
 
@@ -35,7 +36,8 @@ class ContentWithSidemenuAndBack extends StatefulWidget {
       required this.handleGoToInstalledApps,
       required this.handleGoToUpdatesAvailable,
       required this.handleSetLocale,
-      required this.handleGoBack});
+      required this.handleGoBack,
+      required this.handleSetUserScopeInstallation});
 
   @override
   _ContentWithSidemenuState createState() => _ContentWithSidemenuState();
@@ -155,6 +157,7 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenuAndBack> {
       drawer: MyDrawer(
         version: version,
         handleSetLocale: widget.handleSetLocale,
+        handleSetUserScopeInstallation: widget.handleSetUserScopeInstallation,
       ),
     );
   }

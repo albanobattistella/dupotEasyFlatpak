@@ -5,6 +5,7 @@ import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:flutter/material.dart';
 
 class UninstallationView extends StatefulWidget {
@@ -57,7 +58,11 @@ class _UninstallationViewState extends State<UninstallationView> {
 
     String commandBin = 'flatpak';
 
-    List<String> commandArgList = ['uninstall', '-y', '--system'];
+    List<String> commandArgList = [
+      'uninstall',
+      '-y',
+      Parameters().getInstallationScope()
+    ];
     if (widget.willDeleteAppData) {
       commandArgList.add('--delete-data');
     }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dupot_easy_flatpak/Models/app_installed.dart';
 import 'package:dupot_easy_flatpak/Models/app_update.dart';
 import 'package:dupot_easy_flatpak/Models/settings.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 
 class Commands {
   static const String flatpakCommand = 'flatpak';
@@ -222,8 +223,8 @@ class Commands {
 
   Future<String> installApplicationThenOverrideList(
       String applicationId, List<List<String>> subProcessList) async {
-    ProcessResult result = await runProcess(
-        flatpakCommand, ['install', '-y', '--system', applicationId]);
+    ProcessResult result = await runProcess(flatpakCommand,
+        ['install', '-y', Parameters().getInstallationScope(), applicationId]);
 
     stdout.write(result.stdout);
     stderr.write(result.stderr);
@@ -237,8 +238,12 @@ class Commands {
 
   Future<String> uninstallApplicationThenOverrideList(
       String applicationId, List<List<String>> subProcessList) async {
-    ProcessResult result = await runProcess(
-        flatpakCommand, ['uninstall', '-y', '--system', applicationId]);
+    ProcessResult result = await runProcess(flatpakCommand, [
+      'uninstall',
+      '-y',
+      Parameters().getInstallationScope(),
+      applicationId
+    ]);
 
     stdout.write(result.stdout);
     stderr.write(result.stderr);

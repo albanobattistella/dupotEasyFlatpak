@@ -19,6 +19,7 @@ class ContentWithSidemenu extends StatefulWidget {
   final Function handleToggleDarkMode;
   final Function handleSetLocale;
   final Function handleGoToUpdatesAvailable;
+  final Function handleSetUserScopeInstallation;
 
   const ContentWithSidemenu(
       {super.key,
@@ -31,7 +32,8 @@ class ContentWithSidemenu extends StatefulWidget {
       required this.handleToggleDarkMode,
       required this.handleGoToInstalledApps,
       required this.handleSetLocale,
-      required this.handleGoToUpdatesAvailable});
+      required this.handleGoToUpdatesAvailable,
+      required this.handleSetUserScopeInstallation});
 
   @override
   _ContentWithSidemenuState createState() => _ContentWithSidemenuState();
@@ -149,6 +151,7 @@ class _ContentWithSidemenuState extends State<ContentWithSidemenu> {
       drawer: MyDrawer(
         version: version,
         handleSetLocale: widget.handleSetLocale,
+        handleSetUserScopeInstallation: widget.handleSetUserScopeInstallation,
       ),
     );
   }

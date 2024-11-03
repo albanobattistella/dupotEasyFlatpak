@@ -40,6 +40,9 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
   String statePreviousSearch = '';
   String statePreviousCategoryIdSelected = '';
 
+  bool stateUserScopeInstallationEnabled =
+      Parameters().getUserInstallationScopeEnabled();
+
   bool show404 = false;
 
   bool stateIsDarkMode = false;
@@ -171,6 +174,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageCategory &&
               stateCategoryIdSelected != '')
@@ -190,6 +195,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageSearch)
             MaterialPage(
@@ -209,6 +216,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   pageSelected: statePageSelected,
                   defaultSearch: stateDefaultSearch,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageApplication &&
               stateApplicationIdSelected != '')
@@ -233,6 +242,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
                   handleGoBack: _handleGoBack,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageInstallation &&
               stateApplicationIdSelected != '')
@@ -252,6 +263,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageOverride &&
               stateApplicationIdSelected != '')
@@ -271,6 +284,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageUpdate &&
               stateApplicationIdSelected != '')
@@ -290,6 +305,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageUninstallation &&
               stateApplicationIdSelected != '')
@@ -309,6 +326,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageInstallationWithRecipe &&
               stateApplicationIdSelected != '')
@@ -328,6 +347,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageInstalledApps)
             MaterialPage(
@@ -345,6 +366,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
           else if (statePageSelected == constPageUpdatesAvailable)
             MaterialPage(
@@ -362,6 +385,8 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetLocale: _handleSetLocale,
                   pageSelected: statePageSelected,
                   categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
                 ))
         ],
         onPopPage: (route, result) => route.didPop(result),
@@ -479,6 +504,15 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
     Parameters().setLanguageCode(locale);
     setState(() {
       stateLocale = Locale.fromSubtags(languageCode: locale);
+    });
+  }
+
+  void _handleSetUserScopeInstallation(bool newUserInstallationScopeEnabled) {
+    Parameters()
+        .setUserInstallationScopeEnabled(newUserInstallationScopeEnabled);
+    setState(() {
+      stateUserScopeInstallationEnabled =
+          Parameters().getUserInstallationScopeEnabled();
     });
   }
 

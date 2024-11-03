@@ -1,12 +1,18 @@
 import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyDrawer extends StatelessWidget {
-  MyDrawer({super.key, required this.version, required this.handleSetLocale});
+  MyDrawer(
+      {super.key,
+      required this.version,
+      required this.handleSetLocale,
+      required this.handleSetUserScopeInstallation});
 
   final String version;
   Function handleSetLocale;
+  Function handleSetUserScopeInstallation;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +93,55 @@ class MyDrawer extends StatelessWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListTile(
+                      title: Text(
+                        AppLocalizations().tr('Installation_scope'),
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .color),
+                      ),
+                    ),
+                    Column(children: <Widget>[
+                      ListTile(
+                        titleTextStyle: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .color),
+                        title: Text(AppLocalizations().tr('scopeSystem')),
+                        leading: Radio<bool>(
+                          value: false,
+                          groupValue:
+                              Parameters().getUserInstallationScopeEnabled(),
+                          onChanged: (bool? value) {
+                            handleSetUserScopeInstallation(false);
+                          },
+                        ),
+                      ),
+                      ListTile(
+                        titleTextStyle: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .color),
+                        title: Text(AppLocalizations().tr('scopeUser')),
+                        leading: Radio<bool>(
+                          value: true,
+                          groupValue:
+                              Parameters().getUserInstallationScopeEnabled(),
+                          onChanged: (bool? value) {
+                            handleSetUserScopeInstallation(true);
+                          },
+                        ),
+                      ),
+                    ]),
                     const SizedBox(height: 150),
                     Text(
                         '${AppLocalizations().tr('Author')}: Michael Bertocchi'),

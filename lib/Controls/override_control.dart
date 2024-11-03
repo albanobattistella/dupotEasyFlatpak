@@ -3,6 +3,7 @@ import 'package:dupot_easy_flatpak/Models/permission.dart';
 import 'package:dupot_easy_flatpak/Models/recipe.dart';
 import 'package:dupot_easy_flatpak/Models/recipe_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:ini/ini.dart';
 
 class OverrideControl {
@@ -173,7 +174,7 @@ class OverrideControl {
           List<String> argList = [
             'install',
             '-y',
-            '--system',
+            Parameters().getInstallationScope(),
           ];
           argList.add(overrideFormControlLoop.getValue());
           await Commands().runProcess('flatpak', argList);

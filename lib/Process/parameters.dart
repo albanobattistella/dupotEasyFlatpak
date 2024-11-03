@@ -8,6 +8,8 @@ class Parameters {
   String languageCode = 'en';
   bool darkModeEnabled = false;
 
+  bool userInstallationScopeEnabled = false;
+
   static final Parameters _singleton = Parameters._internal();
 
   factory Parameters([String? newJsonParametersPath]) {
@@ -22,6 +24,10 @@ class Parameters {
         }
         if (jsonParameterObj.containsKey('darkModeEnabled')) {
           _singleton.darkModeEnabled = jsonParameterObj['darkModeEnabled'];
+        }
+        if (jsonParameterObj.containsKey('userInstallationScopeEnabled')) {
+          _singleton.userInstallationScopeEnabled =
+              jsonParameterObj['userInstallationScopeEnabled'];
         }
       }
     }
@@ -40,6 +46,12 @@ class Parameters {
     await save();
   }
 
+  Future<void> setUserInstallationScopeEnabled(
+      bool newUserInstallationScopeEnabled) async {
+    userInstallationScopeEnabled = newUserInstallationScopeEnabled;
+    await save();
+  }
+
   String getLanguageCode() {
     return languageCode;
   }
@@ -48,10 +60,22 @@ class Parameters {
     return darkModeEnabled;
   }
 
+  bool getUserInstallationScopeEnabled() {
+    return userInstallationScopeEnabled;
+  }
+
+  String getInstallationScope() {
+    if (userInstallationScopeEnabled) {
+      return '--user';
+    }
+    return '--system';
+  }
+
   Future<void> save() async {
     Map<String, dynamic> jsonParameterObj = {
       'languageCode': languageCode,
-      'darkModeEnabled': darkModeEnabled
+      'darkModeEnabled': darkModeEnabled,
+      'userInstallationScopeEnabled': userInstallationScopeEnabled
     };
 
     File jsonParameterFile = File(jsonParametersPath);

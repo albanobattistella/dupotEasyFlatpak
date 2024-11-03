@@ -5,6 +5,7 @@ import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:flutter/material.dart';
 
 class UpdateView extends StatefulWidget {
@@ -59,7 +60,7 @@ class _UpdateViewState extends State<UpdateView> {
     List<String> commandArgList = [
       'update',
       '-y',
-      '--system',
+      Parameters().getInstallationScope(),
       applicationIdSelected
     ];
 

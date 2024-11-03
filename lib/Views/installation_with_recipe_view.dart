@@ -10,6 +10,7 @@ import 'package:dupot_easy_flatpak/Models/permission.dart';
 import 'package:dupot_easy_flatpak/Models/recipe.dart';
 import 'package:dupot_easy_flatpak/Models/recipe_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
+import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 
@@ -97,65 +98,6 @@ class _InstallationWithRecipeViewState
     super.didChangeDependencies();
   }
 
-/*
-  Future<bool> loadSetup(Recipe recipe) async {
-    List<Permission> flatpakPermissionList =
-        recipe.getFlatpakPermissionToOverrideList();
-
-    for (Permission permissionLoop in flatpakPermissionList) {
-      if (permissionLoop.isFileSystem()) {
-        String directoryPath = await selectDirectory(permissionLoop.label);
-
-        if (directoryPath.length < 2) {
-          return false;
-        }
-
-        List<String> argList = [
-          'override',
-          '--user',
-        ];
-        argList.add(permissionLoop.getFlatpakOverrideType() + directoryPath);
-
-        argList.add(recipe.id);
-
-        processList.add(argList);
-      } else if (permissionLoop.isFileSystemNoPrompt()) {
-        String directoryPath = 'home';
-
-        List<String> argList = [
-          'override',
-          '--user',
-        ];
-        argList.add(permissionLoop.getFlatpakOverrideType() + directoryPath);
-
-        argList.add(recipe.id);
-
-        processList.add(argList);
-      } else if (permissionLoop.isInstallFlatpakYesNo()) {
-        bool shouldInstall = await answerYesNo(permissionLoop.label);
-
-        if (!shouldInstall) {
-          continue;
-        }
-
-        List<String> argList = [
-          'install',
-          '-y',
-          '--system',
-        ];
-
-        argList.add(permissionLoop.getValue().toString());
-
-        processList.add(argList);
-      } else {
-        throw Exception('loadSetup error with ${recipe.id} not implemented');
-      }
-    }
-
-    return true;
-  }
- */
-
   Future<String> selectDirectory(String label) async {
     String? selectedDirectory = await prompt(context,
         title: Text(label),
@@ -206,7 +148,7 @@ class _InstallationWithRecipeViewState
     List<String> commandArgList = [
       'install',
       '-y',
-      '--system',
+      Parameters().getInstallationScope(),
       applicationIdSelected
     ];
 

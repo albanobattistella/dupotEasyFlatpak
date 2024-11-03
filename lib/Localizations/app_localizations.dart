@@ -81,7 +81,10 @@ class AppLocalizations {
       'Links': 'Links',
       'Last_releases': 'Last releases',
       'Yes': 'Yes',
-      'No': 'No'
+      'No': 'No',
+      'Installation_scope': 'Installation scope',
+      'scopeSystem': 'scope system',
+      'scopeUser': 'scope user',
     },
     'fr': {
       'loading': 'Chargement',
@@ -149,7 +152,10 @@ class AppLocalizations {
       'Links': 'Liens',
       'Last_releases': 'Dernières versions',
       'Yes': 'Oui',
-      'No': 'Non'
+      'No': 'Non',
+      'Installation_scope': 'Perimètre d\'installation',
+      'scopeSystem': 'Tout le système',
+      'scopeUser': 'Uniquement le périmètre de l\'utilisateur',
     },
     'it': {
       'loading': 'Caricamento',
@@ -215,7 +221,10 @@ class AppLocalizations {
       'Links': 'Links',
       'Last_releases': 'Last_releases',
       'Yes': 'Yes',
-      'No': 'No'
+      'No': 'No',
+      'Installation_scope': 'Installation scope',
+      'scopeSystem': 'scope system',
+      'scopeUser': 'scope user',
     }
   };
 

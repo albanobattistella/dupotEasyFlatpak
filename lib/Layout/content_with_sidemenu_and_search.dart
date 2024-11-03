@@ -20,6 +20,8 @@ class ContentWithSidemenuAndSearch extends StatefulWidget {
 
   final Function handleSearch;
   final Function handleSetLocale;
+  final Function handleSetUserScopeInstallation;
+
   final String defaultSearch;
 
   const ContentWithSidemenuAndSearch(
@@ -34,7 +36,8 @@ class ContentWithSidemenuAndSearch extends StatefulWidget {
       required this.handleGoToInstalledApps,
       required this.handleGoToUpdatesAvailable,
       required this.handleSetLocale,
-      required this.defaultSearch});
+      required this.defaultSearch,
+      required this.handleSetUserScopeInstallation});
 
   @override
   _ContentWithSidemenuAndSearchState createState() =>
@@ -143,6 +146,7 @@ class _ContentWithSidemenuAndSearchState
       drawer: MyDrawer(
         version: version,
         handleSetLocale: widget.handleSetLocale,
+        handleSetUserScopeInstallation: widget.handleSetUserScopeInstallation,
       ),
     );
   }
