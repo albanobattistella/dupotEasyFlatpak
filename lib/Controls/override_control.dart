@@ -25,10 +25,38 @@ class OverrideControl {
         recipe.getFlatpakPermissionToOverrideList();
 
     for (Permission recipePermissionLoop in recipePermissionList) {
+      if (recipePermissionLoop.isInstallFlatpakYesNo()) {
+        continue;
+      }
       OverrideFormControl overrideFormControlLoop = OverrideFormControl();
       overrideFormControlLoop.setLabel(recipePermissionLoop.label);
 
       String textValue = await getOverridedConfig(recipePermissionLoop.type);
+
+      overrideFormControlLoop.setValue(textValue);
+
+      overrideFormControlLoop.setType(recipePermissionLoop.type);
+
+      overrideFormControlList.add(overrideFormControlLoop);
+    }
+
+    return overrideFormControlList;
+  }
+
+  Future<List<OverrideFormControl>> getOverrideControlWithoutConfigList(
+      applicationId) async {
+    Recipe recipe = await RecipeFactory().getApplication(applicationId);
+
+    List<OverrideFormControl> overrideFormControlList = [];
+
+    List<Permission> recipePermissionList =
+        recipe.getFlatpakPermissionToOverrideList();
+
+    for (Permission recipePermissionLoop in recipePermissionList) {
+      OverrideFormControl overrideFormControlLoop = OverrideFormControl();
+      overrideFormControlLoop.setLabel(recipePermissionLoop.label);
+
+      String textValue = recipePermissionLoop.getValue().toString();
 
       overrideFormControlLoop.setValue(textValue);
 
@@ -70,34 +98,36 @@ class OverrideControl {
 
   Future<void> save(String applicationId,
       List<OverrideFormControl> overrideFormControlList) async {
-    List<String> parameterFilesystemToOverrideList = [];
+    await Commands().runProcess(
+        'flatpak', ['override', '--user', '--reset', applicationId]);
+
     for (OverrideFormControl overrideFormControlLoop
         in overrideFormControlList) {
       if (overrideFormControlLoop.isTypeFileSystem()) {
-        parameterFilesystemToOverrideList
-            .add(overrideFormControlLoop.textEditingController.text);
+        List<String> argList = [
+          'override',
+          '--user',
+        ];
+
+        argList.add('--filesystem=${overrideFormControlLoop.getValue()}');
+
+        argList.add(applicationId);
+
+        await Commands().runProcess('flatpak', argList);
+      } else if (overrideFormControlLoop.isTypeInstallFlatpak()) {
+        if (overrideFormControlLoop.boolValue) {
+          List<String> argList = [
+            'install',
+            '-y',
+            '--system',
+          ];
+          argList.add(overrideFormControlLoop.getValue());
+          await Commands().runProcess('flatpak', argList);
+        }
       } else {
         throw Exception(
             'save overrideFormControlLoop.type ${overrideFormControlLoop.type} not implemented ');
       }
-    }
-    print('-------------SAVE--------------');
-
-    await Commands().runProcess(
-        'flatpak', ['override', '--user', '--reset', applicationId]);
-
-    for (String parameterFilesystemToOverrideLoop
-        in parameterFilesystemToOverrideList) {
-      List<String> argList = [
-        'override',
-        '--user',
-      ];
-
-      argList.add('--filesystem=$parameterFilesystemToOverrideLoop');
-
-      argList.add(applicationId);
-
-      await Commands().runProcess('flatpak', argList);
     }
   }
 }

@@ -6,6 +6,8 @@ class Permission {
   static const constTypeFileSystem = 'filesystem';
   static const constTypeFileSystemNoPrompt = 'filesystem_noprompt';
 
+  static const constTypeInstallYesNo = 'install_flatpak_yesno';
+
   Permission(this.type, this.label, [this.value]);
 
   bool isFileSystem() {
@@ -14,6 +16,10 @@ class Permission {
 
   bool isFileSystemNoPrompt() {
     return (type == constTypeFileSystemNoPrompt);
+  }
+
+  bool isInstallFlatpakYesNo() {
+    return (type == constTypeInstallYesNo);
   }
 
   String getType() {

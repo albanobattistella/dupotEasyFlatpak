@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dupot_easy_flatpak/Controls/override_control.dart';
+import 'package:dupot_easy_flatpak/Entities/override_form_control.dart';
 import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
@@ -30,7 +32,8 @@ class InstallationWithRecipeView extends StatefulWidget {
 class _InstallationWithRecipeViewState
     extends State<InstallationWithRecipeView> {
   AppStream? stateAppStream;
-  bool stateIsInstalling = true;
+  bool stateIsInstalling = false;
+  bool stateDisplayInstallButton = true;
   String stateInstallationOutput = '';
 
   String applicationIdSelected = '';
@@ -41,18 +44,60 @@ class _InstallationWithRecipeViewState
 
   final ScrollController scrollController = ScrollController();
 
+  List<OverrideFormControl> stateOverrideFormControlList = [];
+
+  late OverrideControl overrideControl;
+
+  bool stateIsLoaded = true;
+
+  String stateSubContent = staticSubContentForm;
+
+  static const String staticSubContentForm = 'subContentForm';
+  static const String staticSubContentInstall = 'subContentInstall';
+
   @override
   void initState() {
     super.initState();
 
-    loadSetupThenInstall();
+    //loadSetupThenInstall();
   }
 
-  Future<Recipe> getRecipe(String applicationId) async {
-    Recipe recipe = await RecipeFactory().getApplication(applicationId);
-    return recipe;
+  Future<void> loadData() async {
+    applicationIdSelected = widget.applicationIdSelected;
+    AppStreamFactory appStreamFactory = AppStreamFactory();
+    appPath = await appStreamFactory.getPath();
+
+    AppStream appStream =
+        await appStreamFactory.findAppStreamById(applicationIdSelected);
+
+    await loadApplicationRecipeOverride(applicationIdSelected);
+
+    setState(() {
+      stateAppStream = appStream;
+    });
   }
 
+  Future<void> loadApplicationRecipeOverride(String applicationId) async {
+    overrideControl = OverrideControl();
+    List<OverrideFormControl> overrideFormControlList = await overrideControl
+        .getOverrideControlWithoutConfigList(applicationId);
+
+    setState(() {
+      stateOverrideFormControlList = overrideFormControlList;
+      stateIsLoaded = false;
+    });
+
+    //print(flatpakOverrideApplication);
+  }
+
+  @override
+  @mustCallSuper
+  void didChangeDependencies() {
+    loadData();
+    super.didChangeDependencies();
+  }
+
+/*
   Future<bool> loadSetup(Recipe recipe) async {
     List<Permission> flatpakPermissionList =
         recipe.getFlatpakPermissionToOverrideList();
@@ -86,11 +131,30 @@ class _InstallationWithRecipeViewState
         argList.add(recipe.id);
 
         processList.add(argList);
+      } else if (permissionLoop.isInstallFlatpakYesNo()) {
+        bool shouldInstall = await answerYesNo(permissionLoop.label);
+
+        if (!shouldInstall) {
+          continue;
+        }
+
+        List<String> argList = [
+          'install',
+          '-y',
+          '--system',
+        ];
+
+        argList.add(permissionLoop.getValue().toString());
+
+        processList.add(argList);
+      } else {
+        throw Exception('loadSetup error with ${recipe.id} not implemented');
       }
     }
 
     return true;
   }
+ */
 
   Future<String> selectDirectory(String label) async {
     String? selectedDirectory = await prompt(context,
@@ -112,6 +176,7 @@ class _InstallationWithRecipeViewState
     return selectedDirectory;
   }
 
+/*
   void loadSetupThenInstall() async {
     applicationIdSelected = widget.applicationIdSelected;
 
@@ -132,7 +197,7 @@ class _InstallationWithRecipeViewState
         install();
       }
     });
-  }
+  }*/
 
   Future<void> install() async {
     Commands command = Commands();
@@ -169,9 +234,8 @@ class _InstallationWithRecipeViewState
       process.exitCode.then((exitCode) async {
         print('Exit code: $exitCode');
 
-        for (List<String> argListLoop in processList) {
-          await command.runProcess(flatpakCommand, argListLoop);
-        }
+        await overrideControl.save(
+            applicationIdSelected, stateOverrideFormControlList);
         await Commands().loadApplicationInstalledList();
 
         setState(() {
@@ -191,12 +255,102 @@ class _InstallationWithRecipeViewState
     });
   }
 
+  Widget getSubContent() {
+    if (stateSubContent == staticSubContentForm) {
+      return getSubContentForm();
+    } else {
+      return getSubContentInstall();
+    }
+  }
+
+  Widget getSubContentForm() {
+    return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 800),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: stateOverrideFormControlList
+                    .map((OverrideFormControl stateOverrideFormControlLoop) {
+                  if (stateOverrideFormControlLoop.isTypeFileSystem()) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(stateOverrideFormControlLoop.label,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        TextField(
+                          controller: stateOverrideFormControlLoop
+                              .textEditingController,
+                        )
+                      ],
+                    );
+                  } else if (stateOverrideFormControlLoop
+                      .isTypeInstallFlatpak()) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(stateOverrideFormControlLoop.label,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        Row(
+                          children: [
+                            Switch(
+                              value: stateOverrideFormControlLoop.boolValue,
+                              onChanged: (bool value) {
+                                stateOverrideFormControlLoop.boolValue = value;
+
+                                List<OverrideFormControl>
+                                    tmpOverrideFormControlList =
+                                    stateOverrideFormControlList;
+
+                                setState(() {
+                                  stateOverrideFormControlList =
+                                      tmpOverrideFormControlList;
+                                });
+                              },
+                            ),
+                            Text(AppLocalizations().tr('Yes'))
+                          ],
+                        )
+                      ],
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                }).toList()),
+          ),
+        ));
+  }
+
+  Widget getSubContentInstall() {
+    const TextStyle outputTextStyle =
+        TextStyle(color: Colors.white, fontSize: 14.0);
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+          constraints: const BoxConstraints(minHeight: 800),
+          decoration: const BoxDecoration(color: Colors.blueGrey),
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: RichText(
+                overflow: TextOverflow.clip,
+                text: TextSpan(
+                  style: outputTextStyle,
+                  children: <TextSpan>[
+                    TextSpan(text: stateInstallationOutput),
+                  ],
+                ),
+              ))),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     RecipeFactory(context);
-
-    const TextStyle outputTextStyle =
-        TextStyle(color: Colors.white, fontSize: 14.0);
 
     return Card(
         color: Theme.of(context).cardColor,
@@ -256,27 +410,14 @@ class _InstallationWithRecipeViewState
                         stateIsInstalling
                             ? const CircularProgressIndicator()
                             : getButton(),
+                        SizedBox(width: 5),
+                        stateIsInstalling && !stateDisplayInstallButton
+                            ? SizedBox()
+                            : getInstallButton(),
                         const SizedBox(width: 20)
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Container(
-                          constraints: const BoxConstraints(minHeight: 800),
-                          decoration:
-                              const BoxDecoration(color: Colors.blueGrey),
-                          child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: RichText(
-                                overflow: TextOverflow.clip,
-                                text: TextSpan(
-                                  style: outputTextStyle,
-                                  children: <TextSpan>[
-                                    TextSpan(text: stateInstallationOutput),
-                                  ],
-                                ),
-                              ))),
-                    ),
+                    getSubContent()
                   ],
                 ),
               ));
@@ -295,6 +436,26 @@ class _InstallationWithRecipeViewState
       },
       label: Text(AppLocalizations().tr('close')),
       icon: const Icon(Icons.close),
+    );
+  }
+
+  Widget getInstallButton() {
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+        backgroundColor: Colors.blueGrey,
+        padding: const EdgeInsets.all(20),
+        textStyle: const TextStyle(fontSize: 14));
+
+    return FilledButton.icon(
+      style: buttonStyle,
+      onPressed: () {
+        install();
+        setState(() {
+          stateDisplayInstallButton = false;
+          stateSubContent = staticSubContentInstall;
+        });
+      },
+      label: Text(AppLocalizations().tr('install')),
+      icon: const Icon(Icons.install_desktop),
     );
   }
 }

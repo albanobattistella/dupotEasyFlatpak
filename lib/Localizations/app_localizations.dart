@@ -79,7 +79,9 @@ class AppLocalizations {
       'Edit_override': 'Edit override permissions',
       'Screenshots': 'Screenshots',
       'Links': 'Links',
-      'Last_releases': 'Last releases'
+      'Last_releases': 'Last releases',
+      'Yes': 'Yes',
+      'No': 'No'
     },
     'fr': {
       'loading': 'Chargement',
@@ -145,7 +147,9 @@ class AppLocalizations {
       'Edit_override': 'Editer les permissions ajoutées',
       'Screenshots': 'Copies d\'écrans',
       'Links': 'Liens',
-      'Last_releases': 'Dernières versions'
+      'Last_releases': 'Dernières versions',
+      'Yes': 'Oui',
+      'No': 'Non'
     },
     'it': {
       'loading': 'Caricamento',
@@ -209,7 +213,9 @@ class AppLocalizations {
       'Edit_override': 'Edit override permissions',
       'Screenshots': 'Screenshots',
       'Links': 'Links',
-      'Last_releases': 'Last_releases'
+      'Last_releases': 'Last_releases',
+      'Yes': 'Yes',
+      'No': 'No'
     }
   };
 

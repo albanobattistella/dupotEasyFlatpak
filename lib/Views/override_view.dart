@@ -147,7 +147,7 @@ class _OverrideViewState extends State<OverrideView> {
                           ? const CircularProgressIndicator()
                           : getButton(),
                       const SizedBox(width: 10),
-                      stateIsLoaded ? SizedBox() : getSaveButton(),
+                      stateIsLoaded ? const SizedBox() : getSaveButton(),
                       const SizedBox(width: 20)
                     ],
                   ),
