@@ -215,7 +215,7 @@ class AppLocalizations {
       'NoUpdates': 'Nessun aggiornamento disponibile',
       'Update': 'Aggiornamento',
       'update_finished': 'Aggiornamento completato',
-      'delete_all_app_data': 'Elimina tutti i dati dell'applicazione',
+      'delete_all_app_data': 'Elimina tutti i dati dell\'applicazione',
       'Edit_override': 'Modifica le autorizzazioni di sovrascrittura',
       'Screenshots': 'Screenshot',
       'Links': 'Link',

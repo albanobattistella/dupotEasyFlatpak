@@ -4,13 +4,13 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>LGPL-2.1-only</project_license>
   <name>Easy Flatpak</name>
-  
+
   <launchable type="desktop-id">org.dupot.easyflatpak.desktop</launchable>
 
   <developer id="michael.bertocchi">
-    
-  
-   <name>Michael Bertocchi</name>
+
+
+    <name>Michael Bertocchi</name>
   </developer>
   <summary>A simple Flatpak store</summary>
   <description>
@@ -22,17 +22,17 @@
     </p>
   </description>
 
-   <screenshots>
+  <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_home.png</image>
-      </screenshot>
-      <screenshot>
+    </screenshot>
+    <screenshot>
       <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_category.png</image>
-      </screenshot>
-      <screenshot>
+    </screenshot>
+    <screenshot>
       <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_installed_applications.png</image>
-      </screenshot>
-      <screenshot>
+    </screenshot>
+    <screenshot>
       <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_update_availables.png</image>
     </screenshot>
     <screenshot>
@@ -50,267 +50,281 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_override_view.png</image>
     </screenshot>
-    
 
 
-    </screenshots>
 
-    <url type="homepage">https://www.dupot.org/desktop.html</url>
-    <url type="vcs-browser">https://github.com/imikado/dupotEasyFlatpak/</url>
-    <update_contact>imikado@gmail.com</update_contact>
-    <content_rating type="oars-1.1"/>
-    <releases>
+  </screenshots>
 
-        <release date="2024-11-09" version="2.17.1">
-            <description>
-              <ul>
-                <li>Add new feature: you can select the installation's scope</li>
-                <li>Add new feature: modify recipe overrided</li>
-                <li>Improve home page</li>
-                <li>Add new feature to enable some environment variable like mango hud for steam</li>
-                <li>Update flathub screenshosts</li>
-               </ul>
-             
-            </description>
-        </release>
+  <url type="homepage">https://www.dupot.org/desktop.html</url>
+  <url type="vcs-browser">https://github.com/imikado/dupotEasyFlatpak/</url>
+  <update_contact>imikado@gmail.com</update_contact>
+  <content_rating type="oars-1.1"/>
+  <releases>
 
-        <release date="2024-11-08" version="2.16.2">
-            <description>
-              <ul>
-                <li>Add new feature: modify recipe overrided</li>
-                <li>Improve home page</li>
-                <li>Add new feature to enable some environment variable like mango hud for steam</li>
-                <li>Update flathub screenshosts</li>
-               </ul>
-             
-            </description>
-        </release>
+    <release date="2024-11-09" version="2.17.2">
+      <description>
+        <ul>
+          <li>Add new feature: you can select the installation's scope</li>
+          <li>Add new feature: modify recipe overrided</li>
+          <li>Improve home page</li>
+          <li>Add new feature to enable some environment variable like mango hud for steam</li>
+          <li>Update flathub screenshosts</li>
+          <li>Update italian traduction</li>
+        </ul>
 
-        <release date="2024-11-03" version="2.14.0">
-            <description>
-              <ul>
-                <li>Add new feature: modify recipe overrided</li>
-                <li>Improve home page</li>
-               </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-11-02" version="2.13.0">
-            <description>
-              <ul>
-                <li>Modify DB: add new column to store last release</li>
-                <li>Update home page to use this new column to order applications</li>
-                <li>In application page, display last releases</li>
-               </ul>
-             
-            </description>
-        </release>
+    <release date="2024-11-09" version="2.17.1">
+      <description>
+        <ul>
+          <li>Add new feature: you can select the installation's scope</li>
+          <li>Add new feature: modify recipe overrided</li>
+          <li>Improve home page</li>
+          <li>Add new feature to enable some environment variable like mango hud for steam</li>
+          <li>Update flathub screenshosts</li>
+        </ul>
 
-        <release date="2024-10-30" version="2.12.2">
-            <description>
-              <ul>
-                <li>Improve side menu icons</li>
-                <li>Update applications data</li>
-               </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-10-29" version="2.12.0">
-            <description>
-              <ul>
-                <li>Improve side menu icons</li>
-               </ul>
-             
-            </description>
-        </release>
+    <release date="2024-11-08" version="2.16.2">
+      <description>
+        <ul>
+          <li>Add new feature: modify recipe overrided</li>
+          <li>Improve home page</li>
+          <li>Add new feature to enable some environment variable like mango hud for steam</li>
+          <li>Update flathub screenshosts</li>
+        </ul>
 
-      <release date="2024-10-28" version="2.11.5">
-            <description>
-              <ul>
-                <li>Bug fix in FR traduction</li>
-               </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-10-27" version="2.11.4">
-            <description>
-              <ul>
-                <li>Bug fix on application installed list</li>
-                <li>Improve display</li>
-                <li>Update flathub screenshosts</li>
-               </ul>
-             
-            </description>
-        </release>
+    <release date="2024-11-03" version="2.14.0">
+      <description>
+        <ul>
+          <li>Add new feature: modify recipe overrided</li>
+          <li>Improve home page</li>
+        </ul>
 
-      <release date="2024-10-27" version="2.11.3">
-            <description>
-              <ul>
-                <li>Bug fix on application installed list</li>
-                <li>Improve display</li>
-                </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-10-27" version="2.11.2">
-            <description>
-              <ul>
-                <li>Bug fix on application installed list</li>
-                <li>Improve display</li>
-               </ul>
-             
-            </description>
-        </release>
+    <release date="2024-11-02" version="2.13.0">
+      <description>
+        <ul>
+          <li>Modify DB: add new column to store last release</li>
+          <li>Update home page to use this new column to order applications</li>
+          <li>In application page, display last releases</li>
+        </ul>
 
-        <release date="2024-10-27" version="2.11.1">
-            <description>
-              <ul>
-                <li>Bug fix on update application </li>
-                <li>Bug fix on back button when click on application to update </li>
-               </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
+    <release date="2024-10-30" version="2.12.2">
+      <description>
+        <ul>
+          <li>Improve side menu icons</li>
+          <li>Update applications data</li>
+        </ul>
 
-      <release date="2024-10-26" version="2.11.0">
-            <description>
-              <ul>
-                <li>Add option when uninstall to delete all application data</li>
-               </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-10-12" version="2.10.2">
-            <description>
-              <ul>
-                <li>Update database + applications icon</li>
-                <li>Fix update page</li>
-               </ul>
-             
-            </description>
-        </release>
-    
-      <release date="2024-10-09" version="2.10.1">
-            <description>
-              <ul>
-                <li>Fix update page</li>
-                 <li>Update italian traduction</li>
-              </ul>
-             
-            </description>
-        </release>
+    <release date="2024-10-29" version="2.12.0">
+      <description>
+        <ul>
+          <li>Improve side menu icons</li>
+        </ul>
 
-      <release date="2024-10-06" version="2.10.0">
-            <description>
-              <ul>
-                <li>Manage application's updates</li>
-                 
-              </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-      <release date="2024-10-06" version="2.9.0">
-            <description>
-              <ul>
-                <li>When type, switch to search page</li>
-                 
-              </ul>
-             
-            </description>
-        </release>
+    <release date="2024-10-28" version="2.11.5">
+      <description>
+        <ul>
+          <li>Bug fix in FR traduction</li>
+        </ul>
 
-        <release date="2024-09-23" version="2.8.1">
-            <description>
-              <ul>
-                <li>Fix search: first block search in title, then in summary</li>
-                <li>Reset scrollbar when switch categories</li>
-                <li>Fix confirmation prompt when try to install/uninstall</li>
-              </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
+
+    <release date="2024-10-27" version="2.11.4">
+      <description>
+        <ul>
+          <li>Bug fix on application installed list</li>
+          <li>Improve display</li>
+          <li>Update flathub screenshosts</li>
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-27" version="2.11.3">
+      <description>
+        <ul>
+          <li>Bug fix on application installed list</li>
+          <li>Improve display</li>
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-27" version="2.11.2">
+      <description>
+        <ul>
+          <li>Bug fix on application installed list</li>
+          <li>Improve display</li>
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-27" version="2.11.1">
+      <description>
+        <ul>
+          <li>Bug fix on update application </li>
+          <li>Bug fix on back button when click on application to update </li>
+        </ul>
+
+      </description>
+    </release>
 
 
-        <release date="2024-09-22" version="2.8.0">
-            <description>
-              <ul>
-                <li>Store parameters (language and dark mode)</li>
-              </ul>
-             
-            </description>
-        </release>
+    <release date="2024-10-26" version="2.11.0">
+      <description>
+        <ul>
+          <li>Add option when uninstall to delete all application data</li>
+        </ul>
 
-        <release date="2024-09-22" version="2.7.0">
-            <description>
-              <ul>
-                <li>Improve darkmode</li>
-                <li>Add back button on application page</li>
-                <li>Update detailed application display</li>
-              </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
+
+    <release date="2024-10-12" version="2.10.2">
+      <description>
+        <ul>
+          <li>Update database + applications icon</li>
+          <li>Fix update page</li>
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-09" version="2.10.1">
+      <description>
+        <ul>
+          <li>Fix update page</li>
+          <li>Update italian traduction</li>
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-06" version="2.10.0">
+      <description>
+        <ul>
+          <li>Manage application's updates</li>
+
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-10-06" version="2.9.0">
+      <description>
+        <ul>
+          <li>When type, switch to search page</li>
+
+        </ul>
+
+      </description>
+    </release>
+
+    <release date="2024-09-23" version="2.8.1">
+      <description>
+        <ul>
+          <li>Fix search: first block search in title, then in summary</li>
+          <li>Reset scrollbar when switch categories</li>
+          <li>Fix confirmation prompt when try to install/uninstall</li>
+        </ul>
+
+      </description>
+    </release>
 
 
-      <release date="2024-09-22" version="2.6.1">
-            <description>
-              <ul>
-                <li>Update Italian language</li>
-                <li>Improve code quality</li>
-                <li>Update screenshot</li>
-              </ul>
-             
-            </description>
-        </release>
+    <release date="2024-09-22" version="2.8.0">
+      <description>
+        <ul>
+          <li>Store parameters (language and dark mode)</li>
+        </ul>
 
-      <release date="2024-09-21" version="2.6.0">
-            <description>
-              <ul>
-                <li>Improve home page</li>
-              </ul>
-             
-            </description>
-        </release>
+      </description>
+    </release>
 
-        <release date="2024-09-21" version="2.5.2">
-            <description>
-              <ul>
-                <li>Fix display applications in home page</li>
-              </ul>
-              <ul>
-                <li>Fix application name typpo</li>
-              </ul>
-            </description>
-        </release>
+    <release date="2024-09-22" version="2.7.0">
+      <description>
+        <ul>
+          <li>Improve darkmode</li>
+          <li>Add back button on application page</li>
+          <li>Update detailed application display</li>
+        </ul>
+
+      </description>
+    </release>
 
 
-        <release date="2024-09-20" version="2.5.1">
-            <description>
-              <ul>
-                <li>Fix description</li>
-              </ul>
-            </description>
-        </release>
+    <release date="2024-09-22" version="2.6.1">
+      <description>
+        <ul>
+          <li>Update Italian language</li>
+          <li>Improve code quality</li>
+          <li>Update screenshot</li>
+        </ul>
 
-        <release date="2024-09-20" version="2.5.0">
-            <description>
-              <ul>
-                <li>Add italian Langage</li>
-              </ul>
-            </description>
-        </release>
+      </description>
+    </release>
 
-        <release date="2024-09-15" version="2.4.0"/>
-        <release date="2024-09-07" version="2.0.3"/>
-        <release date="2024-09-01" version="2.0.0"/>
+    <release date="2024-09-21" version="2.6.0">
+      <description>
+        <ul>
+          <li>Improve home page</li>
+        </ul>
 
-    </releases>
+      </description>
+    </release>
+
+    <release date="2024-09-21" version="2.5.2">
+      <description>
+        <ul>
+          <li>Fix display applications in home page</li>
+        </ul>
+        <ul>
+          <li>Fix application name typpo</li>
+        </ul>
+      </description>
+    </release>
+
+
+    <release date="2024-09-20" version="2.5.1">
+      <description>
+        <ul>
+          <li>Fix description</li>
+        </ul>
+      </description>
+    </release>
+
+    <release date="2024-09-20" version="2.5.0">
+      <description>
+        <ul>
+          <li>Add italian Langage</li>
+        </ul>
+      </description>
+    </release>
+
+    <release date="2024-09-15" version="2.4.0"/>
+    <release date="2024-09-07" version="2.0.3"/>
+    <release date="2024-09-01" version="2.0.0"/>
+
+  </releases>
 
 </component>
