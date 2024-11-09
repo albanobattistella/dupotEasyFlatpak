@@ -24,31 +24,31 @@
 
    <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_home.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_home.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_category.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_category.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_installed_applications.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_installed_applications.png</image>
       </screenshot>
       <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_update_availables.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_update_availables.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_search.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_search.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_application_steam.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/e132fc4f27ad1ebc8d2690d54072032cd711b8af/export/screenshots/Screenshot_override_view.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_override_view.png</image>
     </screenshot>
     
 
@@ -61,7 +61,18 @@
     <content_rating type="oars-1.1"/>
     <releases>
 
-        
+        <release date="2024-11-09" version="2.17.1">
+            <description>
+              <ul>
+                <li>Add new feature: you can select the installation's scope</li>
+                <li>Add new feature: modify recipe overrided</li>
+                <li>Improve home page</li>
+                <li>Add new feature to enable some environment variable like mango hud for steam</li>
+                <li>Update flathub screenshosts</li>
+               </ul>
+             
+            </description>
+        </release>
 
         <release date="2024-11-08" version="2.16.2">
             <description>
