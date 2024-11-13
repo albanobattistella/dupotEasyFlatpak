@@ -84,7 +84,7 @@ class _UninstallButtonState extends State<UninstallButton> {
         //install(application);
       },
       label: Text(AppLocalizations().tr('uninstall')),
-      icon: const Icon(Icons.install_desktop),
+      icon: const Icon(Icons.delete_forever),
     );
   }
 }
