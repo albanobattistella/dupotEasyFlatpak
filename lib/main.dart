@@ -9,10 +9,24 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart' as p;
+import 'package:window_manager/window_manager.dart';
 
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+
+    await windowManager.ensureInitialized();
+
+    WindowOptions windowOptions = WindowOptions(
+      size: Size(1200, 600),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
 
     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
     String appDocumentsDirPath = appDocumentsDir.path;
