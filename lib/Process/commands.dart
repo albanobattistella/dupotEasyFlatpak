@@ -69,12 +69,13 @@ class Commands {
 
   Future<void> checkUpdates() async {
     ProcessResult result = await runProcess(
-        'flatpak', ['remote-ls', '--updates', '--columns=application,version']);
+        'flatpak', ['remote-ls', '--updates', '--columns=application,commit']);
     updatesAvailableOutput = result.stdout.toString();
 
     appUpdateAvailableList.clear();
 
     List<String> lineList = updatesAvailableOutput.split("\n");
+
     if (lineList.isNotEmpty) {
       for (String lineLoop in lineList) {
         if (RegExp(r'\t').hasMatch(lineLoop)) {
@@ -165,7 +166,7 @@ class Commands {
 
   Future<void> loadApplicationInstalledList() async {
     ProcessResult result =
-        await runProcess('flatpak', ['list', '--columns=application,version']);
+        await runProcess('flatpak', ['list', '--columns=application,active']);
     String appInstalledOutput = result.stdout.toString();
 
     appInstalledList.clear();
