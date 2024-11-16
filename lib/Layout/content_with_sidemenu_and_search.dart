@@ -72,7 +72,7 @@ class _ContentWithSidemenuAndSearchState
       }, 'home', '', ''),
       MenuItem('InstalledApps', () {
         widget.handleGoToInstalledApps();
-      }, 'installedApps', '', '')
+      }, 'installedApps', '', Commands().appInstalledList.length.toString())
     ];
 
     if (Commands().getNumberOfUpdates() > 0) {
