@@ -68,8 +68,7 @@ class Commands {
   }
 
   Future<void> checkUpdates() async {
-    ProcessResult result = await runProcess(
-        'flatpak', ['remote-ls', '--updates', '--columns=application,version']);
+    ProcessResult result = await runProcess('flatpak', ['update']);
     updatesAvailableOutput = result.stdout.toString();
 
     appUpdateAvailableList.clear();
@@ -78,14 +77,16 @@ class Commands {
 
     if (lineList.isNotEmpty) {
       for (String lineLoop in lineList) {
-        if (RegExp(r'\t').hasMatch(lineLoop)) {
+        if (RegExp(r'\t').hasMatch(lineLoop) && lineLoop.contains('flathub')) {
           List<String> lineLoopList = lineLoop.split("\t");
 
-          if (hasApplicationInDatabase(lineLoopList[0]) &&
-              hasApplicationInstalledVersionDifferentThan(
-                  lineLoopList[0], lineLoopList[1])) {
-            appUpdateAvailableList
-                .add(AppUpdate(lineLoopList[0], lineLoopList[1]));
+          String appId = lineLoopList[2].toLowerCase();
+          String comment = lineLoopList[3];
+          if (lineLoopList.length > 5) {
+            comment = "${lineLoopList[3]} (${lineLoopList[6]})";
+          }
+          if (hasApplicationInDatabase(appId)) {
+            appUpdateAvailableList.add(AppUpdate(appId, comment));
           }
         }
       }
@@ -105,7 +106,7 @@ class Commands {
 
   bool hasUpdateAvailableByAppId(String appId) {
     for (AppUpdate appUpdateAvailableLoop in appUpdateAvailableList) {
-      if (appUpdateAvailableLoop.id == appId) {
+      if (appUpdateAvailableLoop.id == appId.toLowerCase()) {
         return true;
       }
     }
@@ -114,7 +115,7 @@ class Commands {
 
   String getAppUpdateVersionByAppId(String appId) {
     for (AppUpdate appUpdateAvailableLoop in appUpdateAvailableList) {
-      if (appUpdateAvailableLoop.id == appId) {
+      if (appUpdateAvailableLoop.id == appId.toLowerCase()) {
         return appUpdateAvailableLoop.version;
       }
     }
