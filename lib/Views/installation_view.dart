@@ -60,6 +60,7 @@ class _InstallationViewState extends State<InstallationView> {
     List<String> commandArgList = [
       'install',
       '-y',
+      'flathub',
       Parameters().getInstallationScope(),
       applicationIdSelected
     ];

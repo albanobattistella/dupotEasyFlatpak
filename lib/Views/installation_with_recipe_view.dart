@@ -148,6 +148,7 @@ class _InstallationWithRecipeViewState
     List<String> commandArgList = [
       'install',
       '-y',
+      'flathub',
       Parameters().getInstallationScope(),
       applicationIdSelected
     ];

@@ -174,6 +174,7 @@ class OverrideControl {
           List<String> argList = [
             'install',
             '-y',
+            'flathub',
             Parameters().getInstallationScope(),
           ];
           argList.add(overrideFormControlLoop.getValue());

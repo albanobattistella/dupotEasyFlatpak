@@ -69,7 +69,7 @@ class Commands {
 
   Future<void> checkUpdates() async {
     ProcessResult result = await runProcess(
-        'flatpak', ['remote-ls', '--updates', '--columns=application,commit']);
+        'flatpak', ['remote-ls', '--updates', '--columns=application,version']);
     updatesAvailableOutput = result.stdout.toString();
 
     appUpdateAvailableList.clear();
@@ -166,7 +166,7 @@ class Commands {
 
   Future<void> loadApplicationInstalledList() async {
     ProcessResult result =
-        await runProcess('flatpak', ['list', '--columns=application,active']);
+        await runProcess('flatpak', ['list', '--columns=application,version']);
     String appInstalledOutput = result.stdout.toString();
 
     appInstalledList.clear();
@@ -224,8 +224,13 @@ class Commands {
 
   Future<String> installApplicationThenOverrideList(
       String applicationId, List<List<String>> subProcessList) async {
-    ProcessResult result = await runProcess(flatpakCommand,
-        ['install', '-y', Parameters().getInstallationScope(), applicationId]);
+    ProcessResult result = await runProcess(flatpakCommand, [
+      'install',
+      '-y',
+      'flathub',
+      Parameters().getInstallationScope(),
+      applicationId
+    ]);
 
     stdout.write(result.stdout);
     stderr.write(result.stderr);
