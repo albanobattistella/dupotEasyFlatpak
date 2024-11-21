@@ -63,7 +63,14 @@
 
 
 
+    <release date="2024-11-21" version="2.18.1">
+      <description>
+        <ul>
+          <li>Add a progress bar </li>
+        </ul>
 
+      </description>
+    </release>
 
     <release date="2024-11-16" version="2.18.0">
       <description>

@@ -29,7 +29,7 @@ class MyDrawer extends StatelessWidget {
                 child: Image.asset('assets/logos/512x512.png'),
               ),
               Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Column(children: [
                     ListTile(
                       title: Text(
@@ -142,7 +142,7 @@ class MyDrawer extends StatelessWidget {
                         ),
                       ),
                     ]),
-                    const SizedBox(height: 150),
+                    const SizedBox(height: 50),
                     Text(
                         '${AppLocalizations().tr('Author')}: Michael Bertocchi'),
                     const SizedBox(

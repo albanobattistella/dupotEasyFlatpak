@@ -14,15 +14,32 @@ class Loading extends StatefulWidget {
   State<StatefulWidget> createState() => _Loading();
 }
 
-class _Loading extends State<Loading> {
+class _Loading extends State<Loading> with TickerProviderStateMixin {
   bool isLoaded = false;
 
+  double progressValue = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    processInit();
+  }
+
   Future<void> processInit() async {
+    setState(() {
+      progressValue = 0.1;
+    });
+
     print('Installation');
     FirstInstallation firstInstallation =
         FirstInstallation(commands: Commands());
     await firstInstallation.process();
     print('End installation');
+
+    setState(() {
+      progressValue = 0.20;
+    });
 
     final appStreamFactory = AppStreamFactory();
     //await appStreamFactory.create();
@@ -30,9 +47,16 @@ class _Loading extends State<Loading> {
     FlathubApi flathubApi = FlathubApi(appStreamFactory: appStreamFactory);
     await flathubApi.load();
 
+    setState(() {
+      progressValue = 0.50;
+    });
+
     if (!Commands().isInsideFlatpak() &&
         await Commands().missFlathubInFlatpak()) {
       print('need flathub');
+      setState(() {
+        progressValue = 0.6;
+      });
       await Commands().setupFlathub();
     } else {
       print(' flathub ok');
@@ -43,26 +67,30 @@ class _Loading extends State<Loading> {
 
     Commands().setDbApplicationIdList(dbApplicationIdList);
     await Commands().loadApplicationInstalledList();
+    setState(() {
+      progressValue = 0.8;
+    });
     await Commands().checkUpdates();
 
     setState(() {
-      isLoaded = true;
+      progressValue = 1;
     });
+
+    widget.handle();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!isLoaded) {
-      processInit().then((value) {
-        widget.handle();
-      });
-    }
-
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 205, 230, 250),
         body: Center(
           child: Column(
-            children: [Image.asset('assets/logos/512x512.png')],
+            children: [
+              Image.asset('assets/logos/512x512.png'),
+              LinearProgressIndicator(
+                value: progressValue,
+              )
+            ],
           ),
         ));
   }
