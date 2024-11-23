@@ -15,8 +15,10 @@ import 'package:dupot_easy_flatpak/Views/installedapps_view.dart';
 import 'package:dupot_easy_flatpak/Views/override_view.dart';
 import 'package:dupot_easy_flatpak/Views/search_view.dart';
 import 'package:dupot_easy_flatpak/Views/uninstallation_view.dart';
+import 'package:dupot_easy_flatpak/Views/update_all_view.dart';
 import 'package:dupot_easy_flatpak/Views/update_view.dart';
 import 'package:dupot_easy_flatpak/Views/updates_availables_apps_view.dart';
+import 'package:dupot_easy_flatpak/Views/updates_availables_apps_view2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -59,6 +61,7 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
   static const String constPageInstalledApps = 'installedApps';
   static const String constPageUpdatesAvailable = 'updatesAvailable';
   static const String constPageUpdate = 'update';
+  static const String constPageUpdateAll = 'updateAll';
 
   @override
   void initState() {
@@ -308,6 +311,25 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
                   handleSetUserScopeInstallation:
                       _handleSetUserScopeInstallation,
                 ))
+          else if (statePageSelected == constPageUpdateAll)
+            MaterialPage(
+                key: const ValueKey(constPageApplication),
+                child: ContentWithSidemenu(
+                  content: UpdateAllView(
+                    handleGoBack: _handleGoBack,
+                  ),
+                  handleGoToHome: _handleGoToHome,
+                  handleGoToCategory: _handleGoToCategory,
+                  handleGoToSearch: _handleGoToSearch,
+                  handleToggleDarkMode: _handleToggleDarkMode,
+                  handleGoToInstalledApps: _handleGoToInstalledApps,
+                  handleGoToUpdatesAvailable: _handleGoToUpdatesAvailable,
+                  handleSetLocale: _handleSetLocale,
+                  pageSelected: statePageSelected,
+                  categoryIdSelected: stateCategoryIdSelected,
+                  handleSetUserScopeInstallation:
+                      _handleSetUserScopeInstallation,
+                ))
           else if (statePageSelected == constPageUninstallation &&
               stateApplicationIdSelected != '')
             MaterialPage(
@@ -373,8 +395,9 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
             MaterialPage(
                 key: const ValueKey(constPageApplication),
                 child: ContentWithSidemenu(
-                  content: UpdatesAvailablesAppsView(
+                  content: UpdatesAvailablesAppsView2(
                     handleGoToApplication: _handleGoToApplication,
+                    handleGoToUpdateAll: _handleGoToUpdateAll,
                   ),
                   handleGoToHome: _handleGoToHome,
                   handleGoToCategory: _handleGoToCategory,
@@ -497,6 +520,13 @@ class _DupotEasyFlatpakState extends State<DupotEasyFlatpak> {
       statePageSelected = constPageUninstallation;
       stateApplicationIdSelected = applicationId;
       stateWillDeleteAppData = willDeleteAppData;
+    });
+  }
+
+  void _handleGoToUpdateAll() {
+    setState(() {
+      statePageSelected = constPageUpdateAll;
+      statePreviousPageSelected = constPageUpdatesAvailable;
     });
   }
 

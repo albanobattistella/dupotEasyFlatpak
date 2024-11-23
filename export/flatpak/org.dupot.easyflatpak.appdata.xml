@@ -63,6 +63,20 @@
 
 
 
+
+
+    <release date="2024-11-23" version="2.19.0">
+      <description>
+        <ul>
+          <li>Add possibility to update all with one button</li>
+          <li>Update logo</li>
+          <li>Code improvment: move localizations into json assets files</li>
+        </ul>
+
+      </description>
+    </release>
+
+
     <release date="2024-11-21" version="2.18.1">
       <description>
         <ul>

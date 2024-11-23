@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const AppLocalizationsDelegate();
@@ -13,6 +16,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   Future<AppLocalizations> load(Locale locale) {
     // Returning a SynchronousFuture here because an async "load" operation
     // isn't needed to produce an instance of AppLocalizations.
+
     return SynchronousFuture<AppLocalizations>(
         AppLocalizations(newLanguageCode: locale.languageCode));
   }

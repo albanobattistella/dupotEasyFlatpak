@@ -1,8 +1,8 @@
+import 'package:dupot_easy_flatpak/Localizations/app_localizations.dart';
 import 'package:dupot_easy_flatpak/Models/Flathub/appstream_factory.dart';
 import 'package:dupot_easy_flatpak/Process/commands.dart';
 import 'package:dupot_easy_flatpak/Process/first_installation.dart';
 import 'package:dupot_easy_flatpak/Process/flathub_api.dart';
-import 'package:dupot_easy_flatpak/Process/parameters.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatefulWidget {
@@ -61,6 +61,11 @@ class _Loading extends State<Loading> with TickerProviderStateMixin {
     } else {
       print(' flathub ok');
     }
+
+    await AppLocalizations().load();
+    setState(() {
+      progressValue = 0.7;
+    });
 
     List<String> dbApplicationIdList =
         await appStreamFactory.findAllApplicationIdList();
