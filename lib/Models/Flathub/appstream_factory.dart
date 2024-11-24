@@ -243,7 +243,7 @@ class AppStreamFactory {
 
     // Query the table for all the dogs.
     final List<Map<String, Object?>> appStreamList = await db.rawQuery(
-        '''SELECT distinct $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream INNER JOIN $constTableAppStreamCategory ON $constTableAppStream.id=$constTableAppStreamCategory.appstream_id 
+        '''SELECT distinct $constTableAppStream.id,$constTableAppStream.name,$constTableAppStream.summary,$constTableAppStream.icon,$constTableAppStream.lastUpdate,$constTableAppStream.lastReleaseTimestamp from $constTableAppStream   
         where LOWER(id) in (${whereApplicationIdStringList.join(',')}) ORDER by name asc''',
         []);
 

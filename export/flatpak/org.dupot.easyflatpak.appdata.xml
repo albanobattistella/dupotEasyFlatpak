@@ -64,6 +64,16 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+    <release date="2024-11-24" version="2.20.3">
+      <description>
+        <ul>
+          <li>Add buttons to switch display on category and installed applications</li>
+          <li>Bug fix on installed application view (missing some installed applications)</li>
+        </ul>
+
+      </description>
+    </release>
+
 
     <release date="2024-11-24" version="2.20.2">
       <description>
