@@ -24,31 +24,34 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_home.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_home.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_category.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_category.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_installed_applications.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_category_grid.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_update_availables.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_installed_applications.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_search.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_update_availables.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_search.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_application_steam.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/50381ff8ecb8ce698a5bb1a5179f3fba92d73649/export/screenshots/Screenshot_override_view.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/ac275e33841f58f332395919ceb0836912cef951/export/screenshots/Screenshot_override_view.png</image>
     </screenshot>
 
 
@@ -62,8 +65,14 @@
   <releases>
 
 
+    <release date="2024-11-24" version="2.20.2">
+      <description>
+        <ul>
+          <li>Add buttons to switch display on category and installed applications</li>
+        </ul>
 
-
+      </description>
+    </release>
 
     <release date="2024-11-23" version="2.19.0">
       <description>
