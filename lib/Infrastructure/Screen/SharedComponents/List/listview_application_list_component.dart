@@ -1,0 +1,87 @@
+import 'dart:io';
+
+import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
+import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_application_component.dart';
+import 'package:flutter/material.dart';
+
+class ListviewApplicationListComponent extends StatelessWidget {
+  List<ApplicationEntity> applicationEntityList;
+  Function handleGoTo;
+
+  ScrollController handleScrollController;
+
+  ListviewApplicationListComponent(
+      {super.key,
+      required this.applicationEntityList,
+      required this.handleGoTo,
+      required this.handleScrollController});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: applicationEntityList.length,
+        controller: handleScrollController,
+        itemBuilder: (context, index) {
+          ApplicationEntity appStreamLoop = applicationEntityList[index];
+
+          if (!appStreamLoop.hasAppIcon()) {
+            return Card(
+              color: Theme.of(context).primaryColorLight,
+              child: Column(
+                children: [
+                  ListTile(title: Text(applicationEntityList[index].id)),
+                ],
+              ),
+            );
+          } else {
+            return InkWell(
+                borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  handleGoTo(
+                      page: 'application',
+                      argumentMap: {'applicationId': appStreamLoop.id});
+                },
+                child: Card(
+                  color: Theme.of(context).primaryColorLight,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          Image.file(
+                              height: 80,
+                              File(
+                                  '${UserSettingsEntity().getApplicationIconsPath()}/${appStreamLoop.getAppIcon()}')),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  appStreamLoop.name,
+                                  style: TextStyle(
+                                      fontSize: 28,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge!
+                                          .color),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  appStreamLoop.summary,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
+          }
+        });
+  }
+}
