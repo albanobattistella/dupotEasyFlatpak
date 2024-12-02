@@ -1,6 +1,7 @@
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/side_menu_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +27,6 @@ class _SideMenuViewState extends State<SideMenuView> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     loadData();
 
     super.initState();
@@ -37,7 +36,6 @@ class _SideMenuViewState extends State<SideMenuView> {
   void didUpdateWidget(covariant SideMenuView oldWidget) {
     loadData();
 
-    // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
   }
 
@@ -46,10 +44,11 @@ class _SideMenuViewState extends State<SideMenuView> {
         await SideMenuViewModel(handleGoTo: widget.handleGoTo)
             .getMenuItemEntityList();
 
-    if (widget.pageSelected == 'category') {
+    if (widget.pageSelected == NavigationEntity.pageCategory) {
       setState(() {
         statePageSelected = widget.pageSelected;
-        stateCategoryIdSelected = widget.argumentMapSelected['categoryId']!;
+        stateCategoryIdSelected =
+            widget.argumentMapSelected[NavigationEntity.argumentCategoryId]!;
       });
     } else {
       setState(() {

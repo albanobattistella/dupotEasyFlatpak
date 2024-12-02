@@ -78,9 +78,9 @@ class _CategoryViewState extends State<CategoryView> {
             child: Column(
               children: [
                 Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(children: [
-                      Expanded(child: SizedBox()),
+                      const Expanded(child: SizedBox()),
                       SegmentedButton<AppDisplay>(
                         // ToggleButtons above allows multiple or no selection.
                         // Set `multiSelectionEnabled` and `emptySelectionAllowed` to true
@@ -107,7 +107,7 @@ class _CategoryViewState extends State<CategoryView> {
                               value: shirt.$1, label: Icon(shirt.$2));
                         }).toList(),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       )
                     ])),

@@ -4,6 +4,7 @@ import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/application_view_model.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -22,36 +23,28 @@ class ApplicationView extends StatefulWidget {
   });
 
   void goToInstallation() {
-    handleGoTo(page: 'application', argumentMap: {
-      'appId': applicationIdSelected,
-      'subPage': 'installation'
-    });
+    NavigationEntity.goToApplicationInstall(
+        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
   void goToInstallationWithRecipe() {
-    handleGoTo(page: 'application', argumentMap: {
-      'appId': applicationIdSelected,
-      'subPage': 'installationWithRecipe'
-    });
+    NavigationEntity.goToApplicationInstallWithRecipe(
+        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
   void goToUninstallation() {
-    handleGoTo(page: 'application', argumentMap: {
-      'appId': applicationIdSelected,
-      'subPage': 'uninstallation'
-    });
+    NavigationEntity.goToApplicationUninstall(
+        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
   void goToUpdate() {
-    handleGoTo(
-        page: 'application',
-        argumentMap: {'appId': applicationIdSelected, 'subPage': 'update'});
+    NavigationEntity.goToApplicationUpdate(
+        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
   void goToOverride() {
-    handleGoTo(
-        page: 'application',
-        argumentMap: {'appId': applicationIdSelected, 'subPage': 'override'});
+    NavigationEntity.goToApplicationOverride(
+        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
   @override

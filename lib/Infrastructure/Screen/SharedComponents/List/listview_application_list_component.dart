@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_application_component.dart';
 import 'package:flutter/material.dart';
 
@@ -38,9 +39,8 @@ class ListviewApplicationListComponent extends StatelessWidget {
             return InkWell(
                 borderRadius: BorderRadius.circular(10.0),
                 onTap: () {
-                  handleGoTo(
-                      page: 'application',
-                      argumentMap: {'applicationId': appStreamLoop.id});
+                  NavigationEntity.gotToApplicationId(
+                      handleGoTo: handleGoTo, applicationId: appStreamLoop.id);
                 },
                 child: Card(
                   color: Theme.of(context).primaryColorLight,
@@ -50,7 +50,7 @@ class ListviewApplicationListComponent extends StatelessWidget {
                         children: [
                           const SizedBox(width: 10),
                           Image.file(
-                              height: 80,
+                              height: 60,
                               File(
                                   '${UserSettingsEntity().getApplicationIconsPath()}/${appStreamLoop.getAppIcon()}')),
                           const SizedBox(width: 20),
@@ -61,14 +61,11 @@ class ListviewApplicationListComponent extends StatelessWidget {
                                 Text(
                                   appStreamLoop.name,
                                   style: TextStyle(
-                                      fontSize: 28,
+                                      fontSize: 26,
                                       color: Theme.of(context)
                                           .textTheme
                                           .headlineLarge!
                                           .color),
-                                ),
-                                const SizedBox(
-                                  height: 10,
                                 ),
                                 Text(
                                   appStreamLoop.summary,

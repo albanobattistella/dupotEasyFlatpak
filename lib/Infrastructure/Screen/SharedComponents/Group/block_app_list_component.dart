@@ -1,6 +1,7 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_application_component.dart';
 import 'package:flutter/material.dart';
 
@@ -27,8 +28,8 @@ class BlockAppListComponent extends StatelessWidget {
       }
 
       return Container(
-          width: 150,
-          height: 150,
+          width: 170,
+          height: 160,
           child: CardApplicationComponent(
               id: appStreamLoop.id,
               title: appStreamLoop.name,
@@ -38,14 +39,14 @@ class BlockAppListComponent extends StatelessWidget {
     }).toList();
 
     widgetList.add(Container(
-        width: 150,
-        height: 150,
+        width: 170,
+        height: 160,
         child: TextButton(
           child: Text(LocalizationApi().tr('More')),
           // icon: Icon(Icons.more),
           onPressed: () {
-            handleGoTo(
-                page: 'category', argumentMap: {'categoryId': categoryId});
+            NavigationEntity.gotToCategoryId(
+                handleGoTo: handleGoTo, categoryId: categoryId);
           },
         )));
 

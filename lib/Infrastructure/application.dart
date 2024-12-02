@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
@@ -15,32 +16,25 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  static const String constPageLoading = 'loading';
-  static const String constPageHome = 'home';
-  static const String constPageCategory = 'category';
-  static const String constPageApplication = 'application';
-
   static const String constOnlyContent = 'onlyContent';
   static const String constSideMenuWithContent = 'sideMenuWithContent';
   static const String constSideMenuWithContentAndSubContent =
       'sideMenuWithContentAndSubContent';
 
   static const Map<String, List<String>> layoutSetupList = {
-    constOnlyContent: [constPageLoading],
+    constOnlyContent: [NavigationEntity.pageLoading],
     constSideMenuWithContent: [
-      constPageHome,
-      constPageCategory,
-      constPageApplication
+      NavigationEntity.pageHome,
+      NavigationEntity.pageCategory,
+      NavigationEntity.pageApplication
     ]
   };
 
-  String statePage = constPageLoading;
+  String statePage = NavigationEntity.pageLoading;
   Map<String, String> stateArgumentMap = {};
 
   @override
   void initState() {
-    // TODO: implement initState
-
     print('init application');
     print('statePage: $statePage');
 
@@ -58,7 +52,7 @@ class _ApplicationState extends State<Application> {
               child: OnlyContentLayout(
                   handleGoTo: goTo,
                   content: LoadingView(handle: () {
-                    goTo(page: constPageHome, argumentMap: {});
+                    NavigationEntity.goToHome(handleGoTo: goTo);
                   })))
         else if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
           MaterialPage(
@@ -79,16 +73,16 @@ class _ApplicationState extends State<Application> {
   }
 
   Widget getContentView(String pageToLoad) {
-    if (pageToLoad == constPageHome) {
+    if (pageToLoad == NavigationEntity.pageHome) {
       return HomeView(handleGoTo: goTo);
-    } else if (pageToLoad == constPageCategory) {
+    } else if (pageToLoad == NavigationEntity.pageCategory) {
       String newCategoryId = stateArgumentMap['categoryId']!;
 
       return CategoryView(
         handleGoTo: goTo,
         categoryIdSelected: newCategoryId,
       );
-    } else if (pageToLoad == constPageApplication) {
+    } else if (pageToLoad == NavigationEntity.pageApplication) {
       String newAppId = stateArgumentMap['applicationId']!;
 
       return ApplicationView(

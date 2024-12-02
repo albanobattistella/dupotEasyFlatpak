@@ -1,4 +1,5 @@
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +31,8 @@ class SideMenuViewModel {
       menuItemList.add(MenuItemEntity(
           label: categoryIdLoop,
           action: () {
-            handleGoTo(
-                page: 'category', argumentMap: {'categoryId': categoryIdLoop});
+            NavigationEntity.gotToCategoryId(
+                handleGoTo: handleGoTo, categoryId: categoryIdLoop);
           },
           pageSelected: 'category',
           badge: '',

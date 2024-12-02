@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:flutter/material.dart';
 
 class CardApplicationComponent extends StatelessWidget {
@@ -21,9 +22,10 @@ class CardApplicationComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     if (icon.length > 10) {
       return InkWell(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(8.0),
           onTap: () {
-            handleGoTo(page: 'application', argumentMap: {'applicationId': id});
+            NavigationEntity.gotToApplicationId(
+                handleGoTo: handleGoTo, applicationId: id);
           },
           child: Card(
               color: Theme.of(context).primaryColorLight,
@@ -31,7 +33,7 @@ class CardApplicationComponent extends StatelessWidget {
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 ListTile(
                   title: Text(
-                    title.length > 8 ? title.substring(0, 8) + '...' : title,
+                    title.length > 8 ? '${title.substring(0, 8)}...' : title,
                     style: TextStyle(
                         fontSize: 20,
                         color:
@@ -39,13 +41,10 @@ class CardApplicationComponent extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
                 Expanded(
                     child: Image.file(
                   File(icon),
-                  width: 80,
+                  width: 60,
                 ))
               ])));
     }
