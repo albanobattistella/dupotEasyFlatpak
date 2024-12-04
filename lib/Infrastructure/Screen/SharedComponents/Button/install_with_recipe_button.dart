@@ -7,10 +7,14 @@ import 'package:flutter/material.dart';
 
 class InstallWithRecipeButton extends StatelessWidget {
   InstallWithRecipeButton(
-      {super.key, required this.applicationEntity, required this.handle});
+      {super.key,
+      required this.applicationEntity,
+      required this.handle,
+      required this.isActive});
 
   ApplicationEntity applicationEntity;
   Function handle;
+  bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +22,28 @@ class InstallWithRecipeButton extends StatelessWidget {
 
     return FilledButton.icon(
       style: themeButtonStyle.getButtonStyle(),
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  backgroundColor: Theme.of(context).primaryColorLight,
-                  buttonPadding: const EdgeInsets.all(10),
-                  actions: [
-                    const DialogCancelButton(),
-                    DialogConfirmButton(onPressedFunction: () {
-                      Navigator.of(context).pop();
+      onPressed: !isActive
+          ? null
+          : () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        backgroundColor: Theme.of(context).primaryColorLight,
+                        buttonPadding: const EdgeInsets.all(10),
+                        actions: [
+                          const DialogCancelButton(),
+                          DialogConfirmButton(onPressedFunction: () {
+                            Navigator.of(context).pop();
 
-                      handle(applicationEntity.id);
-                    })
-                  ],
-                  title: Text(LocalizationApi().tr('confirmation_title')),
-                  contentPadding: const EdgeInsets.all(20.0),
-                  content: Text(
-                      '${LocalizationApi().tr('do_you_confirm_installation_of')} ${applicationEntity.name} ?'),
-                ));
-      },
+                            handle();
+                          })
+                        ],
+                        title: Text(LocalizationApi().tr('confirmation_title')),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: Text(
+                            '${LocalizationApi().tr('do_you_confirm_installation_of')} ${applicationEntity.name} ?'),
+                      ));
+            },
       label: Text(LocalizationApi().tr('install_with_recipe')),
       icon: const Icon(Icons.install_desktop),
     );

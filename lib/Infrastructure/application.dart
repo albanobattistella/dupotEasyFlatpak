@@ -1,6 +1,8 @@
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
@@ -27,6 +29,13 @@ class _ApplicationState extends State<Application> {
       //NavigationEntity.pageHome,
       NavigationEntity.pageCategory,
       NavigationEntity.pageApplication
+    ],
+    constSideMenuWithContentAndSubContent: [
+      NavigationEntity.argumentSubPageInstall,
+      NavigationEntity.argumentSubPageInstallWithRecipe,
+      NavigationEntity.argumentSubPageOverride,
+      NavigationEntity.argumentSubPageUninstall,
+      NavigationEntity.argumentSubPageUpdate
     ]
   };
 
@@ -59,12 +68,25 @@ class _ApplicationState extends State<Application> {
               key: const ValueKey(NavigationEntity.pageHome),
               child: SideMenuWithContentLayout(
                   menu: getSideMenuView(),
-                  content: getContentView(NavigationEntity.pageHome))),
+                  content: getContentView(NavigationEntity.pageHome, true))),
         if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
           MaterialPage(
               key: ValueKey(statePage),
               child: SideMenuWithContentLayout(
-                  menu: getSideMenuView(), content: getContentView(statePage)))
+                  menu: getSideMenuView(),
+                  content: getContentView(statePage, true))),
+        if (stateArgumentMap.containsKey(NavigationEntity.argumentSubPage) &&
+            layoutSetupList[constSideMenuWithContentAndSubContent]!.contains(
+                NavigationEntity.extractArgumentSubPage(stateArgumentMap)))
+          MaterialPage(
+              key: ValueKey(
+                  NavigationEntity.extractArgumentSubPage(stateArgumentMap)),
+              child: SideMenuWithContentAndSubContentLayout(
+                menu: getSideMenuView(),
+                content: getContentView(statePage, false),
+                subContent: getSubContentView(
+                    stateArgumentMap[NavigationEntity.argumentSubPage]!),
+              ))
       ],
       onDidRemovePage: (page) => true,
     ));
@@ -78,25 +100,40 @@ class _ApplicationState extends State<Application> {
     );
   }
 
-  Widget getContentView(String pageToLoad) {
+  Widget getContentView(String pageToLoad, bool isMain) {
     if (pageToLoad == NavigationEntity.pageHome) {
       return HomeView(handleGoTo: goTo);
     } else if (pageToLoad == NavigationEntity.pageCategory) {
-      String newCategoryId = stateArgumentMap['categoryId']!;
+      String newCategoryId =
+          NavigationEntity.extractArgumentCategoryId(stateArgumentMap);
 
       return CategoryView(
         handleGoTo: goTo,
         categoryIdSelected: newCategoryId,
       );
     } else if (pageToLoad == NavigationEntity.pageApplication) {
-      String newAppId = stateArgumentMap['applicationId']!;
+      String newAppId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
 
       return ApplicationView(
         handleGoTo: goTo,
         applicationIdSelected: newAppId,
+        isMain: isMain,
       );
     }
     throw new Exception('missing content view for statePage $statePage');
+  }
+
+  Widget getSubContentView(String subPageToLoad) {
+    if (subPageToLoad == NavigationEntity.argumentSubPageInstall) {
+      String applicationId = stateArgumentMap['applicationId']!;
+      return InstallSubview(
+          applicationId: applicationId,
+          handleGoToApplication: () => NavigationEntity.gotToApplicationId(
+              handleGoTo: goTo, applicationId: applicationId));
+    }
+    throw new Exception(
+        'missing content sub view for subPageToLoad $subPageToLoad');
   }
 
   void goTo({required String page, required Map<String, String> argumentMap}) {

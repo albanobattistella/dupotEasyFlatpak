@@ -22,11 +22,13 @@ class ApplicationView extends StatefulWidget {
 
   Function handleGoTo;
 
-  ApplicationView({
-    super.key,
-    required this.applicationIdSelected,
-    required this.handleGoTo,
-  });
+  bool isMain;
+
+  ApplicationView(
+      {super.key,
+      required this.applicationIdSelected,
+      required this.handleGoTo,
+      required this.isMain});
 
   void goToInstallation() {
     NavigationEntity.goToApplicationInstall(
@@ -169,14 +171,25 @@ class _ApplicationViewState extends State<ApplicationView> {
                             ],
                           ),
                         ),
-                        getOverrideButton(stateAppStream!.isOverrided),
-                        const SizedBox(width: 5),
-                        getInstallButton(stateAppStream!.isAlreadyInstalled,
-                            stateAppStream!.hasRecipe),
-                        const SizedBox(width: 5),
-                        getRunButton(stateAppStream!.isAlreadyInstalled),
-                        const SizedBox(width: 5),
-                        getUpdateButton(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            getOverrideButton(stateAppStream!.isOverrided),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            getInstallButton(stateAppStream!.isAlreadyInstalled,
+                                stateAppStream!.hasRecipe),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            getRunButton(stateAppStream!.isAlreadyInstalled),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            getUpdateButton(),
+                          ],
+                        ),
                         const SizedBox(width: 10)
                       ],
                     ),
@@ -310,22 +323,32 @@ class _ApplicationViewState extends State<ApplicationView> {
   Widget getOverrideButton(bool isOverrided) {
     return isOverrided
         ? OverrideButton(
-            applicationEntity: stateAppStream!, handle: widget.handleGoTo)
-        : SizedBox();
+            applicationEntity: stateAppStream!,
+            handle: widget.goToOverride,
+            isActive: widget.isMain)
+        : const SizedBox();
   }
 
   Widget getInstallButton(bool isAlreadyInstalled, bool hasRecipe) {
     if (isAlreadyInstalled) {
       return UninstallButton(
-          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
+        applicationEntity: stateAppStream!,
+        handle: widget.goToUninstallation,
+        isActive: widget.isMain,
+      );
     }
 
     if (hasRecipe) {
       return InstallWithRecipeButton(
-          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
+          applicationEntity: stateAppStream!,
+          handle: widget.goToInstallationWithRecipe,
+          isActive: widget.isMain);
     } else {
       return InstallButton(
-          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
+        applicationEntity: stateAppStream!,
+        handle: widget.goToInstallation,
+        isActive: widget.isMain,
+      );
     }
   }
 
@@ -334,7 +357,7 @@ class _ApplicationViewState extends State<ApplicationView> {
         ? RunButton(
             applicationEntity: stateAppStream!,
           )
-        : SizedBox();
+        : const SizedBox();
   }
 
   Widget getUpdateButton() {
@@ -343,7 +366,7 @@ class _ApplicationViewState extends State<ApplicationView> {
           applicationEntity: stateAppStream!, handle: widget.handleGoTo);
     }
 
-    return SizedBox();
+    return const SizedBox();
   }
 
   Widget getIcon(String type) {

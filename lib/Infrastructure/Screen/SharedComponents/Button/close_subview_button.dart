@@ -5,16 +5,12 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:flutter/material.dart';
 
-class OverrideButton extends StatelessWidget {
-  OverrideButton(
-      {super.key,
-      required this.applicationEntity,
-      required this.handle,
-      required this.isActive});
+class CloseSubViewButton extends StatelessWidget {
+  CloseSubViewButton(
+      {super.key, required this.applicationId, required this.handle});
 
-  ApplicationEntity applicationEntity;
+  String applicationId;
   Function handle;
-  bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +18,11 @@ class OverrideButton extends StatelessWidget {
 
     return FilledButton.icon(
       style: themeButtonStyle.getButtonStyle(),
-      onPressed: !isActive
-          ? null
-          : () {
-              handle();
-            },
-      label: Text(LocalizationApi().tr('Edit_override')),
-      icon: const Icon(Icons.settings),
+      onPressed: () {
+        handle();
+      },
+      label: Text(LocalizationApi().tr('close')),
+      icon: const Icon(Icons.close),
     );
   }
 }

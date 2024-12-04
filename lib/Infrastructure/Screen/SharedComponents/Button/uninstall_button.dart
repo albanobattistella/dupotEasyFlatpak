@@ -8,8 +8,13 @@ import 'package:flutter/material.dart';
 class UninstallButton extends StatefulWidget {
   ApplicationEntity applicationEntity;
   Function handle;
+  bool isActive;
+
   UninstallButton(
-      {super.key, required this.applicationEntity, required this.handle});
+      {super.key,
+      required this.applicationEntity,
+      required this.handle,
+      required this.isActive});
 
   @override
   State<UninstallButton> createState() => _UninstallButtonState();

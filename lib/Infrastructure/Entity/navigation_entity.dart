@@ -21,6 +21,18 @@ class NavigationEntity {
     handleGoTo(page: pageHome, argumentMap: {'': ''});
   }
 
+  static extractArgumentApplicationId(Map<String, String> argumentMap) {
+    return argumentMap[argumentApplicationId];
+  }
+
+  static extractArgumentCategoryId(Map<String, String> argumentMap) {
+    return argumentMap[argumentCategoryId];
+  }
+
+  static extractArgumentSubPage(Map<String, String> argumentMap) {
+    return argumentMap[argumentSubPage];
+  }
+
   static gotToApplicationId(
       {required Function handleGoTo, required String applicationId}) {
     handleGoTo(
