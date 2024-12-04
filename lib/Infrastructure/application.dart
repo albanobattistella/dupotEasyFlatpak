@@ -24,7 +24,7 @@ class _ApplicationState extends State<Application> {
   static const Map<String, List<String>> layoutSetupList = {
     constOnlyContent: [NavigationEntity.pageLoading],
     constSideMenuWithContent: [
-      NavigationEntity.pageHome,
+      //NavigationEntity.pageHome,
       NavigationEntity.pageCategory,
       NavigationEntity.pageApplication
     ]
@@ -46,15 +46,21 @@ class _ApplicationState extends State<Application> {
     return MaterialApp(
         home: Navigator(
       pages: [
-        if (layoutSetupList[constOnlyContent]!.contains(statePage))
+        if (statePage == NavigationEntity.pageLoading)
           MaterialPage(
-              key: ValueKey(statePage),
+              key: const ValueKey(NavigationEntity.pageHome),
               child: OnlyContentLayout(
                   handleGoTo: goTo,
                   content: LoadingView(handle: () {
                     NavigationEntity.goToHome(handleGoTo: goTo);
                   })))
-        else if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
+        else
+          MaterialPage(
+              key: const ValueKey(NavigationEntity.pageHome),
+              child: SideMenuWithContentLayout(
+                  menu: getSideMenuView(),
+                  content: getContentView(NavigationEntity.pageHome))),
+        if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
           MaterialPage(
               key: ValueKey(statePage),
               child: SideMenuWithContentLayout(

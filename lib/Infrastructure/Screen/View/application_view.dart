@@ -5,6 +5,12 @@ import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/application_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_with_recipe_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/override_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/run_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/uninstall_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -303,30 +309,40 @@ class _ApplicationViewState extends State<ApplicationView> {
 
   Widget getOverrideButton(bool isOverrided) {
     return isOverrided
-        ? ElevatedButton(onPressed: () {}, child: Text('Override'))
+        ? OverrideButton(
+            applicationEntity: stateAppStream!, handle: widget.handleGoTo)
         : SizedBox();
   }
 
   Widget getInstallButton(bool isAlreadyInstalled, bool hasRecipe) {
     if (isAlreadyInstalled) {
-      return ElevatedButton(onPressed: () {}, child: Text('UnInstall'));
+      return UninstallButton(
+          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
     }
 
     if (hasRecipe) {
-      return ElevatedButton(
-          onPressed: () {}, child: Text('Install with recipe'));
+      return InstallWithRecipeButton(
+          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
     } else {
-      return ElevatedButton(onPressed: () {}, child: Text('Install '));
+      return InstallButton(
+          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
     }
   }
 
   Widget getRunButton(bool isAlreadyInstalled) {
     return isAlreadyInstalled
-        ? ElevatedButton(onPressed: () {}, child: Text('run'))
+        ? RunButton(
+            applicationEntity: stateAppStream!,
+          )
         : SizedBox();
   }
 
   Widget getUpdateButton() {
+    if (stateAppStream!.hasUpdate) {
+      return UpdateButton(
+          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
+    }
+
     return SizedBox();
   }
 

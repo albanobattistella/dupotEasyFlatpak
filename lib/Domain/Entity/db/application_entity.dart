@@ -25,6 +25,7 @@ class ApplicationEntity {
   bool isAlreadyInstalled = false;
   bool hasRecipe = false;
   bool isOverrided = false;
+  bool hasUpdate = false;
 
   ApplicationEntity(
       {required this.id,

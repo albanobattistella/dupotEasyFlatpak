@@ -25,7 +25,18 @@ class ApplicationViewModel {
 
     applicationEntity.hasRecipe = await checkHasRecipe(appId);
 
+    if (applicationEntity.isAlreadyInstalled) {
+      applicationEntity.hasUpdate = await checkHasUpdate(appId);
+    }
+
     return applicationEntity;
+  }
+
+  Future<bool> checkHasUpdate(String applicationId) async {
+    if (CommandApi().hasUpdateAvailableByAppId(applicationId)) {
+      return true;
+    }
+    return false;
   }
 
   Future<bool> checkHasRecipe(String applicationId) async {

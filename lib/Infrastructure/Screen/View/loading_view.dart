@@ -92,7 +92,13 @@ class _LoadingView extends State<LoadingView> with TickerProviderStateMixin {
         body: Center(
           child: Column(
             children: [
-              Image.asset('assets/logos/512x512.png'),
+              SizedBox(
+                height: 200,
+              ),
+              Image.asset(
+                'assets/logos/512x512.png',
+                width: 200,
+              ),
               LinearProgressIndicator(
                 value: progressValue,
               )
