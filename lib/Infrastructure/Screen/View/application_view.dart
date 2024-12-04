@@ -40,9 +40,11 @@ class ApplicationView extends StatefulWidget {
         handleGoTo: handleGoTo, applicationId: applicationIdSelected);
   }
 
-  void goToUninstallation() {
+  void goToUninstallation(bool willDeleteAppData) {
     NavigationEntity.goToApplicationUninstall(
-        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
+        handleGoTo: handleGoTo,
+        applicationId: applicationIdSelected,
+        willDeleteAppData: willDeleteAppData);
   }
 
   void goToUpdate() {
@@ -354,9 +356,7 @@ class _ApplicationViewState extends State<ApplicationView> {
 
   Widget getRunButton(bool isAlreadyInstalled) {
     return isAlreadyInstalled
-        ? RunButton(
-            applicationEntity: stateAppStream!,
-          )
+        ? RunButton(applicationEntity: stateAppStream!, isActive: widget.isMain)
         : const SizedBox();
   }
 

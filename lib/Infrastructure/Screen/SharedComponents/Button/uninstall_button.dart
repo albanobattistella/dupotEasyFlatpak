@@ -31,63 +31,66 @@ class _UninstallButtonState extends State<UninstallButton> {
 
     return FilledButton.icon(
       style: themeButtonStyle.getButtonStyle(),
-      onPressed: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return StatefulBuilder(builder: (context, StateSetter setState) {
-                return AlertDialog(
-                  backgroundColor: Theme.of(context).primaryColorLight,
-                  buttonPadding: const EdgeInsets.all(10),
-                  actions: [
-                    FilledButton(
-                        style: themeButtonStyle.getDialogButtonStyle(),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text(LocalizationApi().tr('cancel'))),
-                    FilledButton(
-                        style: themeButtonStyle.getDialogButtonStyle(),
-                        onPressed: () {
-                          Navigator.of(context).pop();
+      onPressed: !widget.isActive
+          ? null
+          : () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(
+                        builder: (context, StateSetter setState) {
+                      return AlertDialog(
+                        backgroundColor: Theme.of(context).primaryColorLight,
+                        buttonPadding: const EdgeInsets.all(10),
+                        actions: [
+                          FilledButton(
+                              style: themeButtonStyle.getDialogButtonStyle(),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(LocalizationApi().tr('cancel'))),
+                          FilledButton(
+                              style: themeButtonStyle.getDialogButtonStyle(),
+                              onPressed: () {
+                                Navigator.of(context).pop();
 
-                          widget.handle(widget.applicationEntity.id,
-                              stateWillDeleteAppData);
-                        },
-                        child: Text(LocalizationApi().tr('confirm'))),
-                  ],
-                  title: Text(LocalizationApi().tr('confirmation_title')),
-                  contentPadding: const EdgeInsets.all(20.0),
-                  content: SizedBox(
-                      height: 100,
-                      child: Column(
-                        children: [
-                          Text(
-                              '${LocalizationApi().tr('do_you_confirm_uninstallation_of')} ${widget.applicationEntity.name} ?'),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Switch(
-                                value: stateWillDeleteAppData,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    stateWillDeleteAppData = value;
-                                  });
-                                },
-                              ),
-                              Text(LocalizationApi().tr('delete_all_app_data'))
-                            ],
-                          )
+                                widget.handle(stateWillDeleteAppData);
+                              },
+                              child: Text(LocalizationApi().tr('confirm'))),
                         ],
-                      )),
-                );
-              });
-            });
+                        title: Text(LocalizationApi().tr('confirmation_title')),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: SizedBox(
+                            height: 100,
+                            child: Column(
+                              children: [
+                                Text(
+                                    '${LocalizationApi().tr('do_you_confirm_uninstallation_of')} ${widget.applicationEntity.name} ?'),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Switch(
+                                      value: stateWillDeleteAppData,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          stateWillDeleteAppData = value;
+                                        });
+                                      },
+                                    ),
+                                    Text(LocalizationApi()
+                                        .tr('delete_all_app_data'))
+                                  ],
+                                )
+                              ],
+                            )),
+                      );
+                    });
+                  });
 
-        //install(application);
-      },
+              //install(application);
+            },
       label: Text(LocalizationApi().tr('uninstall')),
       icon: const Icon(Icons.delete_forever),
     );

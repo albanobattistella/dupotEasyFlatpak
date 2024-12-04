@@ -3,6 +3,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_lay
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
@@ -84,8 +85,7 @@ class _ApplicationState extends State<Application> {
               child: SideMenuWithContentAndSubContentLayout(
                 menu: getSideMenuView(),
                 content: getContentView(statePage, false),
-                subContent: getSubContentView(
-                    stateArgumentMap[NavigationEntity.argumentSubPage]!),
+                subContent: getSubContentView(),
               ))
       ],
       onDidRemovePage: (page) => true,
@@ -124,13 +124,31 @@ class _ApplicationState extends State<Application> {
     throw new Exception('missing content view for statePage $statePage');
   }
 
-  Widget getSubContentView(String subPageToLoad) {
+  Widget getSubContentView() {
+    String subPageToLoad = stateArgumentMap[NavigationEntity.argumentSubPage]!;
+
     if (subPageToLoad == NavigationEntity.argumentSubPageInstall) {
-      String applicationId = stateArgumentMap['applicationId']!;
+      String applicationId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
       return InstallSubview(
           applicationId: applicationId,
           handleGoToApplication: () => NavigationEntity.gotToApplicationId(
               handleGoTo: goTo, applicationId: applicationId));
+    } else if (subPageToLoad == NavigationEntity.argumentSubPageUninstall) {
+      String applicationId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+
+      bool willDeleteAppData = false;
+      if (stateArgumentMap.containsKey('willDeleteAppData')) {
+        willDeleteAppData = true;
+      }
+
+      return UninstallSubview(
+        applicationId: applicationId,
+        handleGoToApplication: () => NavigationEntity.gotToApplicationId(
+            handleGoTo: goTo, applicationId: applicationId),
+        willDeleteAppData: willDeleteAppData,
+      );
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');

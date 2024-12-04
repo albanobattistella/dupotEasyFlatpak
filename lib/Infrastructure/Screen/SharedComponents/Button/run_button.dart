@@ -7,9 +7,11 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_styl
 import 'package:flutter/material.dart';
 
 class RunButton extends StatelessWidget {
-  RunButton({super.key, required this.applicationEntity});
+  RunButton(
+      {super.key, required this.applicationEntity, required this.isActive});
 
   ApplicationEntity applicationEntity;
+  bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,11 @@ class RunButton extends StatelessWidget {
 
     return FilledButton.icon(
       style: themeButtonStyle.getButtonStyle(),
-      onPressed: () {
-        CommandApi().run(applicationEntity.id);
-      },
+      onPressed: !isActive
+          ? null
+          : () {
+              CommandApi().run(applicationEntity.id);
+            },
       label: Text(LocalizationApi().tr('Run')),
       icon: const Icon(Icons.launch),
     );

@@ -63,10 +63,13 @@ class NavigationEntity {
   }
 
   static goToApplicationUninstall(
-      {required Function handleGoTo, required String applicationId}) {
+      {required Function handleGoTo,
+      required String applicationId,
+      required bool willDeleteAppData}) {
     handleGoTo(page: pageApplication, argumentMap: {
       argumentApplicationId: applicationId,
-      argumentSubPage: argumentSubPageUninstall
+      argumentSubPage: argumentSubPageUninstall,
+      if (willDeleteAppData) 'willDeleteAppData': 'yes'
     });
   }
 
