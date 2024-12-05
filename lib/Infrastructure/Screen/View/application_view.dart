@@ -83,6 +83,25 @@ class _ApplicationViewState extends State<ApplicationView> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(ApplicationView oldWidget) {
+    if (oldWidget.isMain != widget.isMain) {
+      updateAlreadyInstalled();
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  Future<void> updateAlreadyInstalled() async {
+    ApplicationEntity appStream = stateAppStream!;
+    appStream.isAlreadyInstalled =
+        await ApplicationViewModel().checkAlreadyInstalled(appStream.id);
+
+    setState(() {
+      stateAppStream = appStream;
+    });
+  }
+
   Future<void> loadData() async {
     applicationIdSelected = widget.applicationIdSelected;
 

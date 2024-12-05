@@ -52,13 +52,19 @@ class _ApplicationState extends State<Application> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Navigator(
       pages: [
         if (statePage == NavigationEntity.pageLoading)
           MaterialPage(
-              key: const ValueKey(NavigationEntity.pageHome),
+              key: const ValueKey(NavigationEntity.pageLoading),
               child: OnlyContentLayout(
                   handleGoTo: goTo,
                   content: LoadingView(handle: () {
@@ -88,7 +94,7 @@ class _ApplicationState extends State<Application> {
                 subContent: getSubContentView(),
               ))
       ],
-      onDidRemovePage: (page) => true,
+      onDidRemovePage: (page) => false,
     ));
   }
 
@@ -118,7 +124,10 @@ class _ApplicationState extends State<Application> {
       return ApplicationView(
         handleGoTo: goTo,
         applicationIdSelected: newAppId,
-        isMain: isMain,
+        isMain: (!isMain ||
+                stateArgumentMap.containsKey(NavigationEntity.argumentSubPage))
+            ? false
+            : true,
       );
     }
     throw new Exception('missing content view for statePage $statePage');
