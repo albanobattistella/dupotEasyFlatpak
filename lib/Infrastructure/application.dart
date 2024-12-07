@@ -3,6 +3,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_lay
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
@@ -140,6 +141,14 @@ class _ApplicationState extends State<Application> {
       String applicationId =
           NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
       return InstallSubview(
+          applicationId: applicationId,
+          handleGoToApplication: () => NavigationEntity.gotToApplicationId(
+              handleGoTo: goTo, applicationId: applicationId));
+    } else if (subPageToLoad ==
+        NavigationEntity.argumentSubPageInstallWithRecipe) {
+      String applicationId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+      return InstallWithRecipeSubview(
           applicationId: applicationId,
           handleGoToApplication: () => NavigationEntity.gotToApplicationId(
               handleGoTo: goTo, applicationId: applicationId));

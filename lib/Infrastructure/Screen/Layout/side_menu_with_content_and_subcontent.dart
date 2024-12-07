@@ -26,7 +26,7 @@ class _SideMenuWithContentAndSubContentLayoutState
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(width: 240, child: widget.menu),
           const SizedBox(width: 10),
-          Container(width: 450, child: widget.content),
+          Container(width: 500, child: widget.content),
           Expanded(child: widget.subContent)
         ]));
   }

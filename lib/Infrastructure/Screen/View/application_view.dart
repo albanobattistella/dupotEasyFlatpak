@@ -192,25 +192,31 @@ class _ApplicationViewState extends State<ApplicationView> {
                             ],
                           ),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            getOverrideButton(stateAppStream!.isOverrided),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            getInstallButton(stateAppStream!.isAlreadyInstalled,
-                                stateAppStream!.hasRecipe),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            getRunButton(stateAppStream!.isAlreadyInstalled),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            getUpdateButton(),
-                          ],
-                        ),
+                        !widget.isMain
+                            ? SizedBox()
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  getOverrideButton(
+                                      stateAppStream!.isAlreadyInstalled,
+                                      stateAppStream!.isOverrided),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  getInstallButton(
+                                      stateAppStream!.isAlreadyInstalled,
+                                      stateAppStream!.hasRecipe),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  getRunButton(
+                                      stateAppStream!.isAlreadyInstalled),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  getUpdateButton(),
+                                ],
+                              ),
                         const SizedBox(width: 10)
                       ],
                     ),
@@ -341,8 +347,8 @@ class _ApplicationViewState extends State<ApplicationView> {
               ));
   }
 
-  Widget getOverrideButton(bool isOverrided) {
-    return isOverrided
+  Widget getOverrideButton(bool isAlreadyInstalled, bool isOverrided) {
+    return isAlreadyInstalled & isOverrided
         ? OverrideButton(
             applicationEntity: stateAppStream!,
             handle: widget.goToOverride,
