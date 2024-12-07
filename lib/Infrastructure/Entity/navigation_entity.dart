@@ -3,6 +3,7 @@ class NavigationEntity {
   static const String pageHome = 'home';
   static const String pageCategory = 'category';
   static const String pageApplication = 'application';
+  static const String pageInstalledApplication = 'installedApps';
 
   static const String argumentApplicationId = 'applicationId';
   static const String argumentCategoryId = 'categoryId';
@@ -19,6 +20,10 @@ class NavigationEntity {
 
   static goToHome({required Function handleGoTo}) {
     handleGoTo(page: pageHome, argumentMap: {'': ''});
+  }
+
+  static goToInstalledApplications({required Function handleGoTo}) {
+    handleGoTo(page: pageInstalledApplication, argumentMap: {'': ''});
   }
 
   static extractArgumentApplicationId(Map<String, String> argumentMap) {

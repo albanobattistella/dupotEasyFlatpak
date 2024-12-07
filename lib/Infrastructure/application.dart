@@ -8,6 +8,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subvi
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applications_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/loading_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,8 @@ class _ApplicationState extends State<Application> {
     constSideMenuWithContent: [
       //NavigationEntity.pageHome,
       NavigationEntity.pageCategory,
-      NavigationEntity.pageApplication
+      NavigationEntity.pageApplication,
+      NavigationEntity.pageInstalledApplication
     ],
     constSideMenuWithContentAndSubContent: [
       NavigationEntity.argumentSubPageInstall,
@@ -50,12 +52,6 @@ class _ApplicationState extends State<Application> {
     print('statePage: $statePage');
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
   }
 
   @override
@@ -130,7 +126,12 @@ class _ApplicationState extends State<Application> {
             ? false
             : true,
       );
+    } else if (pageToLoad == NavigationEntity.pageInstalledApplication) {
+      return InstalledApplicationsView(
+        handleGoTo: goTo,
+      );
     }
+
     throw new Exception('missing content view for statePage $statePage');
   }
 

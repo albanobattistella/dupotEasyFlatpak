@@ -15,4 +15,8 @@ class MenuItemEntity {
   String categoryIdSelected;
   String badge;
   IconData icon;
+
+  bool isCategory() {
+    return pageSelected == 'category';
+  }
 }

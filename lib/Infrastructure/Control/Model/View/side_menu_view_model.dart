@@ -21,7 +21,7 @@ class SideMenuViewModel {
     'Utility': Icons.build,
   };
 
-  Future<List<MenuItemEntity>> getMenuItemEntityList() async {
+  Future<List<MenuItemEntity>> getCategoryMenuItemEntityList() async {
     List<String> categoryIdList =
         await ApplicationRepository().findAllCategoryList();
 
@@ -41,5 +41,36 @@ class SideMenuViewModel {
     }
 
     return menuItemList;
+  }
+
+  Future<List<MenuItemEntity>> getBottomMenuItemEntityList() async {
+    List<MenuItemEntity> menuItemList = [];
+    menuItemList.add(MenuItemEntity(
+        label: 'Home',
+        action: () {
+          NavigationEntity.goToHome(
+            handleGoTo: handleGoTo,
+          );
+        },
+        pageSelected: 'home',
+        badge: '',
+        categoryIdSelected: '',
+        icon: Icons.home));
+
+    menuItemList.add(MenuItemEntity(
+        label: 'InstalledApps',
+        action: () {
+          NavigationEntity.goToInstalledApplications(handleGoTo: handleGoTo);
+        },
+        pageSelected: 'installedApps',
+        categoryIdSelected: '',
+        badge: getInstalledAppLabel(),
+        icon: Icons.install_desktop));
+
+    return menuItemList;
+  }
+
+  String getInstalledAppLabel() {
+    return '';
   }
 }

@@ -3,6 +3,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/side_menu_v
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
 class SideMenuView extends StatefulWidget {
@@ -21,9 +22,14 @@ class SideMenuView extends StatefulWidget {
 }
 
 class _SideMenuViewState extends State<SideMenuView> {
-  List<MenuItemEntity> stateMenuItemList = [];
+  List<MenuItemEntity> stateCategoryMenuItemList = [];
+  List<MenuItemEntity> stateBottomMenuItemList = [];
   String statePageSelected = '';
   String stateCategoryIdSelected = '';
+
+  ScrollController scrollController = ScrollController();
+
+  late ThemeTextStyle themeTextStyle;
 
   @override
   void initState() {
@@ -40,9 +46,9 @@ class _SideMenuViewState extends State<SideMenuView> {
   }
 
   void loadData() async {
-    List<MenuItemEntity> menuItemList =
+    List<MenuItemEntity> categoryMenuItemList =
         await SideMenuViewModel(handleGoTo: widget.handleGoTo)
-            .getMenuItemEntityList();
+            .getCategoryMenuItemEntityList();
 
     if (widget.pageSelected == NavigationEntity.pageCategory) {
       setState(() {
@@ -57,59 +63,85 @@ class _SideMenuViewState extends State<SideMenuView> {
     }
 
     setState(() {
-      stateMenuItemList = menuItemList;
+      stateCategoryMenuItemList = categoryMenuItemList;
+    });
+
+    List<MenuItemEntity> bottomMenuItemList =
+        await SideMenuViewModel(handleGoTo: widget.handleGoTo)
+            .getBottomMenuItemEntityList();
+
+    setState(() {
+      stateBottomMenuItemList = bottomMenuItemList;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    themeTextStyle = ThemeTextStyle(context: context);
+
     return Padding(
         padding: const EdgeInsets.all(5),
-        child: Card(
-            color: Theme.of(context).primaryColorLight,
-            margin: const EdgeInsets.all(0),
-            elevation: 5,
-            child: ListView(
-              children: stateMenuItemList.map((menuItemLoop) {
-                if (menuItemLoop.label == 'spacer') {
-                  return const SizedBox(height: 100);
-                }
+        child: Scrollbar(
+            interactive: false,
+            thumbVisibility: true,
+            controller: scrollController,
+            child: Card(
+                color: Theme.of(context).primaryColorLight,
+                margin: const EdgeInsets.all(0),
+                elevation: 5,
+                child: ListView(
+                  controller: scrollController,
+                  children: [
+                    Column(
+                      children: stateCategoryMenuItemList
+                          .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                          .toList(),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    Column(
+                      children: stateBottomMenuItemList
+                          .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                          .toList(),
+                    )
+                  ],
+                ))));
+  }
 
-                bool isSelected = false;
-                if (menuItemLoop.pageSelected == statePageSelected &&
-                    menuItemLoop.categoryIdSelected ==
-                        stateCategoryIdSelected) {
-                  isSelected = true;
-                }
+  Widget getMenuLine(MenuItemEntity menuItemLoop) {
+    bool isSelected = false;
+    if (menuItemLoop.isCategory() &&
+        menuItemLoop.pageSelected == statePageSelected &&
+        menuItemLoop.categoryIdSelected == stateCategoryIdSelected) {
+      isSelected = true;
+    } else if (!menuItemLoop.isCategory() &&
+        menuItemLoop.pageSelected == statePageSelected) {
+      isSelected = true;
+    }
 
-                return ListTile(
-                    tileColor: isSelected
-                        ? Theme.of(context).primaryColorDark
-                        : Theme.of(context).primaryColorLight,
-                    titleTextStyle: TextStyle(
-                        color:
-                            Theme.of(context).textTheme.headlineLarge!.color),
-
-                    // selected: menuItemLoop.label == selected,
-                    onTap: () {
-                      menuItemLoop.action();
-                    },
-                    title: Row(
-                      children: [
-                        Icon(menuItemLoop.icon),
-                        const SizedBox(width: 8),
-                        Text(
-                          LocalizationApi().tr(menuItemLoop.label),
-                          style: isSelected
-                              ? TextStyle(
-                                  backgroundColor: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionHandleColor)
-                              : null,
-                        ),
-                      ],
-                    ));
-              }).toList(),
-            )));
+    return ListTile(
+        tileColor: themeTextStyle.getHeadlineBackgroundColor(isSelected),
+        titleTextStyle:
+            TextStyle(color: themeTextStyle.getHeadlineTextColor(isSelected)),
+        onTap: () {
+          menuItemLoop.action();
+        },
+        title: Row(
+          children: [
+            Icon(menuItemLoop.icon,
+                color: themeTextStyle.getHeadlineTextColor(isSelected)),
+            const SizedBox(width: 8),
+            Text(
+              LocalizationApi().tr(menuItemLoop.label),
+              style: isSelected
+                  ? TextStyle(
+                      backgroundColor: Theme.of(context)
+                          .textSelectionTheme
+                          .selectionHandleColor)
+                  : null,
+            ),
+          ],
+        ));
   }
 }
