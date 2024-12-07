@@ -77,6 +77,7 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
+    - assets/images/
     - assets/recipies/
     - assets/recipies.json
     - assets/icons/

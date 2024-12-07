@@ -18,6 +18,9 @@ class UpdatesAvailablesView extends StatefulWidget {
 class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
   List<ApplicationUpdate> stateApplicationUpdateList = [];
   List<ApplicationEntity> stateApplicationEntityList = [];
+
+  Map<String, bool> stateCheckboxList = {};
+
   @override
   void initState() {
     // TODO: implement initState
@@ -27,12 +30,23 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
   }
 
   Future<void> loadData() async {
+    Map<String, bool> checkboxList = {};
+
     List<ApplicationUpdate> applicationUpdateList =
         await CommandApi().checkUpdates();
 
+    List<ApplicationUpdate> distinctApplicationUpdateList = [];
+
     List<String> applicationUpdateIdList = [];
     for (ApplicationUpdate applicationUpdateLoop in applicationUpdateList) {
-      applicationUpdateIdList.add(applicationUpdateLoop.id.toLowerCase());
+      if (!applicationUpdateIdList
+          .contains(applicationUpdateLoop.id.toLowerCase())) {
+        applicationUpdateIdList.add(applicationUpdateLoop.id.toLowerCase());
+
+        checkboxList[applicationUpdateLoop.id.toLowerCase()] = false;
+
+        distinctApplicationUpdateList.add(applicationUpdateLoop);
+      }
     }
 
     List<ApplicationEntity> applicationEntityList =
@@ -40,7 +54,9 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
             .findListApplicationEntityByIdList(applicationUpdateIdList);
 
     setState(() {
-      stateApplicationUpdateList = applicationUpdateList;
+      stateCheckboxList = checkboxList;
+
+      stateApplicationUpdateList = distinctApplicationUpdateList;
       stateApplicationEntityList = applicationEntityList;
     });
   }
@@ -67,9 +83,18 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
     ApplicationEntity? applicationEntityFound =
         getApplicationEntity(applicationUpdate.id);
 
-    return InkWell(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Card(
+    return CheckboxListTile(
+        onChanged: (bool? value) {
+          Map<String, bool> checkboxList = stateCheckboxList;
+
+          checkboxList[applicationUpdate.id.toLowerCase()] = value!;
+
+          setState(() {
+            stateCheckboxList = checkboxList;
+          });
+        },
+        value: stateCheckboxList[applicationUpdate.id.toLowerCase()],
+        title: Card(
           color: Theme.of(context).primaryColorLight,
           child: Column(
             children: [
