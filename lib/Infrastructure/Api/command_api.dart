@@ -46,10 +46,6 @@ class CommandApi {
     return ApplicationUpdateAvailableList.length;
   }
 
-  List<ApplicationUpdate> getApplicationUpdateAvailableList() {
-    return ApplicationUpdateAvailableList;
-  }
-
   List<String> getAppIdUpdateAvailableList() {
     List<String> appIdList = [];
     for (ApplicationUpdate ApplicationUpdateLoop
@@ -68,8 +64,8 @@ class CommandApi {
     return dbApplicationIdList.contains(appId.toLowerCase());
   }
 
-  Future<void> checkUpdates() async {
-    ProcessResult result = await runProcess('flatpak', ['update']);
+  Future<List<ApplicationUpdate>> checkUpdates() async {
+    ProcessResult result = await runProcess('flatpak', ['--no-deps', 'update']);
     updatesAvailableOutput = result.stdout.toString();
 
     ApplicationUpdateAvailableList.clear();
@@ -86,13 +82,12 @@ class CommandApi {
           if (lineLoopList.length > 5) {
             comment = "${lineLoopList[3]} (${lineLoopList[6]})";
           }
-          if (hasApplicationInDatabase(appId)) {
-            ApplicationUpdateAvailableList.add(
-                ApplicationUpdate(appId, comment));
-          }
+          ApplicationUpdateAvailableList.add(ApplicationUpdate(appId, comment));
         }
       }
     }
+
+    return ApplicationUpdateAvailableList;
   }
 
   bool hasApplicationInstalledVersionDifferentThan(

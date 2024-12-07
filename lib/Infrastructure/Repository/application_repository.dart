@@ -191,7 +191,7 @@ class ApplicationRepository {
 
     List<String> whereApplicationIdStringList = [];
     for (String applicationIdLoop in applicationIdList) {
-      whereApplicationIdStringList.add("'$applicationIdLoop'");
+      whereApplicationIdStringList.add("'${applicationIdLoop.toLowerCase()}'");
     }
 
     // Query the table for all the dogs.

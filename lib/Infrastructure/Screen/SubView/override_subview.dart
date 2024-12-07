@@ -85,9 +85,6 @@ class _OverrideSubviewState extends State<OverrideSubview> {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle outputTextStyle =
-        TextStyle(color: Colors.white, fontSize: 14.0);
-
     return stateApplicationEntity == null
         ? const CircularProgressIndicator()
         : Scrollbar(

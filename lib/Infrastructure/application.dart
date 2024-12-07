@@ -13,6 +13,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applicat
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/loading_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/search_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/updates_availables_view.dart';
 import 'package:flutter/material.dart';
 
 class Application extends StatefulWidget {
@@ -35,7 +36,8 @@ class _ApplicationState extends State<Application> {
       NavigationEntity.pageCategory,
       NavigationEntity.pageApplication,
       NavigationEntity.pageInstalledApplication,
-      NavigationEntity.pageSearch
+      NavigationEntity.pageSearch,
+      NavigationEntity.pageUpdateAvailables
     ],
     constSideMenuWithContentAndSubContent: [
       NavigationEntity.argumentSubPageInstall,
@@ -137,6 +139,10 @@ class _ApplicationState extends State<Application> {
     } else if (pageToLoad == NavigationEntity.pageSearch) {
       return SearchView(
         searched: stateSearched,
+        handleGoTo: goTo,
+      );
+    } else if (pageToLoad == NavigationEntity.pageUpdateAvailables) {
+      return UpdatesAvailablesView(
         handleGoTo: goTo,
       );
     }

@@ -10,8 +10,8 @@
             "type": "filesystem"
         },
         {
-            "label":"Install mango hud",
-            "label_fr":"Installer mango hud",
+            "label":"Install mangohud",
+            "label_fr":"Installer mangohud",
             "type":"install_flatpak_yesno",
             "value":"org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/24.08"
         }

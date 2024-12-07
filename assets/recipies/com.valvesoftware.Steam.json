@@ -9,14 +9,14 @@
             "type": "filesystem"
         },
         {
-            "label":"Install mongo hud",
-            "label_fr":"Installer mongo hud",
+            "label":"Install mangohud",
+            "label_fr":"Installer mangohud",
             "type":"install_flatpak_yesno",
             "value":"org.freedesktop.Platform.VulkanLayer.MangoHud/x86_64/24.08"
         },
         {
-            "label":"Enable mongo hud",
-            "label_fr":"Activer mongo hud",
+            "label":"Enable mangohud",
+            "label_fr":"Activer mangohud",
             "type":"env_yesno",
             "value":"MANGOHUD",
             "subValueYes":"1",

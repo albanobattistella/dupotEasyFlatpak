@@ -67,6 +67,15 @@ class SideMenuViewModel {
         badge: getInstalledAppLabel(),
         icon: Icons.install_desktop));
     menuItemList.add(MenuItemEntity(
+        label: 'Updates',
+        action: () {
+          NavigationEntity.goToUpdatesAvailables(handleGoTo: handleGoTo);
+        },
+        pageSelected: NavigationEntity.pageUpdateAvailables,
+        categoryIdSelected: '',
+        badge: getInstalledAppLabel(),
+        icon: Icons.notifications));
+    menuItemList.add(MenuItemEntity(
         label: 'Search',
         action: () {
           NavigationEntity.goToSearch(handleGoTo: handleGoTo, search: '');
