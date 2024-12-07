@@ -20,7 +20,10 @@ class _SideMenuWithContentLayoutState extends State<SideMenuWithContentLayout> {
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(width: 240, child: widget.menu),
           const SizedBox(width: 10),
-          Expanded(child: widget.content)
+          Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: widget.content))
         ]));
   }
 }

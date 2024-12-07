@@ -55,6 +55,10 @@ class ApplicationViewModel {
   }
 
   Future<bool> checkIsOverrided(String applicationId) async {
+    if (!await RecipeApi().hasApplication(applicationId)) {
+      return false;
+    }
+
     FlatpakOverrideApplication result =
         await CommandApi().isApplicationOverrided(applicationId);
     return result.isOverrided;

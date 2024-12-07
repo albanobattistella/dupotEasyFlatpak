@@ -7,9 +7,13 @@ import 'package:flutter/services.dart';
 class RecipeApi {
   static bool isDebug = true;
 
-  Future<List<String>> getApplicationList() async {
+  Future<List<String>> getRecipeApplicationIdList() async {
     String recipiesString = await rootBundle.loadString("assets/recipies.json");
-    List<String> recipeList = List<String>.from(json.decode(recipiesString));
+    return List<String>.from(json.decode(recipiesString));
+  }
+
+  Future<List<String>> getApplicationList() async {
+    List<String> recipeList = await getRecipeApplicationIdList();
 
     List<String> recipeLowerCaseList = [];
     for (String recipeId in recipeList) {
@@ -17,6 +21,12 @@ class RecipeApi {
     }
 
     return recipeLowerCaseList;
+  }
+
+  Future<bool> hasApplication(String id) async {
+    List<String> recipeList = await getRecipeApplicationIdList();
+
+    return recipeList.contains(id);
   }
 
   Future<RecipeEntity> getApplication(id) async {

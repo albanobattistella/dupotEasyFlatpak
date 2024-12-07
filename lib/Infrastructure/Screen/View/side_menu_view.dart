@@ -92,6 +92,7 @@ class _SideMenuViewState extends State<SideMenuView> {
                 child: ListView(
                   controller: scrollController,
                   children: [
+                    SizedBox(height: 20),
                     Column(
                       children: stateCategoryMenuItemList
                           .map((menuItemLoop) => getMenuLine(menuItemLoop))

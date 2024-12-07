@@ -8,6 +8,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/close_subview_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_output_component.dart';
 import 'package:flutter/material.dart';
 
 class UninstallSubview extends StatefulWidget {
@@ -93,49 +94,28 @@ class _InstallSubviewState extends State<UninstallSubview> {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle outputTextStyle =
-        TextStyle(color: Colors.white, fontSize: 14.0);
-
-    return Card(
-        color: Theme.of(context).cardColor,
-        child: Scrollbar(
-          interactive: false,
-          thumbVisibility: true,
-          controller: scrollController,
-          child: ListView(
-            controller: scrollController,
+    return Scrollbar(
+      interactive: false,
+      thumbVisibility: true,
+      controller: scrollController,
+      child: ListView(
+        controller: scrollController,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const SizedBox(width: 20),
-                  stateIsInstalling
-                      ? const CircularProgressIndicator()
-                      : CloseSubViewButton(
-                          applicationId: widget.applicationId,
-                          handle: widget.handleGoToApplication),
-                  const SizedBox(width: 20)
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Container(
-                    constraints: const BoxConstraints(minHeight: 800),
-                    decoration: const BoxDecoration(color: Colors.blueGrey),
-                    child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: RichText(
-                          overflow: TextOverflow.clip,
-                          text: TextSpan(
-                            style: outputTextStyle,
-                            children: <TextSpan>[
-                              TextSpan(text: stateInstallationOutput),
-                            ],
-                          ),
-                        ))),
-              ),
+              const SizedBox(width: 20),
+              stateIsInstalling
+                  ? const CircularProgressIndicator()
+                  : CloseSubViewButton(
+                      applicationId: widget.applicationId,
+                      handle: widget.handleGoToApplication),
+              const SizedBox(width: 20)
             ],
           ),
-        ));
+          CardOutputComponent(outputString: stateInstallationOutput)
+        ],
+      ),
+    );
   }
 }

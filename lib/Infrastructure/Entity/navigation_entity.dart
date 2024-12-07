@@ -13,7 +13,6 @@ class NavigationEntity {
   static const String argumentSubPageInstall = 'application_install';
   static const String argumentSubPageInstallWithRecipe =
       'application_installWithRecipe';
-
   static const String argumentSubPageUninstall = 'application_uninstall';
   static const String argumentSubPageUpdate = 'application_update';
   static const String argumentSubPageOverride = 'application_override';

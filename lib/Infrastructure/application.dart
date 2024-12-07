@@ -4,6 +4,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_c
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/override_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
@@ -168,6 +169,13 @@ class _ApplicationState extends State<Application> {
             handleGoTo: goTo, applicationId: applicationId),
         willDeleteAppData: willDeleteAppData,
       );
+    } else if (subPageToLoad == NavigationEntity.argumentSubPageOverride) {
+      String applicationId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+      return OverrideSubview(
+          applicationId: applicationId,
+          handleGoToApplication: () => NavigationEntity.gotToApplicationId(
+              handleGoTo: goTo, applicationId: applicationId));
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');

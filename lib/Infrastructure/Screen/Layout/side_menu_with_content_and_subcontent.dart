@@ -26,8 +26,22 @@ class _SideMenuWithContentAndSubContentLayoutState
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(width: 240, child: widget.menu),
           const SizedBox(width: 10),
-          Container(width: 500, child: widget.content),
-          Expanded(child: widget.subContent)
+          Container(
+              width: 500,
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: widget.content)),
+          const SizedBox(width: 10),
+          Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Card(
+                      color: Theme.of(context).primaryColorLight,
+                      margin: const EdgeInsets.all(0),
+                      elevation: 1,
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: widget.subContent))))
         ]));
   }
 }
