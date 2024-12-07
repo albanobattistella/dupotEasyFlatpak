@@ -184,8 +184,17 @@ class _OverrideSubviewState extends State<OverrideSubview> {
     return FilledButton.icon(
       style: ThemeButtonStyle(context: context).getButtonStyle(),
       onPressed: () async {
+        setState(() {
+          stateIsInstalling = true;
+        });
         await overrideControl.save(
             widget.applicationId, stateOverrideFormControlList);
+
+        final snackBar = SnackBar(
+          content: Text(LocalizationApi().tr('successfully_saved')),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
         setState(() {
           stateIsInstalling = false;

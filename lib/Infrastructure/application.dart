@@ -11,6 +11,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applications_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/loading_view.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/search_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,8 @@ class _ApplicationState extends State<Application> {
       //NavigationEntity.pageHome,
       NavigationEntity.pageCategory,
       NavigationEntity.pageApplication,
-      NavigationEntity.pageInstalledApplication
+      NavigationEntity.pageInstalledApplication,
+      NavigationEntity.pageSearch
     ],
     constSideMenuWithContentAndSubContent: [
       NavigationEntity.argumentSubPageInstall,
@@ -46,6 +48,7 @@ class _ApplicationState extends State<Application> {
 
   String statePage = NavigationEntity.pageLoading;
   Map<String, String> stateArgumentMap = {};
+  String stateSearched = '';
 
   @override
   void initState() {
@@ -131,6 +134,11 @@ class _ApplicationState extends State<Application> {
       return InstalledApplicationsView(
         handleGoTo: goTo,
       );
+    } else if (pageToLoad == NavigationEntity.pageSearch) {
+      return SearchView(
+        searched: stateSearched,
+        handleGoTo: goTo,
+      );
     }
 
     throw new Exception('missing content view for statePage $statePage');
@@ -182,6 +190,12 @@ class _ApplicationState extends State<Application> {
   }
 
   void goTo({required String page, required Map<String, String> argumentMap}) {
+    if (NavigationEntity.hasArgumentSearch(argumentMap)) {
+      setState(() {
+        stateSearched = NavigationEntity.extractArgumentSearch(argumentMap);
+      });
+    }
+
     setState(() {
       statePage = page;
       stateArgumentMap = argumentMap;

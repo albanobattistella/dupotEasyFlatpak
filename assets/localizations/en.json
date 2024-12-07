@@ -67,5 +67,6 @@
     "scopeSystem": "scope system",
     "scopeUser": "scope user",
     "do_you_confirm_update_all":"Do you confirm to update all",
-    "update_all":"Update all"
+    "update_all":"Update all",
+    "successfully_saved":"Successfully saved"
   }

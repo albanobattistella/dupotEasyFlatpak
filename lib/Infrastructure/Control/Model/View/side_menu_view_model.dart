@@ -52,7 +52,7 @@ class SideMenuViewModel {
             handleGoTo: handleGoTo,
           );
         },
-        pageSelected: 'home',
+        pageSelected: NavigationEntity.pageHome,
         badge: '',
         categoryIdSelected: '',
         icon: Icons.home));
@@ -62,10 +62,19 @@ class SideMenuViewModel {
         action: () {
           NavigationEntity.goToInstalledApplications(handleGoTo: handleGoTo);
         },
-        pageSelected: 'installedApps',
+        pageSelected: NavigationEntity.pageInstalledApplication,
         categoryIdSelected: '',
         badge: getInstalledAppLabel(),
         icon: Icons.install_desktop));
+    menuItemList.add(MenuItemEntity(
+        label: 'Search',
+        action: () {
+          NavigationEntity.goToSearch(handleGoTo: handleGoTo, search: '');
+        },
+        pageSelected: NavigationEntity.pageSearch,
+        categoryIdSelected: '',
+        badge: '',
+        icon: Icons.search));
 
     return menuItemList;
   }

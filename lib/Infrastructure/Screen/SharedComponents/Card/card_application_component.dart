@@ -50,12 +50,23 @@ class CardApplicationComponent extends StatelessWidget {
     }
 
     return Card(
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).primaryColorLight,
         clipBehavior: Clip.hardEdge,
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           ListTile(
-            title: Text(title),
-          )
+            title: Text(
+              title.length > 8 ? '${title.substring(0, 8)}...' : title,
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).textTheme.headlineLarge!.color),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+              child: Image.asset(
+            'assets/logos/512x512.png',
+            width: 60,
+          ))
         ]));
   }
 }

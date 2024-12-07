@@ -4,6 +4,7 @@ class NavigationEntity {
   static const String pageCategory = 'category';
   static const String pageApplication = 'application';
   static const String pageInstalledApplication = 'installedApps';
+  static const String pageSearch = 'search';
 
   static const String argumentApplicationId = 'applicationId';
   static const String argumentCategoryId = 'categoryId';
@@ -17,8 +18,14 @@ class NavigationEntity {
   static const String argumentSubPageUpdate = 'application_update';
   static const String argumentSubPageOverride = 'application_override';
 
+  static const String argumentSearch = 'search';
+
   static goToHome({required Function handleGoTo}) {
     handleGoTo(page: pageHome, argumentMap: {'': ''});
+  }
+
+  static goToSearch({required Function handleGoTo, required String search}) {
+    handleGoTo(page: pageSearch, argumentMap: {argumentSearch: search});
   }
 
   static goToInstalledApplications({required Function handleGoTo}) {
@@ -35,6 +42,14 @@ class NavigationEntity {
 
   static extractArgumentSubPage(Map<String, String> argumentMap) {
     return argumentMap[argumentSubPage];
+  }
+
+  static hasArgumentSearch(Map<String, String> argumentMap) {
+    return argumentMap.containsKey(argumentSearch);
+  }
+
+  static extractArgumentSearch(Map<String, String> argumentMap) {
+    return argumentMap[argumentSearch];
   }
 
   static gotToApplicationId(

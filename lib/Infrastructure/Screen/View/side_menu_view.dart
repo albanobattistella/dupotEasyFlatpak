@@ -92,7 +92,7 @@ class _SideMenuViewState extends State<SideMenuView> {
                 child: ListView(
                   controller: scrollController,
                   children: [
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Column(
                       children: stateCategoryMenuItemList
                           .map((menuItemLoop) => getMenuLine(menuItemLoop))
@@ -105,7 +105,8 @@ class _SideMenuViewState extends State<SideMenuView> {
                       children: stateBottomMenuItemList
                           .map((menuItemLoop) => getMenuLine(menuItemLoop))
                           .toList(),
-                    )
+                    ),
+                    const SizedBox(height: 20)
                   ],
                 ))));
   }

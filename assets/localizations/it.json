@@ -67,6 +67,7 @@
     "scopeSystem": "Sistema",
     "scopeUser": "Utente",
     "do_you_confirm_update_all":"Confermi di aggiornare tutto?",
-    "update_all":"Aggiorna tutto"
+    "update_all":"Aggiorna tutto",
+    "successfully_saved":"Successfully saved"
 
   }
