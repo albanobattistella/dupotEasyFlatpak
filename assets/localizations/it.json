@@ -68,6 +68,7 @@
     "scopeUser": "Utente",
     "do_you_confirm_update_all":"Confermi di aggiornare tutto?",
     "update_all":"Aggiorna tutto",
-    "successfully_saved":"Successfully saved"
+    "successfully_saved":"Successfully saved",
+    "do_you_confirm_update_selected":"Do you confirm to update selected line(s)"
 
   }

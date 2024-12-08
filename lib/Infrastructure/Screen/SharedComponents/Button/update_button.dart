@@ -6,11 +6,10 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_styl
 import 'package:flutter/material.dart';
 
 class UpdateButton extends StatelessWidget {
-  UpdateButton(
-      {super.key, required this.applicationEntity, required this.handle});
+  UpdateButton({super.key, required this.handle, required this.isActive});
 
-  ApplicationEntity applicationEntity;
   Function handle;
+  bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +17,28 @@ class UpdateButton extends StatelessWidget {
 
     return FilledButton.icon(
       style: themeButtonStyle.getButtonStyle(),
-      onPressed: () {
-        handle(applicationEntity.id);
-      },
+      onPressed: !isActive
+          ? null
+          : () {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        backgroundColor: Theme.of(context).primaryColorLight,
+                        buttonPadding: const EdgeInsets.all(10),
+                        actions: [
+                          const DialogCancelButton(),
+                          DialogConfirmButton(onPressedFunction: () {
+                            Navigator.of(context).pop();
+
+                            handle();
+                          })
+                        ],
+                        title: Text(LocalizationApi().tr('confirmation_title')),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        content: Text(
+                            '${LocalizationApi().tr('do_you_confirm_update_selected')} ?'),
+                      ));
+            },
       label: Text(LocalizationApi().tr('Update')),
       icon: const Icon(Icons.launch),
     );

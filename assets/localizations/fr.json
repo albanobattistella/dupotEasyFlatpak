@@ -70,6 +70,7 @@
     "scopeUser": "Uniquement le périmètre de l'utilisateur",
     "do_you_confirm_update_all":"Confirmez-vous de mettre tout à jour",
     "update_all":"Tout mettre à jour",
-    "successfully_saved":"Sauvegardé avec succès"
+    "successfully_saved":"Sauvegardé avec succès",
+    "do_you_confirm_update_selected":"Confirmez-vous vouloir mettre à jour la sélection"
 
   }

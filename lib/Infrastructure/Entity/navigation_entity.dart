@@ -16,8 +16,12 @@ class NavigationEntity {
   static const String argumentSubPageInstallWithRecipe =
       'application_installWithRecipe';
   static const String argumentSubPageUninstall = 'application_uninstall';
-  static const String argumentSubPageUpdate = 'application_update';
   static const String argumentSubPageOverride = 'application_override';
+  static const String argumentSubPageUpdateAvailableProcessing =
+      'updatesAvailables_processing';
+
+  static const String argumentApplicationIdSelectedList =
+      'application_id_selected_list';
 
   static const String argumentSearch = 'search';
 
@@ -47,6 +51,11 @@ class NavigationEntity {
 
   static extractArgumentSubPage(Map<String, String> argumentMap) {
     return argumentMap[argumentSubPage];
+  }
+
+  static extractArgumentApplicationIdSelectedList(
+      Map<String, String> argumentMap) {
+    return argumentMap[argumentApplicationIdSelectedList]!.split(',');
   }
 
   static hasArgumentSearch(Map<String, String> argumentMap) {
@@ -97,19 +106,20 @@ class NavigationEntity {
     });
   }
 
-  static goToApplicationUpdate(
-      {required Function handleGoTo, required String applicationId}) {
-    handleGoTo(page: pageApplication, argumentMap: {
-      argumentApplicationId: applicationId,
-      argumentSubPage: argumentSubPageUpdate
-    });
-  }
-
   static goToApplicationOverride(
       {required Function handleGoTo, required String applicationId}) {
     handleGoTo(page: pageApplication, argumentMap: {
       argumentApplicationId: applicationId,
       argumentSubPage: argumentSubPageOverride
+    });
+  }
+
+  static goToUpdatesAvailablesPocessing(
+      {required Function handleGoTo,
+      required List<String> applicationIdSelectedList}) {
+    handleGoTo(page: pageUpdateAvailables, argumentMap: {
+      argumentSubPage: argumentSubPageUpdateAvailableProcessing,
+      argumentApplicationIdSelectedList: applicationIdSelectedList.join(',')
     });
   }
 }

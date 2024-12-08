@@ -47,11 +47,6 @@ class ApplicationView extends StatefulWidget {
         willDeleteAppData: willDeleteAppData);
   }
 
-  void goToUpdate() {
-    NavigationEntity.goToApplicationUpdate(
-        handleGoTo: handleGoTo, applicationId: applicationIdSelected);
-  }
-
   void goToOverride() {
     NavigationEntity.goToApplicationOverride(
         handleGoTo: handleGoTo, applicationId: applicationIdSelected);
@@ -214,7 +209,6 @@ class _ApplicationViewState extends State<ApplicationView> {
                                   const SizedBox(
                                     height: 2,
                                   ),
-                                  getUpdateButton(),
                                 ],
                               ),
                         const SizedBox(width: 10)
@@ -383,15 +377,6 @@ class _ApplicationViewState extends State<ApplicationView> {
     return isAlreadyInstalled
         ? RunButton(applicationEntity: stateAppStream!, isActive: widget.isMain)
         : const SizedBox();
-  }
-
-  Widget getUpdateButton() {
-    if (stateAppStream!.hasUpdate) {
-      return UpdateButton(
-          applicationEntity: stateAppStream!, handle: widget.handleGoTo);
-    }
-
-    return const SizedBox();
   }
 
   Widget getIcon(String type) {

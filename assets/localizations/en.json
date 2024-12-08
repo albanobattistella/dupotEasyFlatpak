@@ -68,5 +68,7 @@
     "scopeUser": "scope user",
     "do_you_confirm_update_all":"Do you confirm to update all",
     "update_all":"Update all",
-    "successfully_saved":"Successfully saved"
+    "successfully_saved":"Successfully saved",
+    "do_you_confirm_update_selected":"Do you confirm to update selected line(s)"
+
   }

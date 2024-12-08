@@ -6,6 +6,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/override_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
@@ -44,7 +45,7 @@ class _ApplicationState extends State<Application> {
       NavigationEntity.argumentSubPageInstallWithRecipe,
       NavigationEntity.argumentSubPageOverride,
       NavigationEntity.argumentSubPageUninstall,
-      NavigationEntity.argumentSubPageUpdate
+      NavigationEntity.argumentSubPageUpdateAvailableProcessing
     ]
   };
 
@@ -144,6 +145,7 @@ class _ApplicationState extends State<Application> {
     } else if (pageToLoad == NavigationEntity.pageUpdateAvailables) {
       return UpdatesAvailablesView(
         handleGoTo: goTo,
+        isMain: isMain,
       );
     }
 
@@ -190,6 +192,14 @@ class _ApplicationState extends State<Application> {
           applicationId: applicationId,
           handleGoToApplication: () => NavigationEntity.gotToApplicationId(
               handleGoTo: goTo, applicationId: applicationId));
+    } else if (subPageToLoad ==
+        NavigationEntity.argumentSubPageUpdateAvailableProcessing) {
+      List<String> applicationIdSelectedList =
+          NavigationEntity.extractArgumentApplicationIdSelectedList(
+              stateArgumentMap);
+      return UpdateAvailableProcessingSubview(
+          applicationIdSelectedList: applicationIdSelectedList,
+          handleGoTo: goTo);
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');

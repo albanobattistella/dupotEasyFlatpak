@@ -4,12 +4,17 @@ import 'package:dupot_easy_flatpak/Domain/Entity/application_update_entity.dart'
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_button.dart';
 import 'package:flutter/material.dart';
 
 class UpdatesAvailablesView extends StatefulWidget {
   Function handleGoTo;
-  UpdatesAvailablesView({super.key, required this.handleGoTo});
+  bool isMain;
+
+  UpdatesAvailablesView(
+      {super.key, required this.handleGoTo, required this.isMain});
 
   @override
   State<UpdatesAvailablesView> createState() => _UpdatesAvailablesViewState();
@@ -21,9 +26,10 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
 
   Map<String, bool> stateCheckboxList = {};
 
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
-    // TODO: implement initState
     loadData();
 
     super.initState();
@@ -63,11 +69,25 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: stateApplicationUpdateList
-            .map((ApplicationUpdate applicationUpdate) =>
-                getLine(applicationUpdate))
-            .toList());
+    return Scrollbar(
+        interactive: false,
+        thumbVisibility: true,
+        controller: scrollController,
+        child: Column(children: [
+          Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [getUpdateButton()],
+              )),
+          Expanded(
+              child: ListView(
+                  controller: scrollController,
+                  children: stateApplicationUpdateList
+                      .map((ApplicationUpdate applicationUpdate) =>
+                          getLine(applicationUpdate))
+                      .toList()))
+        ]));
   }
 
   ApplicationEntity? getApplicationEntity(String id) {
@@ -83,20 +103,20 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
     ApplicationEntity? applicationEntityFound =
         getApplicationEntity(applicationUpdate.id);
 
-    return CheckboxListTile(
-        onChanged: (bool? value) {
-          Map<String, bool> checkboxList = stateCheckboxList;
+    return Card(
+        color: Theme.of(context).primaryColorLight,
+        child: CheckboxListTile(
+          onChanged: (bool? value) {
+            Map<String, bool> checkboxList = stateCheckboxList;
 
-          checkboxList[applicationUpdate.id.toLowerCase()] = value!;
+            checkboxList[applicationUpdate.id.toLowerCase()] = value!;
 
-          setState(() {
-            stateCheckboxList = checkboxList;
-          });
-        },
-        value: stateCheckboxList[applicationUpdate.id.toLowerCase()],
-        title: Card(
-          color: Theme.of(context).primaryColorLight,
-          child: Column(
+            setState(() {
+              stateCheckboxList = checkboxList;
+            });
+          },
+          value: stateCheckboxList[applicationUpdate.id.toLowerCase()],
+          title: Column(
             children: [
               Row(
                 children: [
@@ -128,7 +148,8 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
                           applicationEntityFound != null
                               ? applicationEntityFound.summary
                               : '',
-                        )
+                        ),
+                        Text(applicationUpdate.version)
                       ],
                     ),
                   )
@@ -137,5 +158,27 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
             ],
           ),
         ));
+  }
+
+  Widget getUpdateButton() {
+    return UpdateButton(
+      isActive: widget.isMain,
+      handle: () {
+        List<String> applicationIdSelectedList = [];
+
+        for (ApplicationUpdate applicationUpdateLoop
+            in stateApplicationUpdateList) {
+          if (stateCheckboxList[applicationUpdateLoop.id.toLowerCase()]!) {
+            applicationIdSelectedList.add(applicationUpdateLoop.id);
+          }
+        }
+
+        if (applicationIdSelectedList.isNotEmpty) {
+          NavigationEntity.goToUpdatesAvailablesPocessing(
+              handleGoTo: widget.handleGoTo,
+              applicationIdSelectedList: applicationIdSelectedList);
+        }
+      },
+    );
   }
 }
