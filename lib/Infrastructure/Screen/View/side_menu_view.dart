@@ -33,19 +33,27 @@ class _SideMenuViewState extends State<SideMenuView> {
 
   @override
   void initState() {
-    loadData();
+    loadData(true);
 
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant SideMenuView oldWidget) {
-    loadData();
+    if (oldWidget.pageSelected != widget.pageSelected ||
+        (oldWidget.pageSelected == widget.pageSelected &&
+            oldWidget.pageSelected == NavigationEntity.pageCategory &&
+            oldWidget.argumentMapSelected![
+                    NavigationEntity.argumentCategoryId]! !=
+                widget.argumentMapSelected![
+                    NavigationEntity.argumentCategoryId])) {
+      loadData(false);
+    }
 
     super.didUpdateWidget(oldWidget);
   }
 
-  void loadData() async {
+  void loadData(bool shouldCheckUpdates) async {
     List<MenuItemEntity> categoryMenuItemList =
         await SideMenuViewModel(handleGoTo: widget.handleGoTo)
             .getCategoryMenuItemEntityList();
@@ -68,7 +76,7 @@ class _SideMenuViewState extends State<SideMenuView> {
 
     List<MenuItemEntity> bottomMenuItemList =
         await SideMenuViewModel(handleGoTo: widget.handleGoTo)
-            .getBottomMenuItemEntityList();
+            .getBottomMenuItemEntityList(shouldCheckUpdates);
 
     setState(() {
       stateBottomMenuItemList = bottomMenuItemList;
@@ -131,8 +139,17 @@ class _SideMenuViewState extends State<SideMenuView> {
         },
         title: Row(
           children: [
-            Icon(menuItemLoop.icon,
-                color: themeTextStyle.getHeadlineTextColor(isSelected)),
+            menuItemLoop.badge.isNotEmpty
+                ? IconButton(
+                    icon: Badge(
+                        label: Text(menuItemLoop.badge),
+                        backgroundColor: Colors.blueAccent,
+                        child: Icon(menuItemLoop.icon,
+                            color: themeTextStyle
+                                .getHeadlineTextColor(isSelected))),
+                    onPressed: null)
+                : Icon(menuItemLoop.icon,
+                    color: themeTextStyle.getHeadlineTextColor(isSelected)),
             const SizedBox(width: 8),
             Text(
               LocalizationApi().tr(menuItemLoop.label),

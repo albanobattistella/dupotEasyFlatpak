@@ -6,6 +6,7 @@ import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_all_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_button.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +79,13 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [getUpdateButton()],
+                children: [
+                  getUpdateAllButton(),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  getUpdateButton()
+                ],
               )),
           Expanded(
               child: ListView(
@@ -178,6 +185,17 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
               handleGoTo: widget.handleGoTo,
               applicationIdSelectedList: applicationIdSelectedList);
         }
+      },
+    );
+  }
+
+  Widget getUpdateAllButton() {
+    return UpdateAllButton(
+      isActive: widget.isMain,
+      handle: () {
+        NavigationEntity.goToUpdatesAvailablesPocessingAll(
+          handleGoTo: widget.handleGoTo,
+        );
       },
     );
   }

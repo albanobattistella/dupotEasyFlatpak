@@ -11,22 +11,21 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_output_component.dart';
 import 'package:flutter/material.dart';
 
-class UpdateAvailableProcessingSubview extends StatefulWidget {
+class UpdateAvailableProcessingAllSubview extends StatefulWidget {
   Function handleGoTo;
-  List<String> applicationIdSelectedList;
 
-  UpdateAvailableProcessingSubview(
-      {super.key,
-      required this.handleGoTo,
-      required this.applicationIdSelectedList});
+  UpdateAvailableProcessingAllSubview({
+    super.key,
+    required this.handleGoTo,
+  });
 
   @override
-  State<UpdateAvailableProcessingSubview> createState() =>
+  State<UpdateAvailableProcessingAllSubview> createState() =>
       _UpdateAvailableProcessingSubviewState();
 }
 
 class _UpdateAvailableProcessingSubviewState
-    extends State<UpdateAvailableProcessingSubview> {
+    extends State<UpdateAvailableProcessingAllSubview> {
   bool stateIsInstalling = true;
   String stateInstallationOutput = '';
 
@@ -36,38 +35,35 @@ class _UpdateAvailableProcessingSubviewState
   void initState() {
     super.initState();
 
-    updateList(widget.applicationIdSelectedList);
+    updateAll();
   }
 
-  Future<void> updateList(List<String> applicationIdSelectedList) async {
+  Future<void> updateAll() async {
     CommandApi command = CommandApi();
 
-    for (String applicationIdSelectedLoop in applicationIdSelectedList) {
-      String commandBin = 'flatpak';
-      List<String> commandArgList = [
-        'update',
-        '-y',
-        UserSettingsEntity().getInstallationScope(),
-        applicationIdSelectedLoop
-      ];
+    String commandBin = 'flatpak';
+    List<String> commandArgList = [
+      'update',
+      '-y',
+      UserSettingsEntity().getInstallationScope(),
+    ];
 
-      Process process = await Process.start(command.getCommand(commandBin),
-          command.getFlatpakSpawnArgumentList(commandBin, commandArgList));
+    Process process = await Process.start(command.getCommand(commandBin),
+        command.getFlatpakSpawnArgumentList(commandBin, commandArgList));
 
-      process.stdout.transform(utf8.decoder).listen((data) {
-        print('STDOUT: $data');
-        setState(() {
-          stateInstallationOutput = data;
-        });
+    process.stdout.transform(utf8.decoder).listen((data) {
+      print('STDOUT: $data');
+      setState(() {
+        stateInstallationOutput = data;
       });
+    });
 
-      process.stderr.transform(utf8.decoder).listen((data) {
-        print('STDERR: $data');
-        setState(() {
-          stateInstallationOutput = data;
-        });
+    process.stderr.transform(utf8.decoder).listen((data) {
+      print('STDERR: $data');
+      setState(() {
+        stateInstallationOutput = data;
       });
-    }
+    });
 
     setState(() {
       stateInstallationOutput =

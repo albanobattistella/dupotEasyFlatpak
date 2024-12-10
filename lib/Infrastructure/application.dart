@@ -6,6 +6,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/override_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_all_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
@@ -45,7 +46,8 @@ class _ApplicationState extends State<Application> {
       NavigationEntity.argumentSubPageInstallWithRecipe,
       NavigationEntity.argumentSubPageOverride,
       NavigationEntity.argumentSubPageUninstall,
-      NavigationEntity.argumentSubPageUpdateAvailableProcessing
+      NavigationEntity.argumentSubPageUpdateAvailableProcessing,
+      NavigationEntity.argumentSubPageUpdateAvailableProcessingAll
     ]
   };
 
@@ -200,6 +202,9 @@ class _ApplicationState extends State<Application> {
       return UpdateAvailableProcessingSubview(
           applicationIdSelectedList: applicationIdSelectedList,
           handleGoTo: goTo);
+    } else if (subPageToLoad ==
+        NavigationEntity.argumentSubPageUpdateAvailableProcessingAll) {
+      return UpdateAvailableProcessingAllSubview(handleGoTo: goTo);
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');

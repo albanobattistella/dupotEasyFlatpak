@@ -19,6 +19,8 @@ class NavigationEntity {
   static const String argumentSubPageOverride = 'application_override';
   static const String argumentSubPageUpdateAvailableProcessing =
       'updatesAvailables_processing';
+  static const String argumentSubPageUpdateAvailableProcessingAll =
+      'updatesAvailables_processingAll';
 
   static const String argumentApplicationIdSelectedList =
       'application_id_selected_list';
@@ -120,6 +122,14 @@ class NavigationEntity {
     handleGoTo(page: pageUpdateAvailables, argumentMap: {
       argumentSubPage: argumentSubPageUpdateAvailableProcessing,
       argumentApplicationIdSelectedList: applicationIdSelectedList.join(',')
+    });
+  }
+
+  static goToUpdatesAvailablesPocessingAll({
+    required Function handleGoTo,
+  }) {
+    handleGoTo(page: pageUpdateAvailables, argumentMap: {
+      argumentSubPage: argumentSubPageUpdateAvailableProcessingAll,
     });
   }
 }

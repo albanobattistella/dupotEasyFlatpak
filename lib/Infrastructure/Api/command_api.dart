@@ -11,7 +11,7 @@ class CommandApi {
 
   late Settings settingsObj;
   late String updatesAvailableOutput;
-  List<ApplicationUpdate> ApplicationUpdateAvailableList = [];
+  List<ApplicationUpdate> applicationUpdateAvailableList = [];
   List<String> dbApplicationIdList = [];
   List<ApplicationInstalledEntity> ApplicationInstalledList = [];
 
@@ -43,13 +43,13 @@ class CommandApi {
   }
 
   int getNumberOfUpdates() {
-    return ApplicationUpdateAvailableList.length;
+    return applicationUpdateAvailableList.length;
   }
 
   List<String> getAppIdUpdateAvailableList() {
     List<String> appIdList = [];
     for (ApplicationUpdate ApplicationUpdateLoop
-        in ApplicationUpdateAvailableList) {
+        in applicationUpdateAvailableList) {
       appIdList.add(ApplicationUpdateLoop.id.toLowerCase());
     }
     return appIdList;
@@ -65,10 +65,11 @@ class CommandApi {
   }
 
   Future<List<ApplicationUpdate>> checkUpdates() async {
+    print('check updates');
     ProcessResult result = await runProcess('flatpak', ['--no-deps', 'update']);
     updatesAvailableOutput = result.stdout.toString();
 
-    ApplicationUpdateAvailableList.clear();
+    applicationUpdateAvailableList.clear();
 
     List<String> lineList = updatesAvailableOutput.split("\n");
 
@@ -82,12 +83,12 @@ class CommandApi {
           if (lineLoopList.length > 5) {
             comment = "${lineLoopList[3]} (${lineLoopList[6]})";
           }
-          ApplicationUpdateAvailableList.add(ApplicationUpdate(appId, comment));
+          applicationUpdateAvailableList.add(ApplicationUpdate(appId, comment));
         }
       }
     }
 
-    return ApplicationUpdateAvailableList;
+    return applicationUpdateAvailableList;
   }
 
   bool hasApplicationInstalledVersionDifferentThan(
@@ -104,7 +105,7 @@ class CommandApi {
 
   bool hasUpdateAvailableByAppId(String appId) {
     for (ApplicationUpdate ApplicationUpdateAvailableLoop
-        in ApplicationUpdateAvailableList) {
+        in applicationUpdateAvailableList) {
       if (ApplicationUpdateAvailableLoop.id == appId.toLowerCase()) {
         return true;
       }
@@ -114,7 +115,7 @@ class CommandApi {
 
   String getApplicationUpdateVersionByAppId(String appId) {
     for (ApplicationUpdate ApplicationUpdateAvailableLoop
-        in ApplicationUpdateAvailableList) {
+        in applicationUpdateAvailableList) {
       if (ApplicationUpdateAvailableLoop.id == appId.toLowerCase()) {
         return ApplicationUpdateAvailableLoop.version;
       }

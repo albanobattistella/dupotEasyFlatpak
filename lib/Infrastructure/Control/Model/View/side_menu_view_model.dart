@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
@@ -43,7 +44,12 @@ class SideMenuViewModel {
     return menuItemList;
   }
 
-  Future<List<MenuItemEntity>> getBottomMenuItemEntityList() async {
+  Future<List<MenuItemEntity>> getBottomMenuItemEntityList(
+      bool shouldCheckUpdates) async {
+    if (shouldCheckUpdates) {
+      await CommandApi().checkUpdates();
+    }
+
     List<MenuItemEntity> menuItemList = [];
     menuItemList.add(MenuItemEntity(
         label: 'Home',
@@ -73,7 +79,7 @@ class SideMenuViewModel {
         },
         pageSelected: NavigationEntity.pageUpdateAvailables,
         categoryIdSelected: '',
-        badge: getInstalledAppLabel(),
+        badge: getUpdateAvailableLabel(),
         icon: Icons.notifications));
     menuItemList.add(MenuItemEntity(
         label: 'Search',
@@ -90,5 +96,9 @@ class SideMenuViewModel {
 
   String getInstalledAppLabel() {
     return '';
+  }
+
+  String getUpdateAvailableLabel() {
+    return CommandApi().getNumberOfUpdates().toString();
   }
 }
