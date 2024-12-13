@@ -18,7 +18,12 @@ class _SideMenuWithContentLayoutState extends State<SideMenuWithContentLayout> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(width: 240, child: widget.menu),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                width: 240,
+                child: widget.menu,
+              )),
           const SizedBox(width: 10),
           Expanded(
               child: Padding(

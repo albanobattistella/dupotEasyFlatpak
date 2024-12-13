@@ -2,7 +2,6 @@ import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/side_menu_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -87,36 +86,30 @@ class _SideMenuViewState extends State<SideMenuView> {
   Widget build(BuildContext context) {
     themeTextStyle = ThemeTextStyle(context: context);
 
-    return Padding(
-        padding: const EdgeInsets.all(5),
-        child: Scrollbar(
-            interactive: false,
-            thumbVisibility: true,
-            controller: scrollController,
-            child: Card(
-                color: Theme.of(context).primaryColorLight,
-                margin: const EdgeInsets.all(0),
-                elevation: 5,
-                child: ListView(
-                  controller: scrollController,
-                  children: [
-                    const SizedBox(height: 20),
-                    Column(
-                      children: stateCategoryMenuItemList
-                          .map((menuItemLoop) => getMenuLine(menuItemLoop))
-                          .toList(),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    Column(
-                      children: stateBottomMenuItemList
-                          .map((menuItemLoop) => getMenuLine(menuItemLoop))
-                          .toList(),
-                    ),
-                    const SizedBox(height: 20)
-                  ],
-                ))));
+    return Card(
+      color: Theme.of(context).primaryColorLight,
+      child: ListView(
+        padding: const EdgeInsets.all(10),
+        children: [
+          Column(
+            children: stateCategoryMenuItemList
+                .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                .toList(),
+          ),
+          SizedBox(
+            height: 28,
+            child: ColoredBox(
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+          Column(
+            children: stateBottomMenuItemList
+                .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                .toList(),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget getMenuLine(MenuItemEntity menuItemLoop) {
@@ -131,6 +124,9 @@ class _SideMenuViewState extends State<SideMenuView> {
     }
 
     return ListTile(
+        visualDensity: const VisualDensity(vertical: -3),
+        contentPadding: const EdgeInsets.all(0),
+        minVerticalPadding: 0,
         tileColor: themeTextStyle.getHeadlineBackgroundColor(isSelected),
         titleTextStyle:
             TextStyle(color: themeTextStyle.getHeadlineTextColor(isSelected)),
@@ -141,6 +137,7 @@ class _SideMenuViewState extends State<SideMenuView> {
           children: [
             menuItemLoop.badge.isNotEmpty
                 ? IconButton(
+                    padding: const EdgeInsets.all(0),
                     icon: Badge(
                         label: Text(menuItemLoop.badge),
                         backgroundColor: Colors.blueAccent,
@@ -148,8 +145,12 @@ class _SideMenuViewState extends State<SideMenuView> {
                             color: themeTextStyle
                                 .getHeadlineTextColor(isSelected))),
                     onPressed: null)
-                : Icon(menuItemLoop.icon,
-                    color: themeTextStyle.getHeadlineTextColor(isSelected)),
+                : IconButton(
+                    padding: const EdgeInsets.all(0),
+                    icon: Icon(menuItemLoop.icon,
+                        color: themeTextStyle.getHeadlineTextColor(isSelected)),
+                    onPressed: null,
+                  ),
             const SizedBox(width: 8),
             Text(
               LocalizationApi().tr(menuItemLoop.label),

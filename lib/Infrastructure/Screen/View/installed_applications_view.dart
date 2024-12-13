@@ -69,7 +69,7 @@ class _InstalledApplicationsViewState extends State<InstalledApplicationsView> {
         child: Column(
           children: [
             Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(children: [
                   const Expanded(child: SizedBox()),
                   SegmentedButton<AppDisplay>(

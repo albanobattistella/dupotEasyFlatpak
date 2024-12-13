@@ -188,7 +188,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                           ),
                         ),
                         !widget.isMain
-                            ? SizedBox()
+                            ? const SizedBox()
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [

@@ -81,6 +81,19 @@ class SideMenuViewModel {
         categoryIdSelected: '',
         badge: getUpdateAvailableLabel(),
         icon: Icons.notifications));
+
+    menuItemList.add(MenuItemEntity(
+        label: 'Settings',
+        action: () {
+          NavigationEntity.goToSettings(
+            handleGoTo: handleGoTo,
+          );
+        },
+        pageSelected: NavigationEntity.pageUserSettings,
+        badge: '',
+        categoryIdSelected: '',
+        icon: Icons.settings));
+
     menuItemList.add(MenuItemEntity(
         label: 'Search',
         action: () {

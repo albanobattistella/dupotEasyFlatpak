@@ -12,8 +12,7 @@
     "confirm": "Confirmer",
     "confirmation_title": "Confirmation",
     "do_you_confirm_installation_of": "Confirmez-vous l 'installation de",
-    "do_you_confirm_uninstallation_of":
-        "Confirmez-vous la désinstallation de",
+    "do_you_confirm_uninstallation_of": "Confirmez-vous la désinstallation de",
     "install": "Installer",
     "install_with_recipe": "Installer avec recette",
     "uninstall": "Désinstaller",
@@ -25,8 +24,7 @@
     "add": "Ajouter",
     "field_should_not_be_empty": "Le champ doit être rempli",
     "application_name": "Nom de l'application",
-    "application_json":
-        "Json de paramétrage de la recette pour l'application",
+    "application_json": "Json de paramétrage de la recette pour l'application",
     "processing_form": "Traitement en cours",
     "save": "Sauvegarder",
     "close": "Fermer",
@@ -68,9 +66,9 @@
     "Installation_scope": "Perimètre d'installation",
     "scopeSystem": "Tout le système",
     "scopeUser": "Uniquement le périmètre de l'utilisateur",
-    "do_you_confirm_update_all":"Confirmez-vous de mettre tout à jour",
-    "update_all":"Tout mettre à jour",
-    "successfully_saved":"Sauvegardé avec succès",
-    "do_you_confirm_update_selected":"Confirmez-vous vouloir mettre à jour la sélection"
-
-  }
+    "do_you_confirm_update_all": "Confirmez-vous de mettre tout à jour",
+    "update_all": "Tout mettre à jour",
+    "successfully_saved": "Sauvegardé avec succès",
+    "do_you_confirm_update_selected": "Confirmez-vous vouloir mettre à jour la sélection",
+    "Settings": "Paramètres"
+}

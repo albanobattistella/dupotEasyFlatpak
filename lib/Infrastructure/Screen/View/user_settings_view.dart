@@ -2,7 +2,9 @@ import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:flutter/material.dart';
 
 class UserSettingsView extends StatefulWidget {
-  const UserSettingsView({super.key});
+  Function handleGoTo;
+
+  UserSettingsView({super.key, required this.handleGoTo});
 
   @override
   State<UserSettingsView> createState() => _UserSettingsViewState();
@@ -11,6 +13,7 @@ class UserSettingsView extends StatefulWidget {
 class _UserSettingsViewState extends State<UserSettingsView> {
   ScrollController scrollController = ScrollController();
 
+  bool isUserSettingsLoaded = false;
   late UserSettingsEntity stateUserSettingsEntity;
 
   @override
@@ -24,6 +27,7 @@ class _UserSettingsViewState extends State<UserSettingsView> {
   Future<void> loadData() async {
     setState(() {
       stateUserSettingsEntity = UserSettingsEntity();
+      isUserSettingsLoaded = true;
     });
   }
 
@@ -33,14 +37,19 @@ class _UserSettingsViewState extends State<UserSettingsView> {
     //darkmode
     //scope install
     //installed app page (badge)
-    return stateUserSettingsEntity == null
-        ? CircularProgressIndicator()
+    return !isUserSettingsLoaded
+        ? const CircularProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
             controller: scrollController,
-            child: Column(
-              children: [],
+            child: ListView(
+              controller: scrollController,
+              children: [
+                Column(
+                  children: [],
+                )
+              ],
             ));
   }
 }

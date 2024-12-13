@@ -24,7 +24,12 @@ class _SideMenuWithContentAndSubContentLayoutState
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Container(width: 240, child: widget.menu),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: Container(
+                width: 240,
+                child: widget.menu,
+              )),
           const SizedBox(width: 10),
           Container(
               width: 500,
@@ -38,7 +43,7 @@ class _SideMenuWithContentAndSubContentLayoutState
                   child: Card(
                       color: Theme.of(context).primaryColorLight,
                       margin: const EdgeInsets.all(0),
-                      elevation: 1,
+                      elevation: 0,
                       child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                           child: widget.subContent))))
