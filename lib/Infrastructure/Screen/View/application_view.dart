@@ -119,226 +119,212 @@ class _ApplicationViewState extends State<ApplicationView> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Theme.of(context).cardColor,
-        child: stateAppStream == null
-            ? const CircularProgressIndicator()
-            : Scrollbar(
-                interactive: false,
-                thumbVisibility: true,
-                controller: scrollController,
-                child: ListView(
-                  controller: scrollController,
+    return stateAppStream == null
+        ? const CircularProgressIndicator()
+        : Scrollbar(
+            interactive: false,
+            thumbVisibility: true,
+            controller: scrollController,
+            child: ListView(
+              controller: scrollController,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        if (stateAppStream!.hasAppIcon())
-                          Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Image.file(File(
-                                  '${UserSettingsEntity().getApplicationIconsPath()}/${stateAppStream!.getAppIcon()}'))),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                stateAppStream!.name,
-                                style: const TextStyle(
-                                    fontSize: 35, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                '${LocalizationApi().tr('By')} ${stateAppStream!.developer_name}',
-                                style: const TextStyle(
-                                    fontStyle: FontStyle.italic, fontSize: 15),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              if (stateAppStream!.projectLicense.isNotEmpty)
-                                Text(
-                                    '${LocalizationApi().tr('License')}: ${stateAppStream!.projectLicense}'),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              if (stateAppStream!.isVerified())
-                                TextButton.icon(
-                                    style: TextButton.styleFrom(
-                                        padding: const EdgeInsets.only(
-                                            top: 5,
-                                            bottom: 5,
-                                            right: 5,
-                                            left: 0),
-                                        alignment:
-                                            AlignmentDirectional.topStart),
-                                    icon: const Icon(Icons.verified),
-                                    onPressed: () {
-                                      String verifiedUrl =
-                                          stateAppStream!.getVerifiedUrl();
-                                      if (verifiedUrl.isNotEmpty) {
-                                        launchUrl(Uri.parse(verifiedUrl));
-                                      }
-                                    },
-                                    label: Text(
-                                        stateAppStream!.getVerifiedLabel())),
-                            ],
-                          ),
-                        ),
-                        !widget.isMain
-                            ? const SizedBox()
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  getOverrideButton(
-                                      stateAppStream!.isAlreadyInstalled,
-                                      stateAppStream!.isOverrided),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                  getInstallButton(
-                                      stateAppStream!.isAlreadyInstalled,
-                                      stateAppStream!.hasRecipe),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                  getRunButton(
-                                      stateAppStream!.isAlreadyInstalled),
-                                  const SizedBox(
-                                    height: 2,
-                                  ),
-                                ],
-                              ),
-                        const SizedBox(width: 10)
-                      ],
-                    ),
-                    if (stateAppStream!.screenshotObjList.isNotEmpty)
-                      ListTile(
-                        title: Text(LocalizationApi().tr('Screenshots'),
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge!
-                                    .color)),
-                      ),
-                    if (stateAppStream!.screenshotObjList.isNotEmpty)
+                    if (stateAppStream!.hasAppIcon())
                       Padding(
                           padding: const EdgeInsets.all(20),
-                          child: Scrollbar(
-                              interactive: false,
-                              thumbVisibility: true,
-                              controller: scrollControllerScreenshot,
-                              child: SingleChildScrollView(
-                                  controller: scrollControllerScreenshot,
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                      children: stateAppStream!
-                                          .screenshotObjList
-                                          .map((screenshotLoop) {
-                                    return IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => AlertDialog(
-                                                  buttonPadding:
-                                                      const EdgeInsets.all(0),
-                                                  content: Image.network(
-                                                      screenshotLoop[
-                                                          'large'])));
-                                        },
-                                        icon: Image.network(
-                                            screenshotLoop['preview']));
-                                  }).toList())))),
-                    Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          child: Image.file(File(
+                              '${UserSettingsEntity().getApplicationIconsPath()}/${stateAppStream!.getAppIcon()}'))),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            stateAppStream!.name,
+                            style: const TextStyle(
+                                fontSize: 35, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${LocalizationApi().tr('By')} ${stateAppStream!.developer_name}',
+                            style: const TextStyle(
+                                fontStyle: FontStyle.italic, fontSize: 15),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (stateAppStream!.projectLicense.isNotEmpty)
                             Text(
-                              stateAppStream!.summary,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .headlineLarge!
-                                      .color),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            HtmlWidget(
-                              stateAppStream!.description,
-                            ),
-                          ],
-                        )),
-                    ListTile(
-                        title: Text(
-                      LocalizationApi().tr('Last_releases'),
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              Theme.of(context).textTheme.headlineLarge!.color),
-                    )),
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, bottom: 5, right: 5, left: 25),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: stateAppStream!
-                                .getReleaseObjList()
-                                .map((realeaseObjLoop) {
-                              DateTime dateVersion =
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      int.parse(realeaseObjLoop['timestamp']) *
-                                          1000);
-
-                              return Row(children: [
-                                Text(DateFormat('dd/MM/yyyy')
-                                    .format(dateVersion)),
-                                const SizedBox(width: 2),
-                                const Text(':'),
-                                const SizedBox(width: 10),
-                                Text(realeaseObjLoop['version'],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold))
-                              ]);
-                            }).toList())),
-                    ListTile(
-                        title: Text(
-                      LocalizationApi().tr('Links'),
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              Theme.of(context).textTheme.headlineLarge!.color),
-                    )),
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            top: 5, bottom: 5, right: 5, left: 10),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: stateAppStream!
-                                .getUrlObjList()
-                                .map((urlObjLoop) {
-                              String url = urlObjLoop['value'].toString();
-
-                              return TextButton.icon(
-                                icon: getIcon(urlObjLoop['key'].toString()),
+                                '${LocalizationApi().tr('License')}: ${stateAppStream!.projectLicense}'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (stateAppStream!.isVerified())
+                            TextButton.icon(
+                                style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, bottom: 5, right: 5, left: 0),
+                                    alignment: AlignmentDirectional.topStart),
+                                icon: const Icon(Icons.verified),
                                 onPressed: () {
-                                  launchUrl(Uri.parse(url));
+                                  String verifiedUrl =
+                                      stateAppStream!.getVerifiedUrl();
+                                  if (verifiedUrl.isNotEmpty) {
+                                    launchUrl(Uri.parse(verifiedUrl));
+                                  }
                                 },
-                                label: Text(url),
-                              );
-                            }).toList()))
+                                label:
+                                    Text(stateAppStream!.getVerifiedLabel())),
+                        ],
+                      ),
+                    ),
+                    !widget.isMain
+                        ? const SizedBox()
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              getOverrideButton(
+                                  stateAppStream!.isAlreadyInstalled,
+                                  stateAppStream!.isOverrided),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              getInstallButton(
+                                  stateAppStream!.isAlreadyInstalled,
+                                  stateAppStream!.hasRecipe),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              getRunButton(stateAppStream!.isAlreadyInstalled),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                            ],
+                          ),
+                    const SizedBox(width: 10)
                   ],
                 ),
-              ));
+                if (stateAppStream!.screenshotObjList.isNotEmpty)
+                  ListTile(
+                    title: Text(LocalizationApi().tr('Screenshots'),
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .color)),
+                  ),
+                if (stateAppStream!.screenshotObjList.isNotEmpty)
+                  Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Scrollbar(
+                          interactive: false,
+                          thumbVisibility: true,
+                          controller: scrollControllerScreenshot,
+                          child: SingleChildScrollView(
+                              controller: scrollControllerScreenshot,
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                  children: stateAppStream!.screenshotObjList
+                                      .map((screenshotLoop) {
+                                return IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => AlertDialog(
+                                              buttonPadding:
+                                                  const EdgeInsets.all(0),
+                                              content: Image.network(
+                                                  screenshotLoop['large'])));
+                                    },
+                                    icon: Image.network(
+                                        screenshotLoop['preview']));
+                              }).toList())))),
+                Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          stateAppStream!.summary,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge!
+                                  .color),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        HtmlWidget(
+                          stateAppStream!.description,
+                        ),
+                      ],
+                    )),
+                ListTile(
+                    title: Text(
+                  LocalizationApi().tr('Last_releases'),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.headlineLarge!.color),
+                )),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, bottom: 5, right: 5, left: 25),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: stateAppStream!
+                            .getReleaseObjList()
+                            .map((realeaseObjLoop) {
+                          DateTime dateVersion =
+                              DateTime.fromMillisecondsSinceEpoch(
+                                  int.parse(realeaseObjLoop['timestamp']) *
+                                      1000);
+
+                          return Row(children: [
+                            Text(DateFormat('dd/MM/yyyy').format(dateVersion)),
+                            const SizedBox(width: 2),
+                            const Text(':'),
+                            const SizedBox(width: 10),
+                            Text(realeaseObjLoop['version'],
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                          ]);
+                        }).toList())),
+                ListTile(
+                    title: Text(
+                  LocalizationApi().tr('Links'),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.headlineLarge!.color),
+                )),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        top: 5, bottom: 5, right: 5, left: 10),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:
+                            stateAppStream!.getUrlObjList().map((urlObjLoop) {
+                          String url = urlObjLoop['value'].toString();
+
+                          return TextButton.icon(
+                            icon: getIcon(urlObjLoop['key'].toString()),
+                            onPressed: () {
+                              launchUrl(Uri.parse(url));
+                            },
+                            label: Text(url),
+                          );
+                        }).toList()))
+              ],
+            ));
   }
 
   Widget getOverrideButton(bool isAlreadyInstalled, bool isOverrided) {

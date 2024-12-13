@@ -19,16 +19,24 @@ class _SideMenuWithContentLayoutState extends State<SideMenuWithContentLayout> {
         resizeToAvoidBottomInset: true,
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Container(
                 width: 240,
-                child: widget.menu,
+                child: Card(
+                  elevation: 4,
+                  color: Theme.of(context).primaryColorLight,
+                  child: widget.menu,
+                ),
               )),
-          const SizedBox(width: 10),
           Expanded(
               child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: widget.content))
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                  child: Card(
+                      elevation: 4,
+                      color: Theme.of(context).cardColor,
+                      child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: widget.content))))
         ]));
   }
 }

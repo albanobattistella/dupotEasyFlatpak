@@ -58,6 +58,8 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
 
   @override
   void initState() {
+    RecipeApi();
+
     super.initState();
   }
 
@@ -244,8 +246,6 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
 
   @override
   Widget build(BuildContext context) {
-    RecipeApi();
-
     return stateApplicationEntity == null
         ? const CircularProgressIndicator()
         : Scrollbar(

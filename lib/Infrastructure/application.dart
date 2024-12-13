@@ -68,42 +68,46 @@ class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: ThemeData.light(),
         home: Navigator(
-      pages: [
-        if (statePage == NavigationEntity.pageLoading)
-          MaterialPage(
-              key: const ValueKey(NavigationEntity.pageLoading),
-              child: OnlyContentLayout(
-                  handleGoTo: goTo,
-                  content: LoadingView(handle: () {
-                    NavigationEntity.goToHome(handleGoTo: goTo);
-                  })))
-        else
-          MaterialPage(
-              key: const ValueKey(NavigationEntity.pageHome),
-              child: SideMenuWithContentLayout(
-                  menu: getSideMenuView(),
-                  content: getContentView(NavigationEntity.pageHome, true))),
-        if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
-          MaterialPage(
-              key: ValueKey(statePage),
-              child: SideMenuWithContentLayout(
-                  menu: getSideMenuView(),
-                  content: getContentView(statePage, true))),
-        if (stateArgumentMap.containsKey(NavigationEntity.argumentSubPage) &&
-            layoutSetupList[constSideMenuWithContentAndSubContent]!.contains(
-                NavigationEntity.extractArgumentSubPage(stateArgumentMap)))
-          MaterialPage(
-              key: ValueKey(
-                  NavigationEntity.extractArgumentSubPage(stateArgumentMap)),
-              child: SideMenuWithContentAndSubContentLayout(
-                menu: getSideMenuView(),
-                content: getContentView(statePage, false),
-                subContent: getSubContentView(),
-              ))
-      ],
-      onDidRemovePage: (page) => false,
-    ));
+          pages: [
+            if (statePage == NavigationEntity.pageLoading)
+              MaterialPage(
+                  key: const ValueKey(NavigationEntity.pageLoading),
+                  child: OnlyContentLayout(
+                      handleGoTo: goTo,
+                      content: LoadingView(handle: () {
+                        NavigationEntity.goToHome(handleGoTo: goTo);
+                      })))
+            else
+              MaterialPage(
+                  key: const ValueKey(NavigationEntity.pageHome),
+                  child: SideMenuWithContentLayout(
+                      menu: getSideMenuView(),
+                      content:
+                          getContentView(NavigationEntity.pageHome, true))),
+            if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
+              MaterialPage(
+                  key: ValueKey(statePage),
+                  child: SideMenuWithContentLayout(
+                      menu: getSideMenuView(),
+                      content: getContentView(statePage, true))),
+            if (stateArgumentMap
+                    .containsKey(NavigationEntity.argumentSubPage) &&
+                layoutSetupList[constSideMenuWithContentAndSubContent]!
+                    .contains(NavigationEntity.extractArgumentSubPage(
+                        stateArgumentMap)))
+              MaterialPage(
+                  key: ValueKey(NavigationEntity.extractArgumentSubPage(
+                      stateArgumentMap)),
+                  child: SideMenuWithContentAndSubContentLayout(
+                    menu: getSideMenuView(),
+                    content: getContentView(statePage, false),
+                    subContent: getSubContentView(),
+                  ))
+          ],
+          onDidRemovePage: (page) => false,
+        ));
   }
 
   Widget getSideMenuView() {

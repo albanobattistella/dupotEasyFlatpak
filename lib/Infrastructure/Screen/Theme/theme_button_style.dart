@@ -7,7 +7,7 @@ class ThemeButtonStyle {
 
   ButtonStyle getButtonStyle() {
     return ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+        backgroundColor: Theme.of(context).primaryColorDark,
         padding: const EdgeInsets.all(16),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

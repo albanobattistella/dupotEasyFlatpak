@@ -70,7 +70,7 @@ class _CategoryViewState extends State<CategoryView> {
   @override
   Widget build(BuildContext context) {
     return stateAppStreamList.isEmpty
-        ? CircularProgressIndicator()
+        ? const CircularProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,

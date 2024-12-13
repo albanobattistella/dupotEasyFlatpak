@@ -86,29 +86,26 @@ class _SideMenuViewState extends State<SideMenuView> {
   Widget build(BuildContext context) {
     themeTextStyle = ThemeTextStyle(context: context);
 
-    return Card(
-      color: Theme.of(context).primaryColorLight,
-      child: ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          Column(
-            children: stateCategoryMenuItemList
-                .map((menuItemLoop) => getMenuLine(menuItemLoop))
-                .toList(),
+    return ListView(
+      padding: const EdgeInsets.all(10),
+      children: [
+        Column(
+          children: stateCategoryMenuItemList
+              .map((menuItemLoop) => getMenuLine(menuItemLoop))
+              .toList(),
+        ),
+        SizedBox(
+          height: 28,
+          child: ColoredBox(
+            color: Theme.of(context).primaryColorLight,
           ),
-          SizedBox(
-            height: 28,
-            child: ColoredBox(
-              color: Theme.of(context).primaryColorLight,
-            ),
-          ),
-          Column(
-            children: stateBottomMenuItemList
-                .map((menuItemLoop) => getMenuLine(menuItemLoop))
-                .toList(),
-          ),
-        ],
-      ),
+        ),
+        Column(
+          children: stateBottomMenuItemList
+              .map((menuItemLoop) => getMenuLine(menuItemLoop))
+              .toList(),
+        ),
+      ],
     );
   }
 
