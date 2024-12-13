@@ -2,18 +2,27 @@ import 'dart:convert';
 import 'dart:io';
 
 class UserSettingsEntity {
-  int version = 0;
+  int version = 1;
 
   String jsonUserSettingsPath = '';
 
   String applicationDataPath = '';
   String applicationIconPath = '';
 
-  bool userOverrideLanguageCode = false;
+  //language
+  bool userOverrideLanguageCode = false; //if not: system
   String languageCode = 'en';
-  bool userOverrideDarkModeEnabled = false;
+
+  //darkmode
+  bool userOverrideDarkModeEnabled = false; //if not: system
   bool darkModeEnabled = false;
-  bool userInstallationScopeEnabled = false;
+
+  //installation scope
+  bool userInstallationScopeEnabled = false; //scope user/system
+
+  //installed app
+  bool displayApplicationInstalledNumberInSideMenu = false;
+  bool displayApplicationInstalledNumberInPage = false;
 
   static final UserSettingsEntity _singleton = UserSettingsEntity._internal();
 
@@ -31,7 +40,9 @@ class UserSettingsEntity {
           'languageCode',
           'userOverrideDarkModeEnabled',
           'darkModeEnabled',
-          'userInstallationScopeEnabled'
+          'userInstallationScopeEnabled',
+          'displayApplicationInstalledNumberInSideMenu',
+          'displayApplicationInstalledNumberInPage'
         ]) {
           if (!jsonParameterObj.containsKey(mandatoryFieldLoop)) {
             throw Exception(
@@ -56,6 +67,12 @@ class UserSettingsEntity {
 
         _singleton.userInstallationScopeEnabled =
             jsonParameterObj['userInstallationScopeEnabled'];
+
+        _singleton.userInstallationScopeEnabled =
+            jsonParameterObj['displayApplicationInstalledNumberInSideMenu'];
+
+        _singleton.userInstallationScopeEnabled =
+            jsonParameterObj['displayApplicationInstalledNumberInPage'];
       }
     }
     return _singleton;
@@ -98,6 +115,20 @@ class UserSettingsEntity {
     await save();
   }
 
+  Future<void> setDisplayApplicationInstalledNumberInSideMenu(
+      bool displayApplicationInstalledNumberInSideMenu) async {
+    this.displayApplicationInstalledNumberInSideMenu =
+        displayApplicationInstalledNumberInSideMenu;
+    await save();
+  }
+
+  Future<void> setDisplayApplicationInstalledNumberInPage(
+      bool displayApplicationInstalledNumberInPage) async {
+    this.displayApplicationInstalledNumberInPage =
+        displayApplicationInstalledNumberInPage;
+    await save();
+  }
+
   String getLanguageCode() {
     return languageCode;
   }
@@ -117,13 +148,25 @@ class UserSettingsEntity {
     return '--system';
   }
 
+  bool getDisplayApplicationInstalledNumberInSideMenu() {
+    return displayApplicationInstalledNumberInSideMenu;
+  }
+
+  bool getDisplayApplicationInstalledNumberInPage() {
+    return displayApplicationInstalledNumberInPage;
+  }
+
   Future<void> save() async {
     Map<String, dynamic> jsonParameterObj = {
       'userOverrideLanguageCode': userOverrideLanguageCode,
       'languageCode': languageCode,
       'userOverrideDarkModeEnabled': userOverrideDarkModeEnabled,
       'darkModeEnabled': darkModeEnabled,
-      'userInstallationScopeEnabled': userInstallationScopeEnabled
+      'userInstallationScopeEnabled': userInstallationScopeEnabled,
+      'displayApplicationInstalledNumberInSideMenu':
+          displayApplicationInstalledNumberInSideMenu,
+      'displayApplicationInstalledNumberInPage':
+          displayApplicationInstalledNumberInPage
     };
 
     File jsonParameterFile = File(jsonUserSettingsPath);
