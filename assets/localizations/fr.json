@@ -70,5 +70,11 @@
     "update_all": "Tout mettre à jour",
     "successfully_saved": "Sauvegardé avec succès",
     "do_you_confirm_update_selected": "Confirmez-vous vouloir mettre à jour la sélection",
-    "Settings": "Paramètres"
+    "Settings": "Paramètres",
+  "Override_language":"Override language",
+  "Use_system_language":"Use system language",
+  "DarkMode":"DarkMode",
+  "Use_system_darkmode":"Use system darkmode",
+  "Override_darkmode":"Override darkmode",
+  "Display_number_of_installedapps_in_sidemenu":"Display number of installed applications in side menu"
 }

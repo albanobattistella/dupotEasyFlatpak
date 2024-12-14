@@ -10,11 +10,14 @@ class SideMenuView extends StatefulWidget {
   Map<String, String> argumentMapSelected;
   Function handleGoTo;
 
+  int interfaceVersion = 0;
+
   SideMenuView(
       {super.key,
       required this.pageSelected,
       required this.argumentMapSelected,
-      required this.handleGoTo});
+      required this.handleGoTo,
+      required this.interfaceVersion});
 
   @override
   State<SideMenuView> createState() => _SideMenuViewState();
@@ -46,6 +49,8 @@ class _SideMenuViewState extends State<SideMenuView> {
                     NavigationEntity.argumentCategoryId]! !=
                 widget.argumentMapSelected![
                     NavigationEntity.argumentCategoryId])) {
+      loadData(false);
+    } else if (oldWidget.interfaceVersion != widget.interfaceVersion) {
       loadData(false);
     }
 

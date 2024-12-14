@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
@@ -70,7 +71,7 @@ class SideMenuViewModel {
         },
         pageSelected: NavigationEntity.pageInstalledApplication,
         categoryIdSelected: '',
-        badge: getInstalledAppLabel(),
+        badge: await getInstalledAppLabel(),
         icon: Icons.install_desktop));
     menuItemList.add(MenuItemEntity(
         label: 'Updates',
@@ -107,7 +108,12 @@ class SideMenuViewModel {
     return menuItemList;
   }
 
-  String getInstalledAppLabel() {
+  Future<String> getInstalledAppLabel() async {
+    if (UserSettingsEntity().getDisplayApplicationInstalledNumberInSideMenu()) {
+      List<String> installedApplicationList =
+          await CommandApi().getInstalledApplicationList();
+      return installedApplicationList.length.toString();
+    }
     return '';
   }
 

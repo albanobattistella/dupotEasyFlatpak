@@ -1,10 +1,22 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/darkmode_form.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/language_form.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/parameter_page_form.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/scope_form.dart';
+
 import 'package:flutter/material.dart';
 
 class UserSettingsView extends StatefulWidget {
   Function handleGoTo;
+  Function handleReload;
+  Function handleReloadLanguage;
 
-  UserSettingsView({super.key, required this.handleGoTo});
+  UserSettingsView(
+      {super.key,
+      required this.handleGoTo,
+      required this.handleReload,
+      required this.handleReloadLanguage});
 
   @override
   State<UserSettingsView> createState() => _UserSettingsViewState();
@@ -31,6 +43,14 @@ class _UserSettingsViewState extends State<UserSettingsView> {
     });
   }
 
+  updateStateUserSettings(UserSettingsEntity newUserSettings) {
+    setState(() {
+      stateUserSettingsEntity = newUserSettings;
+    });
+
+    widget.handleReload();
+  }
+
   @override
   Widget build(BuildContext context) {
     //language
@@ -47,7 +67,21 @@ class _UserSettingsViewState extends State<UserSettingsView> {
               controller: scrollController,
               children: [
                 Column(
-                  children: [],
+                  children: [
+                    LanguageForm(
+                        userSettings: stateUserSettingsEntity,
+                        handleUpdateUserSettings: updateStateUserSettings,
+                        handleReloadLanguage: widget.handleReloadLanguage),
+                    DarkmodeForm(
+                        userSettings: stateUserSettingsEntity,
+                        handleUpdateUserSettings: updateStateUserSettings),
+                    ScopeForm(
+                        userSettings: stateUserSettingsEntity,
+                        handleUpdateUserSettings: updateStateUserSettings),
+                    ParameterPageForm(
+                        userSettings: stateUserSettingsEntity,
+                        handleUpdateUserSettings: updateStateUserSettings)
+                  ],
                 )
               ],
             ));

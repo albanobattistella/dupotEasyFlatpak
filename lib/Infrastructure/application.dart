@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
@@ -13,6 +14,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applications_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/loading_view.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/reload_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/search_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/updates_availables_view.dart';
@@ -57,6 +59,11 @@ class _ApplicationState extends State<Application> {
   Map<String, String> stateArgumentMap = {};
   String stateSearched = '';
 
+  String statePreviousPage = NavigationEntity.pageHome;
+  Map<String, String> statePreviousPArgumentMap = {};
+
+  int stateInterfaceVersion = 0;
+
   @override
   void initState() {
     print('init application');
@@ -68,7 +75,9 @@ class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData.light(),
+        theme: UserSettingsEntity().getActiveDarkModeEnabled()
+            ? ThemeData.dark()
+            : ThemeData.light(),
         home: Navigator(
           pages: [
             if (statePage == NavigationEntity.pageLoading)
@@ -77,7 +86,7 @@ class _ApplicationState extends State<Application> {
                   child: OnlyContentLayout(
                       handleGoTo: goTo,
                       content: LoadingView(handle: () {
-                        NavigationEntity.goToHome(handleGoTo: goTo);
+                        goToPrevious();
                       })))
             else
               MaterialPage(
@@ -112,6 +121,7 @@ class _ApplicationState extends State<Application> {
 
   Widget getSideMenuView() {
     return SideMenuView(
+      interfaceVersion: stateInterfaceVersion,
       pageSelected: statePage,
       argumentMapSelected: stateArgumentMap,
       handleGoTo: goTo,
@@ -157,12 +167,15 @@ class _ApplicationState extends State<Application> {
       );
     } else if (pageToLoad == NavigationEntity.pageUserSettings) {
       return UserSettingsView(
-        handleGoTo: goTo,
-      );
+          handleGoTo: goTo,
+          handleReload: reload,
+          handleReloadLanguage: reloadLanguage);
     }
 
     throw new Exception('missing content view for statePage $statePage');
   }
+
+  reloadLanguage() {}
 
   Widget getSubContentView() {
     String subPageToLoad = stateArgumentMap[NavigationEntity.argumentSubPage]!;
@@ -220,6 +233,19 @@ class _ApplicationState extends State<Application> {
         'missing content sub view for subPageToLoad $subPageToLoad');
   }
 
+  void goToPrevious() {
+    setState(() {
+      statePage = statePreviousPage;
+      stateArgumentMap = statePreviousPArgumentMap;
+    });
+  }
+
+  void reload() {
+    setState(() {
+      stateInterfaceVersion = (stateInterfaceVersion + 1);
+    });
+  }
+
   void goTo({required String page, required Map<String, String> argumentMap}) {
     if (NavigationEntity.hasArgumentSearch(argumentMap)) {
       setState(() {
@@ -228,6 +254,9 @@ class _ApplicationState extends State<Application> {
     }
 
     setState(() {
+      statePreviousPage = statePage;
+      statePreviousPArgumentMap = stateArgumentMap;
+
       statePage = page;
       stateArgumentMap = argumentMap;
     });

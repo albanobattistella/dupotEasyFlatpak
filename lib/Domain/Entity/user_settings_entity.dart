@@ -104,8 +104,19 @@ class UserSettingsEntity {
     await save();
   }
 
-  Future<void> setDarModeEnabled(bool newDarkModeEnabled) async {
+  Future<void> setDarkModeEnabled(bool newDarkModeEnabled) async {
     darkModeEnabled = newDarkModeEnabled;
+    await save();
+  }
+
+  Future<void> setUserOverrideLanguageCode(
+      bool userOverrideLanguageCode) async {
+    this.userOverrideLanguageCode = userOverrideLanguageCode;
+    await save();
+  }
+
+  Future<void> setUserOverrideDarkMode(bool userOverrideDarkModeEnabled) async {
+    this.userOverrideDarkModeEnabled = userOverrideDarkModeEnabled;
     await save();
   }
 
@@ -129,11 +140,19 @@ class UserSettingsEntity {
     await save();
   }
 
-  String getLanguageCode() {
+  String getActiveLanguageCode() {
+    return getUserLanguageCode();
+  }
+
+  String getUserLanguageCode() {
     return languageCode;
   }
 
-  bool getDarkModeEnabled() {
+  bool getActiveDarkModeEnabled() {
+    return getUserDarkModeEnabled();
+  }
+
+  bool getUserDarkModeEnabled() {
     return darkModeEnabled;
   }
 
@@ -170,6 +189,9 @@ class UserSettingsEntity {
     };
 
     File jsonParameterFile = File(jsonUserSettingsPath);
-    jsonParameterFile.writeAsStringSync(jsonEncode(jsonParameterObj));
+    JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    jsonParameterFile.writeAsStringSync(encoder.convert(
+      jsonParameterObj,
+    ));
   }
 }

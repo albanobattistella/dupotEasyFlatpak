@@ -7,6 +7,7 @@ class NavigationEntity {
   static const String pageSearch = 'search';
   static const String pageUpdateAvailables = 'updatesAvailables';
   static const String pageUserSettings = 'userSettings';
+  static const String pageReload = 'reload';
 
   static const String argumentApplicationId = 'applicationId';
   static const String argumentCategoryId = 'categoryId';
@@ -27,6 +28,10 @@ class NavigationEntity {
       'application_id_selected_list';
 
   static const String argumentSearch = 'search';
+
+  static goToReload({required Function handleGoTo}) {
+    handleGoTo(page: pageLoading, argumentMap: {'': ''});
+  }
 
   static goToHome({required Function handleGoTo}) {
     handleGoTo(page: pageHome, argumentMap: {'': ''});
