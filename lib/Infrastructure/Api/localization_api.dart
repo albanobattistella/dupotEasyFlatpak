@@ -22,7 +22,14 @@ class LocalizationApi {
   }
 
   void setLanguageCode(String newLanguageCode) {
-    _singleton.languageCode = newLanguageCode;
+    if (newLanguageCode.contains('_')) {
+      List<String> newLanguageCodeList = newLanguageCode.split('_');
+      languageCode = newLanguageCodeList[0];
+    }
+
+    if (_localizedValues.containsKey(newLanguageCode)) {
+      _singleton.languageCode = newLanguageCode;
+    }
   }
 
   LocalizationApi._internal();

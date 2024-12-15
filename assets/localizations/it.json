@@ -76,5 +76,7 @@
   "DarkMode":"DarkMode",
   "Use_system_darkmode":"Use system darkmode",
   "Override_darkmode":"Override darkmode",
-  "Display_number_of_installedapps_in_sidemenu":"Display number of installed applications in side menu"
+  "Display_number_of_installedapps_in_sidemenu":"Display number of installed applications in side menu",
+  "About":"About",
+  "Version":"Version"
 }

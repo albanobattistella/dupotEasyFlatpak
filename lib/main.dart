@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dupot_easy_flatpak/Domain/Entity/settings_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/application.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,6 +95,12 @@ void main() async {
 
     UserSettingsEntity userSettings = UserSettingsEntity(userSettingsFile.path);
     userSettings.setApplicationDataPath(applicationDataDirectory.path);
+
+    if (userSettings.userOverrideLanguageCode) {
+      LocalizationApi().setLanguageCode(userSettings.getUserLanguageCode());
+    } else {
+      LocalizationApi().setLanguageCode(Platform.localeName);
+    }
 
     Settings settingsObj = Settings();
     settingsObj.load().then((value) {

@@ -6,9 +6,12 @@ class ThemeTextStyle {
   ThemeTextStyle({required this.context});
 
   Color getHeadlineTextColor(bool isSelected) {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return isSelected ? Colors.white : Colors.black;
+    }
     return isSelected
         ? Colors.white
-        : Theme.of(context).textTheme.bodyLarge!.color!;
+        : Theme.of(context).textTheme.bodyMedium!.color!;
   }
 
   Color getHeadlineBackgroundColor(bool isSelected) {

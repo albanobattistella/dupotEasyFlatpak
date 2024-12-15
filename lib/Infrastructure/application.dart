@@ -9,6 +9,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/override_subvie
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/uninstall_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_all_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_subview.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/about_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
@@ -20,6 +21,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dar
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/updates_availables_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/user_settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Application extends StatefulWidget {
   const Application({super.key});
@@ -43,7 +45,8 @@ class _ApplicationState extends State<Application> {
       NavigationEntity.pageInstalledApplication,
       NavigationEntity.pageSearch,
       NavigationEntity.pageUpdateAvailables,
-      NavigationEntity.pageUserSettings
+      NavigationEntity.pageUserSettings,
+      NavigationEntity.pageAbout
     ],
     constSideMenuWithContentAndSubContent: [
       NavigationEntity.argumentSubPageInstall,
@@ -64,12 +67,21 @@ class _ApplicationState extends State<Application> {
 
   int stateInterfaceVersion = 0;
 
+  String version = '';
+
   @override
   void initState() {
     print('init application');
     print('statePage: $statePage');
 
+    processInit();
+
     super.initState();
+  }
+
+  void processInit() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
   }
 
   @override
@@ -170,6 +182,10 @@ class _ApplicationState extends State<Application> {
           handleGoTo: goTo,
           handleReload: reload,
           handleReloadLanguage: reloadLanguage);
+    } else if (pageToLoad == NavigationEntity.pageAbout) {
+      return AboutView(
+        version: version,
+      );
     }
 
     throw new Exception('missing content view for statePage $statePage');

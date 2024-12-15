@@ -105,6 +105,18 @@ class SideMenuViewModel {
         badge: '',
         icon: Icons.search));
 
+    menuItemList.add(MenuItemEntity(
+        label: 'About',
+        action: () {
+          NavigationEntity.goToAbout(
+            handleGoTo: handleGoTo,
+          );
+        },
+        pageSelected: NavigationEntity.pageAbout,
+        categoryIdSelected: '',
+        badge: '',
+        icon: Icons.help));
+
     return menuItemList;
   }
 

@@ -8,6 +8,7 @@ class NavigationEntity {
   static const String pageUpdateAvailables = 'updatesAvailables';
   static const String pageUserSettings = 'userSettings';
   static const String pageReload = 'reload';
+  static const String pageAbout = 'about';
 
   static const String argumentApplicationId = 'applicationId';
   static const String argumentCategoryId = 'categoryId';
@@ -39,6 +40,10 @@ class NavigationEntity {
 
   static goToSearch({required Function handleGoTo, required String search}) {
     handleGoTo(page: pageSearch, argumentMap: {argumentSearch: search});
+  }
+
+  static goToAbout({required Function handleGoTo}) {
+    handleGoTo(page: pageAbout, argumentMap: {'': ''});
   }
 
   static goToUpdatesAvailables({required Function handleGoTo}) {

@@ -126,7 +126,7 @@ class _SideMenuViewState extends State<SideMenuView> {
     }
 
     return ListTile(
-        visualDensity: const VisualDensity(vertical: -3),
+        visualDensity: const VisualDensity(vertical: -4),
         contentPadding: const EdgeInsets.all(0),
         minVerticalPadding: 0,
         tileColor: themeTextStyle.getHeadlineBackgroundColor(isSelected),
