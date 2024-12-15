@@ -170,6 +170,12 @@ class ApplicationRepository {
     return rowList[0];
   }
 
+  Future<void> deleteApplicationId(String applicationId) async {
+    final db = await getDb();
+    await db.rawDelete(
+        'DELETE FROM $constTableApplication WHERE id = ?', [applicationId]);
+  }
+
   Future<List<String>> findAllApplicationIdList() async {
     final db = await getDb();
     // Query the table for all the dogs.

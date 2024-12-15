@@ -91,6 +91,16 @@ class _ApplicationState extends State<Application> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themData = ThemeData(
+      useMaterial3: true,
+
+      primaryColorLight: Colors.blueGrey,
+      brightness: Brightness.dark,
+
+      // Define the default `TextTheme`. Use this to specify the default
+      // text styling for headlines, titles, bodies of text, and more.
+    );
+
     return KeyboardListener(
         focusNode: _focusNode,
         autofocus: true,
@@ -107,7 +117,7 @@ class _ApplicationState extends State<Application> {
         },
         child: MaterialApp(
             theme: UserSettingsEntity().getActiveDarkModeEnabled()
-                ? ThemeData.dark()
+                ? themData
                 : ThemeData.light(),
             home: Navigator(
               pages: [
@@ -184,6 +194,7 @@ class _ApplicationState extends State<Application> {
 
       return ApplicationView(
         handleGoTo: goTo,
+        handleGoToPrevious: goToPrevious,
         applicationIdSelected: newAppId,
         isMain: (!isMain ||
                 stateArgumentMap.containsKey(NavigationEntity.argumentSubPage))

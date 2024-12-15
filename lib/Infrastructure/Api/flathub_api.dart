@@ -17,10 +17,16 @@ class FlathubApi {
 
   FlathubApi({required this.applicationRepository});
 
-  Future<void> updateAppStream(String applicationId) async {
+  Future<bool> updateAppStream(String applicationId) async {
+    if (!await applicationExist(applicationId)) {
+      return false;
+    }
+
     ApplicationEntity appStream = await getApplicationEntity(applicationId);
 
     await applicationRepository.updateApplicationEntity(appStream);
+
+    return true;
   }
 
   Future<void> load() async {
@@ -100,6 +106,16 @@ class FlathubApi {
 
     List<dynamic> appStreamIdList = jsonDecode(apiContent.body);
     return appStreamIdList;
+  }
+
+  Future<bool> applicationExist(String appSteamId) async {
+    var apiContent = await http
+        .get(Uri.parse('https://flathub.org/api/v2/appstream/$appSteamId'));
+
+    if (apiContent.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 
   Future<ApplicationEntity> getApplicationEntity(String appSteamId) async {

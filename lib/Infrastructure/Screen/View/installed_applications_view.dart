@@ -1,5 +1,6 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/grid_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/listview_application_list_component.dart';
@@ -71,6 +72,10 @@ class _InstalledApplicationsViewState extends State<InstalledApplicationsView> {
             Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(children: [
+                  Text(
+                    "${LocalizationApi().tr('Total')} : ${stateAppStreamList.length.toString()}",
+                    style: TextStyle(fontSize: 18),
+                  ),
                   const Expanded(child: SizedBox()),
                   SegmentedButton<AppDisplay>(
                     // ToggleButtons above allows multiple or no selection.

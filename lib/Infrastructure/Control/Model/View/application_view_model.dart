@@ -13,8 +13,13 @@ class ApplicationViewModel {
 
     if (applicationEntity.lastUpdateIsOlderThan(7)) {
       print('update from api');
-      await FlathubApi(applicationRepository: appStreamFactory)
-          .updateAppStream(appId);
+      if (!await FlathubApi(applicationRepository: appStreamFactory)
+          .updateAppStream(appId)) {
+        applicationEntity.isEmpty = true;
+
+        await ApplicationRepository().deleteApplicationId(appId);
+        return applicationEntity;
+      }
 
       applicationEntity =
           await appStreamFactory.findApplicationEntityById(appId);

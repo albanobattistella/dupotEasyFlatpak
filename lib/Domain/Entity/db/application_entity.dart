@@ -27,6 +27,8 @@ class ApplicationEntity {
   bool isOverrided = false;
   bool hasUpdate = false;
 
+  bool isEmpty = false;
+
   ApplicationEntity(
       {required this.id,
       required this.name,

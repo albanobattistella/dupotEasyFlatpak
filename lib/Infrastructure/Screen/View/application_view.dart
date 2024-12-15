@@ -21,6 +21,7 @@ class ApplicationView extends StatefulWidget {
   String applicationIdSelected;
 
   Function handleGoTo;
+  Function handleGoToPrevious;
 
   bool isMain;
 
@@ -28,6 +29,7 @@ class ApplicationView extends StatefulWidget {
       {super.key,
       required this.applicationIdSelected,
       required this.handleGoTo,
+      required this.handleGoToPrevious,
       required this.isMain});
 
   void goToInstallation() {
@@ -102,6 +104,10 @@ class _ApplicationViewState extends State<ApplicationView> {
 
     ApplicationEntity appStream = await ApplicationViewModel()
         .getApplicationEntity(applicationIdSelected);
+
+    if (appStream.isEmpty) {
+      return widget.handleGoToPrevious();
+    }
 
     setState(() {
       stateAppStream = appStream;

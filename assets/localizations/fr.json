@@ -78,5 +78,6 @@
   "Override_darkmode":"Forcer le mode sombre",
   "Display_number_of_installedapps_in_sidemenu":"Afficher le nombre d'applications installées dans le menu",
   "About":"A propos",
-  "Version":"Version"
+  "Version":"Version",
+  "Total":"Total"
 }
