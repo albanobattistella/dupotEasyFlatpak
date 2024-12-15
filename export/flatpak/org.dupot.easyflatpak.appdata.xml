@@ -64,13 +64,22 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+
+    <release date="2024-12-15" version="3.0.5">
+      <description>
+        <ul>
+          <li>Application rewrite</li>
+          <li>Reorganisation, new design</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-11-24" version="2.20.3">
       <description>
         <ul>
           <li>Add buttons to switch display on category and installed applications</li>
           <li>Bug fix on installed application view (missing some installed applications)</li>
         </ul>
-
       </description>
     </release>
 
@@ -91,7 +100,6 @@
           <li>Update logo</li>
           <li>Code improvment: move localizations into json assets files</li>
         </ul>
-
       </description>
     </release>
 
@@ -101,7 +109,6 @@
         <ul>
           <li>Add a progress bar </li>
         </ul>
-
       </description>
     </release>
 
@@ -111,7 +118,6 @@
           <li>Fix update availables page  </li>
           <li>Add number of installed applications  </li>
         </ul>
-
       </description>
     </release>
 
@@ -120,7 +126,6 @@
         <ul>
           <li>Fix update availables page </li>
         </ul>
-
       </description>
     </release>
 
@@ -129,7 +134,6 @@
         <ul>
           <li>Error on installation on fedora, need to force flathub repo</li>
         </ul>
-
       </description>
     </release>
 
@@ -138,7 +142,6 @@
         <ul>
           <li>Rollback to check updates available</li>
         </ul>
-
       </description>
     </release>
 
@@ -148,7 +151,6 @@
         <ul>
           <li>Bug fix on last change to use window manager host</li>
         </ul>
-
       </description>
     </release>
 
@@ -159,7 +161,6 @@
           <li>Bug fix on update availables page</li>
           <li>Use window manager host</li>
         </ul>
-
       </description>
     </release>
 
@@ -168,7 +169,6 @@
         <ul>
           <li>Update some icons</li>
         </ul>
-
       </description>
     </release>
 
@@ -182,7 +182,6 @@
           <li>Update flathub screenshosts</li>
           <li>Update italian traduction</li>
         </ul>
-
       </description>
     </release>
 
@@ -195,7 +194,6 @@
           <li>Add new feature to enable some environment variable like mango hud for steam</li>
           <li>Update flathub screenshosts</li>
         </ul>
-
       </description>
     </release>
 
@@ -207,7 +205,6 @@
           <li>Add new feature to enable some environment variable like mango hud for steam</li>
           <li>Update flathub screenshosts</li>
         </ul>
-
       </description>
     </release>
 
@@ -217,7 +214,6 @@
           <li>Add new feature: modify recipe overrided</li>
           <li>Improve home page</li>
         </ul>
-
       </description>
     </release>
 
@@ -228,7 +224,6 @@
           <li>Update home page to use this new column to order applications</li>
           <li>In application page, display last releases</li>
         </ul>
-
       </description>
     </release>
 
@@ -238,7 +233,6 @@
           <li>Improve side menu icons</li>
           <li>Update applications data</li>
         </ul>
-
       </description>
     </release>
 
@@ -247,7 +241,6 @@
         <ul>
           <li>Improve side menu icons</li>
         </ul>
-
       </description>
     </release>
 
@@ -256,7 +249,6 @@
         <ul>
           <li>Bug fix in FR traduction</li>
         </ul>
-
       </description>
     </release>
 
@@ -267,7 +259,6 @@
           <li>Improve display</li>
           <li>Update flathub screenshosts</li>
         </ul>
-
       </description>
     </release>
 
@@ -277,7 +268,6 @@
           <li>Bug fix on application installed list</li>
           <li>Improve display</li>
         </ul>
-
       </description>
     </release>
 
@@ -287,7 +277,6 @@
           <li>Bug fix on application installed list</li>
           <li>Improve display</li>
         </ul>
-
       </description>
     </release>
 
@@ -297,7 +286,6 @@
           <li>Bug fix on update application </li>
           <li>Bug fix on back button when click on application to update </li>
         </ul>
-
       </description>
     </release>
 
@@ -307,7 +295,6 @@
         <ul>
           <li>Add option when uninstall to delete all application data</li>
         </ul>
-
       </description>
     </release>
 
