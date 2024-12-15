@@ -27,6 +27,8 @@ class _SearchViewState extends State<SearchView> {
   void initState() {
     super.initState();
 
+    _searchController.text = widget.searched;
+
     loadData();
   }
 

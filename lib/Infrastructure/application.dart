@@ -21,6 +21,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dar
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/updates_availables_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/user_settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Application extends StatefulWidget {
@@ -69,6 +70,10 @@ class _ApplicationState extends State<Application> {
 
   String version = '';
 
+  final FocusNode _focusNode = FocusNode();
+
+  final alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
+
   @override
   void initState() {
     print('init application');
@@ -86,49 +91,71 @@ class _ApplicationState extends State<Application> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: UserSettingsEntity().getActiveDarkModeEnabled()
-            ? ThemeData.dark()
-            : ThemeData.light(),
-        home: Navigator(
-          pages: [
-            if (statePage == NavigationEntity.pageLoading)
-              MaterialPage(
-                  key: const ValueKey(NavigationEntity.pageLoading),
-                  child: OnlyContentLayout(
-                      handleGoTo: goTo,
-                      content: LoadingView(handle: () {
-                        goToPrevious();
-                      })))
-            else
-              MaterialPage(
-                  key: const ValueKey(NavigationEntity.pageHome),
-                  child: SideMenuWithContentLayout(
-                      menu: getSideMenuView(),
-                      content:
-                          getContentView(NavigationEntity.pageHome, true))),
-            if (layoutSetupList[constSideMenuWithContent]!.contains(statePage))
-              MaterialPage(
-                  key: ValueKey(statePage),
-                  child: SideMenuWithContentLayout(
-                      menu: getSideMenuView(),
-                      content: getContentView(statePage, true))),
-            if (stateArgumentMap
-                    .containsKey(NavigationEntity.argumentSubPage) &&
-                layoutSetupList[constSideMenuWithContentAndSubContent]!
-                    .contains(NavigationEntity.extractArgumentSubPage(
-                        stateArgumentMap)))
-              MaterialPage(
-                  key: ValueKey(NavigationEntity.extractArgumentSubPage(
-                      stateArgumentMap)),
-                  child: SideMenuWithContentAndSubContentLayout(
-                    menu: getSideMenuView(),
-                    content: getContentView(statePage, false),
-                    subContent: getSubContentView(),
-                  ))
-          ],
-          onDidRemovePage: (page) => false,
-        ));
+    return KeyboardListener(
+        focusNode: _focusNode,
+        autofocus: true,
+        onKeyEvent: (event) {
+          if (![
+                NavigationEntity.argumentSubPageOverride,
+                NavigationEntity.argumentSubPageInstallWithRecipe
+              ].contains(getSubPage()) &&
+              event is KeyDownEvent &&
+              alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
+            NavigationEntity.goToSearch(
+                handleGoTo: goTo, search: event.logicalKey.keyLabel.toString());
+          }
+        },
+        child: MaterialApp(
+            theme: UserSettingsEntity().getActiveDarkModeEnabled()
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            home: Navigator(
+              pages: [
+                if (statePage == NavigationEntity.pageLoading)
+                  MaterialPage(
+                      key: const ValueKey(NavigationEntity.pageLoading),
+                      child: OnlyContentLayout(
+                          handleGoTo: goTo,
+                          content: LoadingView(handle: () {
+                            goToPrevious();
+                          })))
+                else
+                  MaterialPage(
+                      key: const ValueKey(NavigationEntity.pageHome),
+                      child: SideMenuWithContentLayout(
+                          menu: getSideMenuView(),
+                          content:
+                              getContentView(NavigationEntity.pageHome, true))),
+                if (layoutSetupList[constSideMenuWithContent]!
+                    .contains(statePage))
+                  MaterialPage(
+                      key: ValueKey(statePage),
+                      child: SideMenuWithContentLayout(
+                          menu: getSideMenuView(),
+                          content: getContentView(statePage, true))),
+                if (stateArgumentMap
+                        .containsKey(NavigationEntity.argumentSubPage) &&
+                    layoutSetupList[constSideMenuWithContentAndSubContent]!
+                        .contains(NavigationEntity.extractArgumentSubPage(
+                            stateArgumentMap)))
+                  MaterialPage(
+                      key: ValueKey(NavigationEntity.extractArgumentSubPage(
+                          stateArgumentMap)),
+                      child: SideMenuWithContentAndSubContentLayout(
+                        menu: getSideMenuView(),
+                        content: getContentView(statePage, false),
+                        subContent: getSubContentView(),
+                      ))
+              ],
+              onDidRemovePage: (page) => false,
+            )));
+  }
+
+  String getSubPage() {
+    if (stateArgumentMap.containsKey(NavigationEntity.argumentSubPage)) {
+      return NavigationEntity.extractArgumentSubPage(stateArgumentMap);
+    }
+    return '';
   }
 
   Widget getSideMenuView() {
