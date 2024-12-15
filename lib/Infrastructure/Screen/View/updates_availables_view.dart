@@ -122,6 +122,7 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
               stateCheckboxList = checkboxList;
             });
           },
+          enabled: applicationEntityFound != null,
           value: stateCheckboxList[applicationUpdate.id.toLowerCase()],
           title: Column(
             children: [

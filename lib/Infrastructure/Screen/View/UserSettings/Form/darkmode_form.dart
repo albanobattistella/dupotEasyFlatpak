@@ -45,8 +45,8 @@ class _DarkmodeFormState extends State<DarkmodeForm> {
               children: <Widget>[
                 RadioBoolListSubform(
                     radioBoolEntityList: [
-                      RadioBoolEntity(
-                          label: 'Use_system_darkmode', value: false),
+                      // RadioBoolEntity(
+                      //    label: 'Use_system_darkmode', value: false),
                       RadioBoolEntity(label: 'Override_darkmode', value: true)
                     ],
                     value: widget.userSettings.userOverrideDarkModeEnabled,

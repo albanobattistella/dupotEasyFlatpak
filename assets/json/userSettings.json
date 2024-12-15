@@ -3,7 +3,7 @@
     "applicationDataPath": "",
     "userOverrideLanguageCode": false,
     "languageCode": "en",
-    "userOverrideDarkModeEnabled": false,
+    "userOverrideDarkModeEnabled": true,
     "darkModeEnabled": false,
     "userInstallationScopeEnabled": false,
     "displayApplicationInstalledNumberInSideMenu": false,

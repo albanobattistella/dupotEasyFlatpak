@@ -65,7 +65,7 @@
   <releases>
 
 
-    <release date="2024-12-15" version="3.0.5">
+    <release date="2024-12-15" version="3.0.6">
       <description>
         <ul>
           <li>Application rewrite</li>
