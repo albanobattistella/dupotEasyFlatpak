@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
@@ -122,9 +123,14 @@ class SideMenuViewModel {
 
   Future<String> getInstalledAppLabel() async {
     if (UserSettingsEntity().getDisplayApplicationInstalledNumberInSideMenu()) {
-      List<String> installedApplicationList =
+      List<String> installedApplicationIdList =
           await CommandApi().getInstalledApplicationList();
-      return installedApplicationList.length.toString();
+
+      List<ApplicationEntity> applicationEntityList =
+          await ApplicationRepository()
+              .findListApplicationEntityByIdList(installedApplicationIdList);
+
+      return applicationEntityList.length.toString();
     }
     return '';
   }

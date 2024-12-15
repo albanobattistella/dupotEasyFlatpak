@@ -35,7 +35,6 @@ class UserSettingsEntity {
         Map<String, dynamic> jsonParameterObj = jsonDecode(jsonParameterString);
         for (String mandatoryFieldLoop in [
           'version',
-          'applicationDataPath',
           'userOverrideLanguageCode',
           'languageCode',
           'userOverrideDarkModeEnabled',
@@ -51,7 +50,9 @@ class UserSettingsEntity {
         }
         _singleton.version = jsonParameterObj['version'];
         _singleton.applicationDataPath =
-            jsonParameterObj['applicationDataPath'];
+            jsonParameterObj.containsKey('applicationDataPath')
+                ? jsonParameterObj['applicationDataPath']
+                : '';
         _singleton.userOverrideLanguageCode =
             jsonParameterObj['userOverrideLanguageCode'];
         _singleton.userOverrideDarkModeEnabled =
@@ -68,10 +69,10 @@ class UserSettingsEntity {
         _singleton.userInstallationScopeEnabled =
             jsonParameterObj['userInstallationScopeEnabled'];
 
-        _singleton.userInstallationScopeEnabled =
+        _singleton.displayApplicationInstalledNumberInSideMenu =
             jsonParameterObj['displayApplicationInstalledNumberInSideMenu'];
 
-        _singleton.userInstallationScopeEnabled =
+        _singleton.displayApplicationInstalledNumberInPage =
             jsonParameterObj['displayApplicationInstalledNumberInPage'];
       }
     }
@@ -177,6 +178,7 @@ class UserSettingsEntity {
 
   Future<void> save() async {
     Map<String, dynamic> jsonParameterObj = {
+      'version': version,
       'userOverrideLanguageCode': userOverrideLanguageCode,
       'languageCode': languageCode,
       'userOverrideDarkModeEnabled': userOverrideDarkModeEnabled,

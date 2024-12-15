@@ -72,7 +72,10 @@ void main() async {
             await rootBundle.loadString('assets/json/userSettings.json');
         Map<String, dynamic> defaultUserSettingObj =
             jsonDecode(jsonDefaultUserSettingsString);
-        if (defaultUserSettingObj['version'] != userSettingsObj['version']) {
+        if (!userSettingsObj.containsKey('version')) {
+          shouldCopyUserSettings = true;
+        } else if (defaultUserSettingObj['version'] !=
+            userSettingsObj['version']) {
           shouldCopyUserSettings = true;
         }
       }
