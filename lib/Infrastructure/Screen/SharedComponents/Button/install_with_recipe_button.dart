@@ -44,8 +44,10 @@ class InstallWithRecipeButton extends StatelessWidget {
                             '${LocalizationApi().tr('do_you_confirm_installation_of')} ${applicationEntity.name} ?'),
                       ));
             },
-      label: Text(LocalizationApi().tr('install_with_recipe')),
-      icon: const Icon(Icons.install_desktop),
+      label: Text(LocalizationApi().tr('install_with_recipe'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.install_desktop,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

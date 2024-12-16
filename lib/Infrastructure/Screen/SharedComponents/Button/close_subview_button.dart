@@ -21,8 +21,10 @@ class CloseSubViewButton extends StatelessWidget {
       onPressed: () {
         handle();
       },
-      label: Text(LocalizationApi().tr('close')),
-      icon: const Icon(Icons.close),
+      label: Text(LocalizationApi().tr('close'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon:
+          Icon(Icons.close, color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

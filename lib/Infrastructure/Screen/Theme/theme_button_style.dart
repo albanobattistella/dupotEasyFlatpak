@@ -5,6 +5,14 @@ class ThemeButtonStyle {
 
   ThemeButtonStyle({required this.context});
 
+  TextStyle getButtonTextStyle() {
+    if (Theme.of(context).brightness == Brightness.dark) {
+      return TextStyle(fontSize: 14, color: Colors.white);
+    }
+
+    return TextStyle(fontSize: 14, color: Colors.white);
+  }
+
   ButtonStyle getButtonStyle() {
     if (Theme.of(context).brightness == Brightness.dark) {
       return ElevatedButton.styleFrom(
@@ -12,7 +20,7 @@ class ThemeButtonStyle {
           padding: const EdgeInsets.all(16),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          textStyle: const TextStyle(fontSize: 14, color: Colors.white));
+          textStyle: getButtonTextStyle());
     }
 
     return ElevatedButton.styleFrom(

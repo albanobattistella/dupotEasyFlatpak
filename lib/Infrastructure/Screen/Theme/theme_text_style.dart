@@ -7,7 +7,7 @@ class ThemeTextStyle {
 
   Color getHeadlineTextColor(bool isSelected) {
     if (Theme.of(context).brightness == Brightness.dark) {
-      return isSelected ? Colors.white : Colors.black;
+      return isSelected ? Colors.blueAccent : Colors.white;
     }
     return isSelected
         ? Colors.white

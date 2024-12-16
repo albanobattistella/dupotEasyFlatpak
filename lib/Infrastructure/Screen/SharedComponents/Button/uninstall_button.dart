@@ -91,8 +91,10 @@ class _UninstallButtonState extends State<UninstallButton> {
 
               //install(application);
             },
-      label: Text(LocalizationApi().tr('uninstall')),
-      icon: const Icon(Icons.delete_forever),
+      label: Text(LocalizationApi().tr('uninstall'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.delete_forever,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

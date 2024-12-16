@@ -27,8 +27,10 @@ class OverrideButton extends StatelessWidget {
           : () {
               handle();
             },
-      label: Text(LocalizationApi().tr('Edit_override')),
-      icon: const Icon(Icons.settings),
+      label: Text(LocalizationApi().tr('Edit_override'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.settings,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

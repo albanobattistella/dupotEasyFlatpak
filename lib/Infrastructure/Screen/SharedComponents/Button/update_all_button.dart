@@ -38,8 +38,10 @@ class UpdateAllButton extends StatelessWidget {
                             '${LocalizationApi().tr('do_you_confirm_update_all')} ?'),
                       ));
             },
-      label: Text(LocalizationApi().tr('update_all')),
-      icon: const Icon(Icons.install_desktop),
+      label: Text(LocalizationApi().tr('update_all'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.install_desktop,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

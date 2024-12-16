@@ -24,8 +24,10 @@ class RunButton extends StatelessWidget {
           : () {
               CommandApi().run(applicationEntity.id);
             },
-      label: Text(LocalizationApi().tr('Run')),
-      icon: const Icon(Icons.launch),
+      label: Text(LocalizationApi().tr('Run'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.launch,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

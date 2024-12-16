@@ -39,8 +39,10 @@ class UpdateButton extends StatelessWidget {
                             '${LocalizationApi().tr('do_you_confirm_update_selected')} ?'),
                       ));
             },
-      label: Text(LocalizationApi().tr('Update')),
-      icon: const Icon(Icons.launch),
+      label: Text(LocalizationApi().tr('Update'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon: Icon(Icons.launch,
+          color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

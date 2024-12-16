@@ -210,7 +210,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                               ),
                             ],
                           ),
-                    const SizedBox(width: 10)
+                    const SizedBox(width: 20)
                   ],
                 ),
                 if (stateAppStream!.screenshotObjList.isNotEmpty)
