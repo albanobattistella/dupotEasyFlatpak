@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class ApplicationEntity {
   final String id;
   final String name;
@@ -78,6 +80,25 @@ class ApplicationEntity {
     }
     print(metadataObj);
     return false;
+  }
+
+  String formatMB(int value) {
+    final f = NumberFormat("###.00");
+    return f.format(value / 1000000).replaceAll('.00', '');
+  }
+
+  String getDownloadSize() {
+    if (metadataObj.containsKey('download_size')) {
+      return '${formatMB(metadataObj['download_size'])} MB';
+    }
+    return '-';
+  }
+
+  String getInstalledSize() {
+    if (metadataObj.containsKey('installed_size')) {
+      return '${formatMB(metadataObj['installed_size'])} MB';
+    }
+    return '-';
   }
 
   String getVerifiedLabel() {

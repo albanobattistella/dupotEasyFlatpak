@@ -124,6 +124,11 @@ class FlathubApi {
 
     Map<String, dynamic> rawAppStream = jsonDecode(apiContent.body);
 
+    var apiSummaryContent = await http
+        .get(Uri.parse('https://flathub.org/api/v2/summary/$appSteamId'));
+
+    Map<String, dynamic> rawAppSummary = jsonDecode(apiSummaryContent.body);
+
     List<String> categoryList = [];
     if (rawAppStream.containsKey('categories')) {
       categoryList = List<String>.from(rawAppStream['categories'] as List);
@@ -146,6 +151,13 @@ class FlathubApi {
       }
 
       metadataObj['flathub_verified'] = flathubVerified;
+
+      if (rawAppSummary.containsKey('download_size')) {
+        metadataObj['download_size'] = rawAppSummary['download_size'];
+      }
+      if (rawAppSummary.containsKey('installed_size')) {
+        metadataObj['installed_size'] = rawAppSummary['installed_size'];
+      }
 
       if (rawMetadata.containsKey('flathub::verification::method')) {
         String method = rawMetadata['flathub::verification::method'];

@@ -275,6 +275,38 @@ class _ApplicationViewState extends State<ApplicationView> {
                     )),
                 ListTile(
                     title: Text(
+                  LocalizationApi().tr('Infos'),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.headlineLarge!.color),
+                )),
+                Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text("${LocalizationApi().tr('Download_Size')}:",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(width: 10),
+                            Text(stateAppStream!.getDownloadSize())
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Text("${LocalizationApi().tr('Installed_Size')}:",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            SizedBox(width: 10),
+                            Text(stateAppStream!.getInstalledSize())
+                          ],
+                        )
+                      ],
+                    )),
+                ListTile(
+                    title: Text(
                   LocalizationApi().tr('Last_releases'),
                   style: TextStyle(
                       fontSize: 20,

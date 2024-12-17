@@ -79,7 +79,11 @@
   "Display_number_of_installedapps_in_sidemenu":"Display number of installed applications in side menu",
   "About":"About",
   "Version":"Version",
-  "Total":"Total"
+  "Total":"Total",
+  "Infos":"Infos",
+  "Installed_Size":"Installed Size",
+  "Download_Size":"Download Size"
+  
 
 
 }

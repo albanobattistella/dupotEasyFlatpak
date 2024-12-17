@@ -64,6 +64,14 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+    <release date="2024-12-17" version="3.0.8">
+      <description>
+        <ul>
+          <li>Add downloaded/installed size information</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-12-16" version="3.0.7">
       <description>
         <ul>

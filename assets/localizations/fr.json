@@ -79,5 +79,8 @@
   "Display_number_of_installedapps_in_sidemenu":"Afficher le nombre d'applications installées dans le menu",
   "About":"A propos",
   "Version":"Version",
-  "Total":"Total"
+  "Total":"Total",
+  "Infos":"Infos",
+  "Installed_Size":"Taille de l'installation",
+  "Download_Size":"Taille du téléchargement"
 }
