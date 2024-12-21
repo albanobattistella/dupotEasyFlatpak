@@ -13,11 +13,16 @@ class CartOverrideSubview extends StatefulWidget {
   String applicationId;
 
   Function handleGoToCart;
+  Function handleSaveOverrideSetup;
+
+  List<OverrideFormControl> overrideSetupList;
 
   CartOverrideSubview({
     super.key,
     required this.applicationId,
     required this.handleGoToCart,
+    required this.handleSaveOverrideSetup,
+    required this.overrideSetupList,
   });
 
   @override
@@ -65,9 +70,14 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
 
   Future<void> loadApplicationRecipeOverride(String applicationId) async {
     overrideControl = OverrideControl();
-    List<OverrideFormControl> overrideFormControlList =
-        await overrideControl.getOverrideControlList(applicationId);
 
+    List<OverrideFormControl> overrideFormControlList = [];
+    if (widget.overrideSetupList.isNotEmpty) {
+      overrideFormControlList = widget.overrideSetupList;
+    } else {
+      overrideFormControlList = await overrideControl
+          .getOverrideControlWithoutConfigList(applicationId);
+    }
     setState(() {
       stateOverrideFormControlList = overrideFormControlList;
       stateIsLoaded = false;
@@ -174,6 +184,8 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
   }
 
   Widget getSaveButton() {
+    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
+
     return FilledButton.icon(
       style: ThemeButtonStyle(context: context).getButtonStyle(),
       onPressed: () async {
@@ -182,7 +194,8 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
         });
 
         //MIKA
-//TODO
+        widget.handleSaveOverrideSetup(
+            widget.applicationId, stateOverrideFormControlList);
         //await overrideControl.save(
         //    widget.applicationId, stateOverrideFormControlList);
 
@@ -196,8 +209,10 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
           stateIsInstalling = false;
         });
       },
-      label: Text(LocalizationApi().tr('save')),
-      icon: const Icon(Icons.save),
+      label: Text(LocalizationApi().tr('save'),
+          style: themeButtonStyle.getButtonTextStyle()),
+      icon:
+          Icon(Icons.save, color: themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

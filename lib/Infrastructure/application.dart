@@ -1,5 +1,6 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/override_form_control.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/cart_override_subview.dart';
@@ -41,7 +42,9 @@ class _ApplicationState extends State<Application> {
 
   int stateInterfaceVersion = 0;
 
-  List<String> stateApplicationIdListInCart = [];
+  List<String> stateCartApplicationIdList = [];
+  Map<String, List<OverrideFormControl>>
+      stateCartOverrideFormControlListByApplicationId = {};
 
   String version = '';
 
@@ -85,7 +88,8 @@ class _ApplicationState extends State<Application> {
         onKeyEvent: (event) {
           if (![
                 NavigationEntity.argumentSubPageOverride,
-                NavigationEntity.argumentSubPageInstallWithRecipe
+                NavigationEntity.argumentSubPageInstallWithRecipe,
+                NavigationEntity.argumentSubPageCartSetupOverride
               ].contains(getSubPage()) &&
               event is KeyDownEvent &&
               alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
@@ -134,7 +138,7 @@ class _ApplicationState extends State<Application> {
         pageSelected: statePage,
         argumentMapSelected: stateArgumentMap,
         handleGoTo: goTo,
-        applicationIdListInCart: stateApplicationIdListInCart);
+        applicationIdListInCart: stateCartApplicationIdList);
   }
 
   Widget getContentView(String pageToLoad, bool isMain) {
@@ -158,7 +162,7 @@ class _ApplicationState extends State<Application> {
         handleAddToCart: addToCart,
         handleRemoveFromCart: removeFromCart,
         handleReload: reload,
-        applicationIdListInCart: stateApplicationIdListInCart,
+        applicationIdListInCart: stateCartApplicationIdList,
         applicationIdSelected: newAppId,
         isMain: (!isMain ||
                 stateArgumentMap.containsKey(NavigationEntity.argumentSubPage))
@@ -189,12 +193,22 @@ class _ApplicationState extends State<Application> {
         version: version,
       );
     } else if (pageToLoad == NavigationEntity.pageCart) {
+      String applicationId = '';
+
+      if (stateArgumentMap
+          .containsKey(NavigationEntity.argumentApplicationId)) {
+        applicationId =
+            NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+      }
+
       return CartView(
-        applicationIdListInCart: stateApplicationIdListInCart,
-        handleGoTo: goTo,
-        handleRemoveFromCart: removeFromCart,
-        isMain: isMain,
-      );
+          applicationIdListInCart: stateCartApplicationIdList,
+          handleGoTo: goTo,
+          handleRemoveFromCart: removeFromCart,
+          overrideSetupListByApplicationId:
+              stateCartOverrideFormControlListByApplicationId,
+          isMain: isMain,
+          applicationId: applicationId);
     }
 
     throw new Exception('missing content view for statePage $statePage');
@@ -264,6 +278,9 @@ class _ApplicationState extends State<Application> {
 
       return CartOverrideSubview(
           applicationId: applicationId,
+          handleSaveOverrideSetup: saveCartOverrideSetupForApplicationId,
+          overrideSetupList:
+              getCartOverrideSetupForApplicationId(applicationId),
           handleGoToCart: () {
             NavigationEntity.goToCart(handleGoTo: goTo);
           });
@@ -272,25 +289,54 @@ class _ApplicationState extends State<Application> {
         'missing content sub view for subPageToLoad $subPageToLoad');
   }
 
+  List<OverrideFormControl> getCartOverrideSetupForApplicationId(
+      String applicationId) {
+    if (stateCartOverrideFormControlListByApplicationId
+        .containsKey(applicationId)) {
+      return stateCartOverrideFormControlListByApplicationId[applicationId]!;
+    }
+    return [];
+  }
+
+  void saveCartOverrideSetupForApplicationId(
+      String applicationId, List<OverrideFormControl> overrideFormControlList) {
+    Map<String, List<OverrideFormControl>>
+        cartOverrideFormControlListByApplicationId =
+        stateCartOverrideFormControlListByApplicationId;
+
+    cartOverrideFormControlListByApplicationId[applicationId] =
+        overrideFormControlList;
+
+    setState(() {
+      stateCartOverrideFormControlListByApplicationId =
+          cartOverrideFormControlListByApplicationId;
+    });
+  }
+
   void addToCart(String applicationId) {
-    List<String> applicationIdList = stateApplicationIdListInCart;
+    List<String> applicationIdList = stateCartApplicationIdList;
     if (!applicationIdList.contains(applicationId)) {
       applicationIdList.add(applicationId);
     }
 
     setState(() {
-      stateApplicationIdListInCart = applicationIdList;
+      stateCartApplicationIdList = applicationIdList;
     });
   }
 
   void removeFromCart(String applicationId) {
-    List<String> applicationIdList = stateApplicationIdListInCart;
+    List<String> applicationIdList = stateCartApplicationIdList;
     if (applicationIdList.contains(applicationId)) {
       applicationIdList.remove(applicationId);
     }
 
+    if (stateCartOverrideFormControlListByApplicationId
+        .containsKey(applicationId)) {
+      stateCartOverrideFormControlListByApplicationId.remove(applicationId);
+    }
+
     setState(() {
-      stateApplicationIdListInCart = applicationIdList;
+      stateCartApplicationIdList = applicationIdList;
     });
   }
 

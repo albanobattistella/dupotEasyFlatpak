@@ -4,6 +4,7 @@ import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/recipe_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/override_form_control.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_all_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/override_button.dart';
@@ -16,13 +17,17 @@ class CartView extends StatefulWidget {
   List<String> applicationIdListInCart;
   bool isMain;
   Function handleRemoveFromCart;
+  Map<String, List<OverrideFormControl>> overrideSetupListByApplicationId;
+  String applicationId;
 
   CartView(
       {super.key,
       required this.handleGoTo,
       required this.isMain,
       required this.applicationIdListInCart,
-      required this.handleRemoveFromCart});
+      required this.handleRemoveFromCart,
+      required this.overrideSetupListByApplicationId,
+      required this.applicationId});
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -33,6 +38,7 @@ class _CartViewState extends State<CartView> {
   List<String> stateApplicationRecipeIdList = [];
 
   Map<String, bool> stateCheckboxList = {};
+  List<String> stateApplicationIdWhichHasRecipeList = [];
 
   ScrollController scrollController = ScrollController();
 
@@ -74,12 +80,21 @@ class _CartViewState extends State<CartView> {
         await ApplicationRepository()
             .findListApplicationEntityByIdList(distinctApplicationIdList);
 
+    List<String> applicationIdWhichHasRecipeList = [];
+    for (String distinctApplicationIdLoop in distinctApplicationIdList) {
+      if (applicationRecipeIdList.contains(distinctApplicationIdLoop)) {
+        applicationIdWhichHasRecipeList.add(distinctApplicationIdLoop);
+      }
+    }
+
     setState(() {
       stateCheckboxList = checkboxList;
 
       stateApplicationEntityList = applicationEntityList;
 
       stateApplicationRecipeIdList = applicationRecipeIdList;
+
+      stateApplicationIdWhichHasRecipeList = applicationIdWhichHasRecipeList;
     });
   }
 
@@ -119,7 +134,9 @@ class _CartViewState extends State<CartView> {
 
   Widget getLine(ApplicationEntity applicationEntity) {
     return Card(
-        color: Theme.of(context).primaryColorLight,
+        color: widget.applicationId == applicationEntity.id
+            ? Theme.of(context).secondaryHeaderColor
+            : Theme.of(context).primaryColorLight,
         child: ListTile(
           title: Column(
             children: [
@@ -155,15 +172,20 @@ class _CartViewState extends State<CartView> {
                     children: [
                       if (stateApplicationRecipeIdList
                           .contains(applicationEntity.id))
-                        OverrideButton(
-                            applicationEntity: applicationEntity,
-                            handle: () {
-                              NavigationEntity
-                                  .goToCartSetupOverrideForApplicationId(
-                                      handleGoTo: widget.handleGoTo,
-                                      applicationId: applicationEntity.id);
-                            },
-                            isActive: widget.isMain),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                            child: OverrideButton(
+                              applicationEntity: applicationEntity,
+                              handle: () {
+                                NavigationEntity
+                                    .goToCartSetupOverrideForApplicationId(
+                                        handleGoTo: widget.handleGoTo,
+                                        applicationId: applicationEntity.id);
+                              },
+                              isActive: widget.isMain,
+                              hasError: !widget.overrideSetupListByApplicationId
+                                  .containsKey(applicationEntity.id),
+                            )),
                       RemoveFromCartButton(
                           applicationEntity: applicationEntity,
                           handle: () {
@@ -180,6 +202,17 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget getInstallAllButton() {
+    for (String applicationIdWithRecipeLoop
+        in stateApplicationIdWhichHasRecipeList) {
+      if (!widget.overrideSetupListByApplicationId
+          .containsKey(applicationIdWithRecipeLoop)) {
+        return InstallAllButton(
+          isActive: false,
+          handle: () {},
+        );
+      }
+    }
+
     return InstallAllButton(
       isActive: widget.isMain,
       handle: () {

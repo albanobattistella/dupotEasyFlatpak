@@ -10,11 +10,13 @@ class OverrideButton extends StatelessWidget {
       {super.key,
       required this.applicationEntity,
       required this.handle,
-      required this.isActive});
+      required this.isActive,
+      required this.hasError});
 
   ApplicationEntity applicationEntity;
   Function handle;
   bool isActive;
+  bool hasError;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,9 @@ class OverrideButton extends StatelessWidget {
       label: Text(LocalizationApi().tr('Edit_override'),
           style: themeButtonStyle.getButtonTextStyle()),
       icon: Icon(Icons.settings,
-          color: themeButtonStyle.getButtonTextStyle().color),
+          color: hasError
+              ? Colors.redAccent
+              : themeButtonStyle.getButtonTextStyle().color),
     );
   }
 }

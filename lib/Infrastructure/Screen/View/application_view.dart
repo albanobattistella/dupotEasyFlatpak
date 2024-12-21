@@ -398,7 +398,9 @@ class _ApplicationViewState extends State<ApplicationView> {
         ? OverrideButton(
             applicationEntity: stateAppStream!,
             handle: widget.goToOverride,
-            isActive: widget.isMain)
+            isActive: widget.isMain,
+            hasError: false,
+          )
         : const SizedBox();
   }
 
