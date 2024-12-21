@@ -24,34 +24,34 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_home.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_home.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_category.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_category.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_category_grid.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_category_grid.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_installed_applications.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_installed_applications.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_update_availables.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_update_availables.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_search.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_search.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_application_steam.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_application_steam.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_application_steam_confirm_install.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_application_steam_install_setup_path.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/10cd144f0dffc657b5af10ea4488c810ba937d6a/export/screenshots/Screenshot_override_view.png</image>
+      <image>https://raw.githubusercontent.com/imikado/dupotEasyFlatpak/8072faecdb9b79dc0570747fcc4358fceaad94e0/export/screenshots/Screenshot_override_view.png</image>
     </screenshot>
 
 
@@ -65,12 +65,13 @@
   <releases>
 
 
-    <release date="2024-12-21" version="3.1.0">
+    <release date="2024-12-21" version="3.1.2">
       <description>
         <ul>
           <li>Rewrite page system to avoid "zoom effect" when navigate</li>
           <li>Add new feature: cart, you can now add few application and validate the cart at the end</li>
           <li>Menu is now disable when you have a sub page open (3 column mode to avoid bug if you click during events)</li>
+          <li>New search system</li>
           <li>Some bug fix</li>
         </ul>
       </description>
