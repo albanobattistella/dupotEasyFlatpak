@@ -107,9 +107,7 @@ class _InstallSubviewState extends State<InstallSubview> {
               const SizedBox(width: 20),
               stateIsInstalling
                   ? const CircularProgressIndicator()
-                  : CloseSubViewButton(
-                      applicationId: widget.applicationId,
-                      handle: widget.handleGoToApplication),
+                  : CloseSubViewButton(handle: widget.handleGoToApplication),
               const SizedBox(width: 20)
             ],
           ),

@@ -22,6 +22,13 @@ class _SideMenuWithContentAndSubContentLayoutState
     extends State<SideMenuWithContentAndSubContentLayout> {
   @override
   Widget build(BuildContext context) {
+    Widget content = Padding(
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+        child: Card(
+            elevation: 4,
+            color: Theme.of(context).cardColor,
+            child: widget.content));
+
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -37,21 +44,12 @@ class _SideMenuWithContentAndSubContentLayoutState
           widget.hasSubContent
               ? SizedBox(
                   width: 500,
-                  child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: Card(
-                          elevation: 4,
-                          color: Theme.of(context).cardColor,
-                          child: widget.content)))
+                  child: content,
+                )
               : Expanded(
                   child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: Card(
-                          elevation: 4,
-                          color: Theme.of(context).cardColor,
-                          child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: widget.content)))),
+                      child: content)),
           if (widget.hasSubContent)
             Expanded(
                 child: Padding(

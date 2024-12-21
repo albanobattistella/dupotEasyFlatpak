@@ -94,12 +94,10 @@ class _UpdateAvailableProcessingSubviewState
               const SizedBox(width: 20),
               stateIsInstalling
                   ? const CircularProgressIndicator()
-                  : CloseSubViewButton(
-                      applicationId: '',
-                      handle: () {
-                        NavigationEntity.goToUpdatesAvailables(
-                            handleGoTo: widget.handleGoTo);
-                      }),
+                  : CloseSubViewButton(handle: () {
+                      NavigationEntity.goToUpdatesAvailables(
+                          handleGoTo: widget.handleGoTo);
+                    }),
               const SizedBox(width: 20)
             ],
           ),

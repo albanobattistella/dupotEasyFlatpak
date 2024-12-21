@@ -9,22 +9,22 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_styl
 import 'package:flutter/material.dart';
 import 'package:ini/ini.dart';
 
-class OverrideSubview extends StatefulWidget {
+class CartOverrideSubview extends StatefulWidget {
   String applicationId;
 
-  Function handleGoToApplication;
+  Function handleGoToCart;
 
-  OverrideSubview({
+  CartOverrideSubview({
     super.key,
     required this.applicationId,
-    required this.handleGoToApplication,
+    required this.handleGoToCart,
   });
 
   @override
-  State<OverrideSubview> createState() => _OverrideSubviewState();
+  State<CartOverrideSubview> createState() => _CartOverrideSubviewState();
 }
 
-class _OverrideSubviewState extends State<OverrideSubview> {
+class _CartOverrideSubviewState extends State<CartOverrideSubview> {
   ApplicationEntity? stateApplicationEntity;
   bool stateIsLoaded = true;
   String stateInstallationOutput = '';
@@ -72,8 +72,6 @@ class _OverrideSubviewState extends State<OverrideSubview> {
       stateOverrideFormControlList = overrideFormControlList;
       stateIsLoaded = false;
     });
-
-    //print(flatpakOverrideApplication);
   }
 
   @override
@@ -101,8 +99,7 @@ class _OverrideSubviewState extends State<OverrideSubview> {
                     const SizedBox(width: 20),
                     stateIsInstalling
                         ? const CircularProgressIndicator()
-                        : CloseSubViewButton(
-                            handle: widget.handleGoToApplication),
+                        : CloseSubViewButton(handle: widget.handleGoToCart),
                     const SizedBox(width: 20)
                   ],
                 ),
@@ -183,8 +180,11 @@ class _OverrideSubviewState extends State<OverrideSubview> {
         setState(() {
           stateIsInstalling = true;
         });
-        await overrideControl.save(
-            widget.applicationId, stateOverrideFormControlList);
+
+        //MIKA
+//TODO
+        //await overrideControl.save(
+        //    widget.applicationId, stateOverrideFormControlList);
 
         final snackBar = SnackBar(
           content: Text(LocalizationApi().tr('successfully_saved')),

@@ -25,6 +25,8 @@ class NavigationEntity {
       'updatesAvailables_processing';
   static const String argumentSubPageUpdateAvailableProcessingAll =
       'updatesAvailables_processingAll';
+  static const String argumentSubPageCartInstallAll = 'cart_install_all';
+  static const String argumentSubPageCartSetupOverride = 'cart_setup_override';
 
   static const String argumentApplicationIdSelectedList =
       'application_id_selected_list';
@@ -33,6 +35,20 @@ class NavigationEntity {
 
   static goToCart({required Function handleGoTo}) {
     handleGoTo(page: pageCart, argumentMap: {'': ''});
+  }
+
+  static goToCartInstallingAll({required Function handleGoTo}) {
+    handleGoTo(
+        page: pageCart,
+        argumentMap: {argumentSubPage: argumentSubPageCartInstallAll});
+  }
+
+  static goToCartSetupOverrideForApplicationId(
+      {required Function handleGoTo, required String applicationId}) {
+    handleGoTo(page: pageCart, argumentMap: {
+      argumentSubPage: argumentSubPageCartSetupOverride,
+      argumentApplicationId: applicationId
+    });
   }
 
   static goToReload({required Function handleGoTo}) {

@@ -6,10 +6,8 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_styl
 import 'package:flutter/material.dart';
 
 class CloseSubViewButton extends StatelessWidget {
-  CloseSubViewButton(
-      {super.key, required this.applicationId, required this.handle});
+  CloseSubViewButton({super.key, required this.handle});
 
-  String applicationId;
   Function handle;
 
   @override

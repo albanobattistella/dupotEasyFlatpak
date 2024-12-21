@@ -157,7 +157,12 @@ class _CartViewState extends State<CartView> {
                           .contains(applicationEntity.id))
                         OverrideButton(
                             applicationEntity: applicationEntity,
-                            handle: () {},
+                            handle: () {
+                              NavigationEntity
+                                  .goToCartSetupOverrideForApplicationId(
+                                      handleGoTo: widget.handleGoTo,
+                                      applicationId: applicationEntity.id);
+                            },
                             isActive: widget.isMain),
                       RemoveFromCartButton(
                           applicationEntity: applicationEntity,
@@ -178,7 +183,7 @@ class _CartViewState extends State<CartView> {
     return InstallAllButton(
       isActive: widget.isMain,
       handle: () {
-        NavigationEntity.goToUpdatesAvailablesPocessingAll(
+        NavigationEntity.goToCartInstallingAll(
           handleGoTo: widget.handleGoTo,
         );
       },

@@ -2,6 +2,7 @@ import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/cart_override_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/override_subview.dart';
@@ -15,7 +16,6 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applications_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/loading_view.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/reload_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/search_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/side_menu_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/updates_availables_view.dart';
@@ -32,34 +32,6 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  static const String constOnlyContent = 'onlyContent';
-  static const String constSideMenuWithContent = 'sideMenuWithContent';
-  static const String constSideMenuWithContentAndSubContent =
-      'sideMenuWithContentAndSubContent';
-
-  static const Map<String, List<String>> layoutSetupList = {
-    constOnlyContent: [NavigationEntity.pageLoading],
-    constSideMenuWithContent: [
-      //NavigationEntity.pageHome,
-      NavigationEntity.pageCategory,
-      NavigationEntity.pageApplication,
-      NavigationEntity.pageInstalledApplication,
-      NavigationEntity.pageSearch,
-      NavigationEntity.pageUpdateAvailables,
-      NavigationEntity.pageUserSettings,
-      NavigationEntity.pageAbout,
-      NavigationEntity.pageCart
-    ],
-    constSideMenuWithContentAndSubContent: [
-      NavigationEntity.argumentSubPageInstall,
-      NavigationEntity.argumentSubPageInstallWithRecipe,
-      NavigationEntity.argumentSubPageOverride,
-      NavigationEntity.argumentSubPageUninstall,
-      NavigationEntity.argumentSubPageUpdateAvailableProcessing,
-      NavigationEntity.argumentSubPageUpdateAvailableProcessingAll
-    ]
-  };
-
   String statePage = NavigationEntity.pageLoading;
   Map<String, String> stateArgumentMap = {};
   String stateSearched = '';
@@ -96,17 +68,15 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     ThemeData themData = ThemeData(
       useMaterial3: true,
-
       primaryColorLight: Colors.blueGrey,
       brightness: Brightness.dark,
-
-      // Define the default `TextTheme`. Use this to specify the default
-      // text styling for headlines, titles, bodies of text, and more.
     );
 
     bool hasSubContent = false;
+    bool isMain = true;
     if (stateArgumentMap.containsKey(NavigationEntity.argumentSubPage)) {
       hasSubContent = true;
+      isMain = false;
     }
 
     return KeyboardListener(
@@ -139,16 +109,15 @@ class _ApplicationState extends State<Application> {
                           })))
                 else
                   MaterialPage(
-                      key: ValueKey(NavigationEntity.extractArgumentSubPage(
-                          stateArgumentMap)),
+                      key: const ValueKey(NavigationEntity.pageHome),
                       child: SideMenuWithContentAndSubContentLayout(
                         menu: getSideMenuView(),
-                        content: getContentView(statePage, false),
+                        content: getContentView(statePage, isMain),
                         subContent: getSubContentView(hasSubContent),
                         hasSubContent: hasSubContent,
                       ))
               ],
-              onDidRemovePage: (page) => false,
+              onDidRemovePage: (page) => print('remove ' + page.toString()),
             )));
   }
 
@@ -288,6 +257,16 @@ class _ApplicationState extends State<Application> {
     } else if (subPageToLoad ==
         NavigationEntity.argumentSubPageUpdateAvailableProcessingAll) {
       return UpdateAvailableProcessingAllSubview(handleGoTo: goTo);
+    } else if (subPageToLoad ==
+        NavigationEntity.argumentSubPageCartSetupOverride) {
+      String applicationId =
+          NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+
+      return CartOverrideSubview(
+          applicationId: applicationId,
+          handleGoToCart: () {
+            NavigationEntity.goToCart(handleGoTo: goTo);
+          });
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');
