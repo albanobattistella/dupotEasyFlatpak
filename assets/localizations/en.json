@@ -82,7 +82,13 @@
   "Total":"Total",
   "Infos":"Infos",
   "Installed_Size":"Installed Size",
-  "Download_Size":"Download Size"
+  "Download_Size":"Download Size",
+  "add_to_cart":"Add to cart",
+  "Cart":"Cart",
+  "remove_from_cart":"Remove from Cart",
+  "do_you_confirm_installation_of_all": "Do you confirm installation of all",
+  "install_all":"Install all"
+
   
 
 

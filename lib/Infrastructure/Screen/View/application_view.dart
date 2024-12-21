@@ -5,9 +5,11 @@ import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/application_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/add_to_cart_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_with_recipe_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/override_button.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/remove_from_cart_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/run_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/uninstall_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_button.dart';
@@ -22,6 +24,11 @@ class ApplicationView extends StatefulWidget {
 
   Function handleGoTo;
   Function handleGoToPrevious;
+  Function handleAddToCart;
+  Function handleRemoveFromCart;
+
+  Function handleReload;
+  List<String> applicationIdListInCart;
 
   bool isMain;
 
@@ -30,7 +37,23 @@ class ApplicationView extends StatefulWidget {
       required this.applicationIdSelected,
       required this.handleGoTo,
       required this.handleGoToPrevious,
+      required this.handleAddToCart,
+      required this.handleRemoveFromCart,
+      required this.handleReload,
+      required this.applicationIdListInCart,
       required this.isMain});
+
+  void addToCart() {
+    handleAddToCart(applicationIdSelected);
+
+    handleReload();
+  }
+
+  void removeFromCart() {
+    handleRemoveFromCart(applicationIdSelected);
+
+    handleReload();
+  }
 
   void goToInstallation() {
     NavigationEntity.goToApplicationInstall(
@@ -195,6 +218,11 @@ class _ApplicationViewState extends State<ApplicationView> {
                               getOverrideButton(
                                   stateAppStream!.isAlreadyInstalled,
                                   stateAppStream!.isOverrided),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              getAddToCartButton(
+                                  stateAppStream!.isAlreadyInstalled),
                               const SizedBox(
                                 height: 2,
                               ),
@@ -372,6 +400,23 @@ class _ApplicationViewState extends State<ApplicationView> {
             handle: widget.goToOverride,
             isActive: widget.isMain)
         : const SizedBox();
+  }
+
+  Widget getAddToCartButton(bool isAlreadyInstalled) {
+    if (isAlreadyInstalled) {
+      return SizedBox();
+    }
+
+    if (widget.applicationIdListInCart.contains(stateAppStream!.id)) {
+      return RemoveFromCartButton(
+          applicationEntity: stateAppStream!,
+          handle: widget.removeFromCart,
+          isActive: widget.isMain);
+    }
+    return AddToCartButton(
+        applicationEntity: stateAppStream!,
+        handle: widget.addToCart,
+        isActive: widget.isMain);
   }
 
   Widget getInstallButton(bool isAlreadyInstalled, bool hasRecipe) {

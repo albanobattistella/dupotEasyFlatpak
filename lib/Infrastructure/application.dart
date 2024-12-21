@@ -1,7 +1,6 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
@@ -11,6 +10,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_availabl
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/update_available_processing_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/about_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/application_view.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/cart_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/category_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/home_view.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/installed_applications_view.dart';
@@ -47,7 +47,8 @@ class _ApplicationState extends State<Application> {
       NavigationEntity.pageSearch,
       NavigationEntity.pageUpdateAvailables,
       NavigationEntity.pageUserSettings,
-      NavigationEntity.pageAbout
+      NavigationEntity.pageAbout,
+      NavigationEntity.pageCart
     ],
     constSideMenuWithContentAndSubContent: [
       NavigationEntity.argumentSubPageInstall,
@@ -67,6 +68,8 @@ class _ApplicationState extends State<Application> {
   Map<String, String> statePreviousPArgumentMap = {};
 
   int stateInterfaceVersion = 0;
+
+  List<String> stateApplicationIdListInCart = [];
 
   String version = '';
 
@@ -101,6 +104,11 @@ class _ApplicationState extends State<Application> {
       // text styling for headlines, titles, bodies of text, and more.
     );
 
+    bool hasSubContent = false;
+    if (stateArgumentMap.containsKey(NavigationEntity.argumentSubPage)) {
+      hasSubContent = true;
+    }
+
     return KeyboardListener(
         focusNode: _focusNode,
         autofocus: true,
@@ -131,30 +139,13 @@ class _ApplicationState extends State<Application> {
                           })))
                 else
                   MaterialPage(
-                      key: const ValueKey(NavigationEntity.pageHome),
-                      child: SideMenuWithContentLayout(
-                          menu: getSideMenuView(),
-                          content:
-                              getContentView(NavigationEntity.pageHome, true))),
-                if (layoutSetupList[constSideMenuWithContent]!
-                    .contains(statePage))
-                  MaterialPage(
-                      key: ValueKey(statePage),
-                      child: SideMenuWithContentLayout(
-                          menu: getSideMenuView(),
-                          content: getContentView(statePage, true))),
-                if (stateArgumentMap
-                        .containsKey(NavigationEntity.argumentSubPage) &&
-                    layoutSetupList[constSideMenuWithContentAndSubContent]!
-                        .contains(NavigationEntity.extractArgumentSubPage(
-                            stateArgumentMap)))
-                  MaterialPage(
                       key: ValueKey(NavigationEntity.extractArgumentSubPage(
                           stateArgumentMap)),
                       child: SideMenuWithContentAndSubContentLayout(
                         menu: getSideMenuView(),
                         content: getContentView(statePage, false),
-                        subContent: getSubContentView(),
+                        subContent: getSubContentView(hasSubContent),
+                        hasSubContent: hasSubContent,
                       ))
               ],
               onDidRemovePage: (page) => false,
@@ -170,11 +161,11 @@ class _ApplicationState extends State<Application> {
 
   Widget getSideMenuView() {
     return SideMenuView(
-      interfaceVersion: stateInterfaceVersion,
-      pageSelected: statePage,
-      argumentMapSelected: stateArgumentMap,
-      handleGoTo: goTo,
-    );
+        interfaceVersion: stateInterfaceVersion,
+        pageSelected: statePage,
+        argumentMapSelected: stateArgumentMap,
+        handleGoTo: goTo,
+        applicationIdListInCart: stateApplicationIdListInCart);
   }
 
   Widget getContentView(String pageToLoad, bool isMain) {
@@ -195,6 +186,10 @@ class _ApplicationState extends State<Application> {
       return ApplicationView(
         handleGoTo: goTo,
         handleGoToPrevious: goToPrevious,
+        handleAddToCart: addToCart,
+        handleRemoveFromCart: removeFromCart,
+        handleReload: reload,
+        applicationIdListInCart: stateApplicationIdListInCart,
         applicationIdSelected: newAppId,
         isMain: (!isMain ||
                 stateArgumentMap.containsKey(NavigationEntity.argumentSubPage))
@@ -224,6 +219,13 @@ class _ApplicationState extends State<Application> {
       return AboutView(
         version: version,
       );
+    } else if (pageToLoad == NavigationEntity.pageCart) {
+      return CartView(
+        applicationIdListInCart: stateApplicationIdListInCart,
+        handleGoTo: goTo,
+        handleRemoveFromCart: removeFromCart,
+        isMain: isMain,
+      );
     }
 
     throw new Exception('missing content view for statePage $statePage');
@@ -231,7 +233,11 @@ class _ApplicationState extends State<Application> {
 
   reloadLanguage() {}
 
-  Widget getSubContentView() {
+  Widget getSubContentView(bool hasSubContent) {
+    if (!hasSubContent) {
+      return const SizedBox();
+    }
+
     String subPageToLoad = stateArgumentMap[NavigationEntity.argumentSubPage]!;
 
     if (subPageToLoad == NavigationEntity.argumentSubPageInstall) {
@@ -285,6 +291,28 @@ class _ApplicationState extends State<Application> {
     }
     throw new Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');
+  }
+
+  void addToCart(String applicationId) {
+    List<String> applicationIdList = stateApplicationIdListInCart;
+    if (!applicationIdList.contains(applicationId)) {
+      applicationIdList.add(applicationId);
+    }
+
+    setState(() {
+      stateApplicationIdListInCart = applicationIdList;
+    });
+  }
+
+  void removeFromCart(String applicationId) {
+    List<String> applicationIdList = stateApplicationIdListInCart;
+    if (applicationIdList.contains(applicationId)) {
+      applicationIdList.remove(applicationId);
+    }
+
+    setState(() {
+      stateApplicationIdListInCart = applicationIdList;
+    });
   }
 
   void goToPrevious() {

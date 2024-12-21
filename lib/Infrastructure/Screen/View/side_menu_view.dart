@@ -9,6 +9,7 @@ class SideMenuView extends StatefulWidget {
   String pageSelected;
   Map<String, String> argumentMapSelected;
   Function handleGoTo;
+  List<String> applicationIdListInCart;
 
   int interfaceVersion = 0;
 
@@ -17,7 +18,8 @@ class SideMenuView extends StatefulWidget {
       required this.pageSelected,
       required this.argumentMapSelected,
       required this.handleGoTo,
-      required this.interfaceVersion});
+      required this.interfaceVersion,
+      required this.applicationIdListInCart});
 
   @override
   State<SideMenuView> createState() => _SideMenuViewState();
@@ -26,6 +28,9 @@ class SideMenuView extends StatefulWidget {
 class _SideMenuViewState extends State<SideMenuView> {
   List<MenuItemEntity> stateCategoryMenuItemList = [];
   List<MenuItemEntity> stateBottomMenuItemList = [];
+
+  List<MenuItemEntity> stateCartMenuItemList = [];
+
   String statePageSelected = '';
   String stateCategoryIdSelected = '';
 
@@ -51,6 +56,9 @@ class _SideMenuViewState extends State<SideMenuView> {
                     NavigationEntity.argumentCategoryId])) {
       loadData(false);
     } else if (oldWidget.interfaceVersion != widget.interfaceVersion) {
+      loadData(false);
+    } else if (stateCartMenuItemList.length !=
+        widget.applicationIdListInCart.length) {
       loadData(false);
     }
 
@@ -78,6 +86,13 @@ class _SideMenuViewState extends State<SideMenuView> {
       stateCategoryMenuItemList = categoryMenuItemList;
     });
 
+    List<MenuItemEntity> cartMenuItemList =
+        SideMenuViewModel(handleGoTo: widget.handleGoTo)
+            .getCartMenuItemEntyList(widget.applicationIdListInCart);
+    setState(() {
+      stateCartMenuItemList = cartMenuItemList;
+    });
+
     List<MenuItemEntity> bottomMenuItemList =
         await SideMenuViewModel(handleGoTo: widget.handleGoTo)
             .getBottomMenuItemEntityList(shouldCheckUpdates);
@@ -99,6 +114,18 @@ class _SideMenuViewState extends State<SideMenuView> {
               .map((menuItemLoop) => getMenuLine(menuItemLoop))
               .toList(),
         ),
+        if (stateCartMenuItemList.isNotEmpty)
+          SizedBox(
+            height: 28,
+            child: ColoredBox(
+              color: Theme.of(context).primaryColorLight,
+            ),
+          ),
+        if (stateCartMenuItemList.isNotEmpty)
+          Column(
+              children: stateCartMenuItemList
+                  .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                  .toList()),
         SizedBox(
           height: 28,
           child: ColoredBox(
@@ -125,45 +152,43 @@ class _SideMenuViewState extends State<SideMenuView> {
       isSelected = true;
     }
 
-    return ListTile(
-        visualDensity: const VisualDensity(vertical: -4),
-        contentPadding: const EdgeInsets.all(0),
-        minVerticalPadding: 0,
-        tileColor: themeTextStyle.getHeadlineBackgroundColor(isSelected),
-        titleTextStyle:
-            TextStyle(color: themeTextStyle.getHeadlineTextColor(isSelected)),
+    return InkWell(
+        borderRadius: BorderRadius.circular(10.0),
         onTap: () {
           menuItemLoop.action();
         },
-        title: Row(
-          children: [
-            menuItemLoop.badge.isNotEmpty
-                ? IconButton(
-                    padding: const EdgeInsets.all(0),
-                    icon: Badge(
-                        label: Text(menuItemLoop.badge),
-                        backgroundColor: Colors.blueAccent,
-                        child: Icon(menuItemLoop.icon,
+        child: Card(
+            color: themeTextStyle.getHeadlineBackgroundColor(isSelected),
+            child: Row(
+              children: [
+                menuItemLoop.badge.isNotEmpty
+                    ? IconButton(
+                        padding: const EdgeInsets.all(0),
+                        icon: Badge(
+                            label: Text(menuItemLoop.badge),
+                            backgroundColor: Colors.blueAccent,
+                            child: Icon(menuItemLoop.icon,
+                                color: themeTextStyle
+                                    .getHeadlineTextColor(isSelected))),
+                        onPressed: null)
+                    : IconButton(
+                        padding: const EdgeInsets.all(0),
+                        icon: Icon(menuItemLoop.icon,
                             color: themeTextStyle
-                                .getHeadlineTextColor(isSelected))),
-                    onPressed: null)
-                : IconButton(
-                    padding: const EdgeInsets.all(0),
-                    icon: Icon(menuItemLoop.icon,
-                        color: themeTextStyle.getHeadlineTextColor(isSelected)),
-                    onPressed: null,
-                  ),
-            const SizedBox(width: 8),
-            Text(
-              LocalizationApi().tr(menuItemLoop.label),
-              style: isSelected
-                  ? TextStyle(
-                      backgroundColor: Theme.of(context)
-                          .textSelectionTheme
-                          .selectionHandleColor)
-                  : null,
-            ),
-          ],
-        ));
+                                .getHeadlineTextColor(isSelected)),
+                        onPressed: null,
+                      ),
+                const SizedBox(width: 8),
+                Text(
+                  LocalizationApi().tr(menuItemLoop.label),
+                  style: isSelected
+                      ? TextStyle(
+                          backgroundColor: Theme.of(context)
+                              .textSelectionTheme
+                              .selectionHandleColor)
+                      : null,
+                ),
+              ],
+            )));
   }
 }

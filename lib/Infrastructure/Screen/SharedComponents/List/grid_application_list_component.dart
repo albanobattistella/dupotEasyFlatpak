@@ -29,7 +29,7 @@ class GridApplicationListComponent extends StatelessWidget {
               '${UserSettingsEntity().getApplicationIconsPath()}/${appStreamLoop.getAppIcon()}';
         }
 
-        return Container(
+        return SizedBox(
             width: 150,
             height: 150,
             child: CardApplicationComponent(

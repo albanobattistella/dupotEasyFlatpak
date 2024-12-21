@@ -46,6 +46,27 @@ class SideMenuViewModel {
     return menuItemList;
   }
 
+  List<MenuItemEntity> getCartMenuItemEntyList(
+      List<String> applicationIdListInCart) {
+    List<MenuItemEntity> menuItemList = [];
+
+    int numberOfApplicationInCart = applicationIdListInCart.length;
+
+    if (numberOfApplicationInCart > 0) {
+      menuItemList.add(MenuItemEntity(
+          label: 'Cart',
+          action: () {
+            NavigationEntity.goToCart(handleGoTo: handleGoTo);
+          },
+          pageSelected: NavigationEntity.pageCart,
+          categoryIdSelected: '',
+          badge: numberOfApplicationInCart.toString(),
+          icon: Icons.shopping_cart));
+    }
+
+    return menuItemList;
+  }
+
   Future<List<MenuItemEntity>> getBottomMenuItemEntityList(
       bool shouldCheckUpdates) async {
     if (shouldCheckUpdates) {
