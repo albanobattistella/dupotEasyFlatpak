@@ -107,7 +107,7 @@ class _SideMenuViewState extends State<SideMenuView> {
     themeTextStyle = ThemeTextStyle(context: context);
 
     return ListView(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
       children: [
         Column(
           children: stateCategoryMenuItemList
@@ -153,7 +153,7 @@ class _SideMenuViewState extends State<SideMenuView> {
     }
 
     return InkWell(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(8.0),
         onTap: widget.argumentMapSelected
                 .containsKey(NavigationEntity.argumentSubPage)
             ? null
@@ -162,6 +162,8 @@ class _SideMenuViewState extends State<SideMenuView> {
               },
         child: Card(
             color: themeTextStyle.getHeadlineBackgroundColor(isSelected),
+            elevation: 0,
+            margin: const EdgeInsets.all(0),
             child: Row(
               children: [
                 menuItemLoop.badge.isNotEmpty
