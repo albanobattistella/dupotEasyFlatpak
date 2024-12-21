@@ -21,13 +21,9 @@ class _SearchViewState extends State<SearchView> {
 
   String lastCategoryIdSelected = '';
 
-  TextEditingController _searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-
-    _searchController.text = widget.searched;
 
     loadData();
   }
@@ -51,20 +47,6 @@ class _SearchViewState extends State<SearchView> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      TextField(
-        autofocus: true,
-        controller: _searchController,
-        style: Theme.of(context).textTheme.titleLarge,
-        cursorColor: Colors.white,
-        decoration: InputDecoration(
-          hintText: LocalizationApi().tr('Search...'),
-          hintStyle: const TextStyle(color: Colors.black54),
-        ),
-        onChanged: (value) {
-          NavigationEntity.goToSearch(
-              handleGoTo: widget.handleGoTo, search: value);
-        },
-      ),
       Expanded(
           child: stateAppStreamList.isEmpty
               ? SizedBox()

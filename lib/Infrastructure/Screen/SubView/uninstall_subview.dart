@@ -83,7 +83,7 @@ class _InstallSubviewState extends State<UninstallSubview> {
 
         setState(() {
           stateInstallationOutput =
-              "$stateInstallationOutput \n ${LocalizationApi().tr('uninstallation_finished')}";
+              LocalizationApi().tr('uninstallation_finished');
           stateIsInstalling = false;
         });
       });

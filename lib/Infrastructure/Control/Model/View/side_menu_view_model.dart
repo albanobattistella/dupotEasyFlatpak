@@ -30,6 +30,18 @@ class SideMenuViewModel {
 
     List<MenuItemEntity> menuItemList = [];
 
+    menuItemList.add(MenuItemEntity(
+        label: 'Home',
+        action: () {
+          NavigationEntity.goToHome(
+            handleGoTo: handleGoTo,
+          );
+        },
+        pageSelected: NavigationEntity.pageHome,
+        badge: '',
+        categoryIdSelected: '',
+        icon: Icons.home));
+
     for (String categoryIdLoop in categoryIdList) {
       menuItemList.add(MenuItemEntity(
           label: categoryIdLoop,
@@ -74,17 +86,6 @@ class SideMenuViewModel {
     }
 
     List<MenuItemEntity> menuItemList = [];
-    menuItemList.add(MenuItemEntity(
-        label: 'Home',
-        action: () {
-          NavigationEntity.goToHome(
-            handleGoTo: handleGoTo,
-          );
-        },
-        pageSelected: NavigationEntity.pageHome,
-        badge: '',
-        categoryIdSelected: '',
-        icon: Icons.home));
 
     menuItemList.add(MenuItemEntity(
         label: 'InstalledApps',
@@ -116,16 +117,6 @@ class SideMenuViewModel {
         badge: '',
         categoryIdSelected: '',
         icon: Icons.settings));
-
-    menuItemList.add(MenuItemEntity(
-        label: 'Search',
-        action: () {
-          NavigationEntity.goToSearch(handleGoTo: handleGoTo, search: '');
-        },
-        pageSelected: NavigationEntity.pageSearch,
-        categoryIdSelected: '',
-        badge: '',
-        icon: Icons.search));
 
     menuItemList.add(MenuItemEntity(
         label: 'About',

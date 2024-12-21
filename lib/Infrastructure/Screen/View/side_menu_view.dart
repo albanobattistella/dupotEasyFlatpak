@@ -13,13 +13,16 @@ class SideMenuView extends StatefulWidget {
 
   int interfaceVersion = 0;
 
+  String searched;
+
   SideMenuView(
       {super.key,
       required this.pageSelected,
       required this.argumentMapSelected,
       required this.handleGoTo,
       required this.interfaceVersion,
-      required this.applicationIdListInCart});
+      required this.applicationIdListInCart,
+      required this.searched});
 
   @override
   State<SideMenuView> createState() => _SideMenuViewState();
@@ -38,9 +41,13 @@ class _SideMenuViewState extends State<SideMenuView> {
 
   late ThemeTextStyle themeTextStyle;
 
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     loadData(true);
+
+    _searchController.text = widget.searched;
 
     super.initState();
   }
@@ -60,6 +67,10 @@ class _SideMenuViewState extends State<SideMenuView> {
     } else if (stateCartMenuItemList.length !=
         widget.applicationIdListInCart.length) {
       loadData(false);
+    }
+
+    if (oldWidget.searched != widget.searched) {
+      _searchController.text = widget.searched;
     }
 
     super.didUpdateWidget(oldWidget);
@@ -109,6 +120,34 @@ class _SideMenuViewState extends State<SideMenuView> {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: [
+        Card(
+            child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Row(
+                  children: [
+                    const Icon(Icons.search),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        autofocus: _searchController.text.isNotEmpty,
+                        controller: _searchController,
+                        style: Theme.of(context).textTheme.titleSmall,
+                        decoration: InputDecoration.collapsed(
+                          hintText: LocalizationApi().tr('Search...'),
+                        ),
+                        onChanged: (value) {
+                          NavigationEntity.goToSearch(
+                              handleGoTo: widget.handleGoTo, search: value);
+                        },
+                      ),
+                    ),
+                  ],
+                ))),
+        SizedBox(
+          height: 5,
+        ),
         Column(
           children: stateCategoryMenuItemList
               .map((menuItemLoop) => getMenuLine(menuItemLoop))
@@ -170,8 +209,12 @@ class _SideMenuViewState extends State<SideMenuView> {
                     ? IconButton(
                         padding: const EdgeInsets.all(0),
                         icon: Badge(
-                            label: Text(menuItemLoop.badge),
-                            backgroundColor: Colors.blueAccent,
+                            label: Text(menuItemLoop.badge,
+                                style: TextStyle(
+                                    color: themeTextStyle
+                                        .getHeadlineTextColor(isSelected))),
+                            backgroundColor: themeTextStyle
+                                .getHeadlineTextColor(!isSelected),
                             child: Icon(menuItemLoop.icon,
                                 color: themeTextStyle
                                     .getHeadlineTextColor(isSelected))),

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 
 class CartInstallAllSubview extends StatefulWidget {
-  Function handleGoToCart;
+  Function handleGoToApplicationInstalled;
 
   List<String> applicationIdListInCart;
   Function handleRemoveFromCart;
@@ -26,7 +26,7 @@ class CartInstallAllSubview extends StatefulWidget {
 
   CartInstallAllSubview(
       {super.key,
-      required this.handleGoToCart,
+      required this.handleGoToApplicationInstalled,
       required this.applicationIdListInCart,
       required this.handleRemoveFromCart,
       required this.overrideSetupListByApplicationId,
@@ -105,8 +105,7 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
       await widget.handleSetApplicationLighted('');
 
       setState(() {
-        stateInstallationOutput =
-            "$stateInstallationOutput \n ${LocalizationApi().tr('installation_finished')}";
+        stateInstallationOutput = LocalizationApi().tr('installation_finished');
       });
     }
 
@@ -129,7 +128,8 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
             children: [
               stateIsInstalling
                   ? const CircularProgressIndicator()
-                  : CloseSubViewButton(handle: widget.handleGoToCart),
+                  : CloseSubViewButton(
+                      handle: widget.handleGoToApplicationInstalled),
               const SizedBox(width: 20)
             ],
           ),

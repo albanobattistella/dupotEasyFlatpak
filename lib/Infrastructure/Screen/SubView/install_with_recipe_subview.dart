@@ -160,7 +160,7 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
 
         setState(() {
           stateInstallationOutput =
-              "$stateInstallationOutput \n ${LocalizationApi().tr('installation_finished')}";
+              LocalizationApi().tr('installation_finished');
           stateIsInstalling = false;
         });
       });

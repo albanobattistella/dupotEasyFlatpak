@@ -80,7 +80,7 @@ class _InstallSubviewState extends State<InstallSubview> {
 
         setState(() {
           stateInstallationOutput =
-              "$stateInstallationOutput \n ${LocalizationApi().tr('installation_finished')}";
+              LocalizationApi().tr('installation_finished');
           stateIsInstalling = false;
         });
       });

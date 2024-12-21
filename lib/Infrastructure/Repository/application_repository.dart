@@ -288,6 +288,7 @@ class ApplicationRepository {
           
           where name like  '%$search%' 
 
+ 
         UNION ALL
 
            SELECT 
@@ -302,7 +303,7 @@ class ApplicationRepository {
           
           where summary like  '%$search%'   
 
-
+ 
         ''',
     );
 

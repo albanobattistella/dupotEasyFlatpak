@@ -53,7 +53,7 @@ class _ApplicationState extends State<Application> {
 
   final FocusNode _focusNode = FocusNode();
 
-  final alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
+  final alphanumeric = RegExp(r'^[a-zA-Z0-9]{1}$');
 
   @override
   void initState() {
@@ -95,9 +95,12 @@ class _ApplicationState extends State<Application> {
                 NavigationEntity.argumentSubPageCartSetupOverride
               ].contains(getSubPage()) &&
               event is KeyDownEvent &&
+              event.logicalKey.keyLabel.toString().length == 1 &&
               alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
             NavigationEntity.goToSearch(
-                handleGoTo: goTo, search: event.logicalKey.keyLabel.toString());
+                handleGoTo: goTo,
+                search: stateSearched +
+                    event.logicalKey.keyLabel.toString().toLowerCase());
           }
         },
         child: MaterialApp(
@@ -137,11 +140,13 @@ class _ApplicationState extends State<Application> {
 
   Widget getSideMenuView() {
     return SideMenuView(
-        interfaceVersion: stateInterfaceVersion,
-        pageSelected: statePage,
-        argumentMapSelected: stateArgumentMap,
-        handleGoTo: goTo,
-        applicationIdListInCart: stateCartApplicationIdList);
+      interfaceVersion: stateInterfaceVersion,
+      pageSelected: statePage,
+      argumentMapSelected: stateArgumentMap,
+      handleGoTo: goTo,
+      applicationIdListInCart: stateCartApplicationIdList,
+      searched: stateSearched,
+    );
   }
 
   Widget getContentView(String pageToLoad, bool isMain) {
@@ -231,6 +236,9 @@ class _ApplicationState extends State<Application> {
     if (subPageToLoad == NavigationEntity.argumentSubPageInstall) {
       String applicationId =
           NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+
+      removeFromCart(applicationId);
+
       return InstallSubview(
           applicationId: applicationId,
           handleGoToApplication: () => NavigationEntity.gotToApplicationId(
@@ -292,8 +300,8 @@ class _ApplicationState extends State<Application> {
     } else if (subPageToLoad ==
         NavigationEntity.argumentSubPageCartInstallAll) {
       return CartInstallAllSubview(
-          handleGoToCart: () {
-            NavigationEntity.goToCart(handleGoTo: goTo);
+          handleGoToApplicationInstalled: () {
+            NavigationEntity.goToInstalledApplications(handleGoTo: goTo);
           },
           handleSetApplicationLighted: setApplicationIdLighted,
           applicationIdListInCart: stateCartApplicationIdList,
@@ -381,6 +389,12 @@ class _ApplicationState extends State<Application> {
     if (NavigationEntity.hasArgumentSearch(argumentMap)) {
       setState(() {
         stateSearched = NavigationEntity.extractArgumentSearch(argumentMap);
+      });
+    }
+
+    if (page != NavigationEntity.pageSearch) {
+      setState(() {
+        stateSearched = '';
       });
     }
 
