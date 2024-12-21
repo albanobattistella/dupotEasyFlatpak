@@ -3,6 +3,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart'
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/override_form_control.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/only_content_layout.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Layout/side_menu_with_content_and_subcontent.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/cart_install_all_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/cart_override_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_subview.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SubView/install_with_recipe_subview.dart';
@@ -45,6 +46,8 @@ class _ApplicationState extends State<Application> {
   List<String> stateCartApplicationIdList = [];
   Map<String, List<OverrideFormControl>>
       stateCartOverrideFormControlListByApplicationId = {};
+
+  String stateApplicationIdLighted = '';
 
   String version = '';
 
@@ -199,6 +202,8 @@ class _ApplicationState extends State<Application> {
           .containsKey(NavigationEntity.argumentApplicationId)) {
         applicationId =
             NavigationEntity.extractArgumentApplicationId(stateArgumentMap);
+      } else if (stateApplicationIdLighted.isNotEmpty) {
+        applicationId = stateApplicationIdLighted;
       }
 
       return CartView(
@@ -284,9 +289,28 @@ class _ApplicationState extends State<Application> {
           handleGoToCart: () {
             NavigationEntity.goToCart(handleGoTo: goTo);
           });
+    } else if (subPageToLoad ==
+        NavigationEntity.argumentSubPageCartInstallAll) {
+      return CartInstallAllSubview(
+          handleGoToCart: () {
+            NavigationEntity.goToCart(handleGoTo: goTo);
+          },
+          handleSetApplicationLighted: setApplicationIdLighted,
+          applicationIdListInCart: stateCartApplicationIdList,
+          handleRemoveFromCart: removeFromCart,
+          overrideSetupListByApplicationId:
+              stateCartOverrideFormControlListByApplicationId);
     }
-    throw new Exception(
+    throw Exception(
         'missing content sub view for subPageToLoad $subPageToLoad');
+  }
+
+  void setApplicationIdLighted(String applicationId) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        stateApplicationIdLighted = applicationId;
+      });
+    });
   }
 
   List<OverrideFormControl> getCartOverrideSetupForApplicationId(

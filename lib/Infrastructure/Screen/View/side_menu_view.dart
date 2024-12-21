@@ -154,9 +154,12 @@ class _SideMenuViewState extends State<SideMenuView> {
 
     return InkWell(
         borderRadius: BorderRadius.circular(10.0),
-        onTap: () {
-          menuItemLoop.action();
-        },
+        onTap: widget.argumentMapSelected
+                .containsKey(NavigationEntity.argumentSubPage)
+            ? null
+            : () {
+                menuItemLoop.action();
+              },
         child: Card(
             color: themeTextStyle.getHeadlineBackgroundColor(isSelected),
             child: Row(

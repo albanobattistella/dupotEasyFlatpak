@@ -64,6 +64,18 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+
+    <release date="2024-12-21" version="3.1.0">
+      <description>
+        <ul>
+          <li>Rewrite page system to avoid "zoom effect" when navigate</li>
+          <li>Add new feature: cart, you can now add few application and validate the cart at the end</li>
+          <li>Menu is now disable when you have a sub page open (3 column mode to avoid bug if you click during events)</li>
+          <li>Some bug fix</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-12-17" version="3.0.8">
       <description>
         <ul>

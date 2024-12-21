@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/recipe_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/override_form_control.dart';
@@ -116,10 +117,16 @@ class _CartViewState extends State<CartView> {
           Expanded(
               child: ListView(
                   controller: scrollController,
-                  children: stateApplicationEntityList
-                      .map((ApplicationEntity applicationEntity) =>
-                          getLine(applicationEntity))
-                      .toList()))
+                  children: stateApplicationEntityList.isEmpty
+                      ? [
+                          ListTile(
+                            title: Text(LocalizationApi().tr('cart_is_empty')),
+                          )
+                        ]
+                      : stateApplicationEntityList
+                          .map((ApplicationEntity applicationEntity) =>
+                              getLine(applicationEntity))
+                          .toList()))
         ]));
   }
 
@@ -202,6 +209,13 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget getInstallAllButton() {
+    if (widget.applicationIdListInCart.isEmpty) {
+      return InstallAllButton(
+        isActive: false,
+        handle: () {},
+      );
+    }
+
     for (String applicationIdWithRecipeLoop
         in stateApplicationIdWhichHasRecipeList) {
       if (!widget.overrideSetupListByApplicationId
