@@ -79,8 +79,6 @@ class _InstallSubviewState extends State<InstallSubview> {
         CommandApi().loadApplicationInstalledList();
 
         setState(() {
-          stateInstallationOutput =
-              LocalizationApi().tr('installation_finished');
           stateIsInstalling = false;
         });
       });
@@ -112,6 +110,11 @@ class _InstallSubviewState extends State<InstallSubview> {
             ],
           ),
           CardOutputComponent(outputString: stateInstallationOutput),
+          const SizedBox(
+            height: 10,
+          ),
+          if (!stateIsInstalling)
+            Center(child: Text(LocalizationApi().tr('installation_finished')))
         ],
       ),
     );

@@ -89,11 +89,7 @@ class _ApplicationState extends State<Application> {
         focusNode: _focusNode,
         autofocus: true,
         onKeyEvent: (event) {
-          if (![
-                NavigationEntity.argumentSubPageOverride,
-                NavigationEntity.argumentSubPageInstallWithRecipe,
-                NavigationEntity.argumentSubPageCartSetupOverride
-              ].contains(getSubPage()) &&
+          if (getSubPage() == '' &&
               event is KeyDownEvent &&
               event.logicalKey.keyLabel.toString().length == 1 &&
               alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {

@@ -103,10 +103,6 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
       await widget.handleRemoveFromCart(applicationIdLoop);
 
       await widget.handleSetApplicationLighted('');
-
-      setState(() {
-        stateInstallationOutput = LocalizationApi().tr('installation_finished');
-      });
     }
 
     setState(() {
@@ -133,7 +129,12 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
               const SizedBox(width: 20)
             ],
           ),
-          CardOutputComponent(outputString: stateInstallationOutput)
+          CardOutputComponent(outputString: stateInstallationOutput),
+          const SizedBox(
+            height: 10,
+          ),
+          if (!stateIsInstalling)
+            Center(child: Text(LocalizationApi().tr('installation_finished')))
         ],
       ),
     );

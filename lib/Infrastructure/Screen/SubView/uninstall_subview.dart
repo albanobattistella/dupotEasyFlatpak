@@ -82,8 +82,6 @@ class _InstallSubviewState extends State<UninstallSubview> {
         CommandApi().loadApplicationInstalledList();
 
         setState(() {
-          stateInstallationOutput =
-              LocalizationApi().tr('uninstallation_finished');
           stateIsInstalling = false;
         });
       });
@@ -111,7 +109,12 @@ class _InstallSubviewState extends State<UninstallSubview> {
               const SizedBox(width: 20)
             ],
           ),
-          CardOutputComponent(outputString: stateInstallationOutput)
+          CardOutputComponent(outputString: stateInstallationOutput),
+          const SizedBox(
+            height: 10,
+          ),
+          if (!stateIsInstalling)
+            Center(child: Text(LocalizationApi().tr('uninstallation_finished')))
         ],
       ),
     );

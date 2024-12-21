@@ -52,6 +52,15 @@ class _SideMenuViewState extends State<SideMenuView> {
     super.initState();
   }
 
+  bool isActive() {
+    if (widget.argumentMapSelected
+        .containsKey(NavigationEntity.argumentSubPage)) {
+      return false;
+    }
+
+    return true;
+  }
+
   @override
   void didUpdateWidget(covariant SideMenuView oldWidget) {
     if (oldWidget.pageSelected != widget.pageSelected ||
@@ -120,17 +129,19 @@ class _SideMenuViewState extends State<SideMenuView> {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: [
+        if (!isActive()) Icon(Icons.do_not_touch_rounded),
         Card(
             child: Padding(
                 padding: EdgeInsets.all(5),
                 child: Row(
                   children: [
                     const Icon(Icons.search),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Expanded(
                       child: TextField(
+                        enabled: isActive(),
                         autofocus: _searchController.text.isNotEmpty,
                         controller: _searchController,
                         style: Theme.of(context).textTheme.titleSmall,
@@ -193,8 +204,7 @@ class _SideMenuViewState extends State<SideMenuView> {
 
     return InkWell(
         borderRadius: BorderRadius.circular(8.0),
-        onTap: widget.argumentMapSelected
-                .containsKey(NavigationEntity.argumentSubPage)
+        onTap: !isActive()
             ? null
             : () {
                 menuItemLoop.action();

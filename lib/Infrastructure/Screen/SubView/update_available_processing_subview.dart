@@ -70,8 +70,6 @@ class _UpdateAvailableProcessingSubviewState
     }
 
     setState(() {
-      stateInstallationOutput =
-          "$stateInstallationOutput \n ${LocalizationApi().tr('update_finished')}";
       stateIsInstalling = false;
     });
   }
@@ -102,6 +100,11 @@ class _UpdateAvailableProcessingSubviewState
             ],
           ),
           CardOutputComponent(outputString: stateInstallationOutput),
+          const SizedBox(
+            height: 10,
+          ),
+          if (!stateIsInstalling)
+            Center(child: Text(LocalizationApi().tr('update_finished')))
         ],
       ),
     );

@@ -13,7 +13,7 @@ class CardOutputComponent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: Container(
-          constraints: const BoxConstraints(minHeight: 800),
+          constraints: const BoxConstraints(minHeight: 20),
           color: Colors.black54,
           child: Padding(
               padding: const EdgeInsets.all(20),

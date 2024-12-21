@@ -159,8 +159,6 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
         await CommandApi().loadApplicationInstalledList();
 
         setState(() {
-          stateInstallationOutput =
-              LocalizationApi().tr('installation_finished');
           stateIsInstalling = false;
         });
       });
@@ -241,7 +239,16 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
   }
 
   Widget getSubContentInstall() {
-    return CardOutputComponent(outputString: stateInstallationOutput);
+    return Column(
+      children: [
+        CardOutputComponent(outputString: stateInstallationOutput),
+        const SizedBox(
+          height: 10,
+        ),
+        if (!stateIsInstalling)
+          Center(child: Text(LocalizationApi().tr('installation_finished')))
+      ],
+    );
   }
 
   @override
