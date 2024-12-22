@@ -65,6 +65,15 @@
   <releases>
 
 
+    <release date="2024-12-22" version="3.1.4">
+      <description>
+        <ul>
+          <li>Improve darkmode</li>
+          <li>Fix some design issue</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-12-21" version="3.1.2">
       <description>
         <ul>
