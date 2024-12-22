@@ -27,7 +27,7 @@ class ListviewApplicationListComponent extends StatelessWidget {
           ApplicationEntity appStreamLoop = applicationEntityList[index];
 
           return InkWell(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(8.0),
               onTap: () {
                 NavigationEntity.gotToApplicationId(
                     handleGoTo: handleGoTo, applicationId: appStreamLoop.id);
@@ -41,9 +41,9 @@ class ListviewApplicationListComponent extends StatelessWidget {
                         const SizedBox(width: 10),
                         !appStreamLoop.hasAppIcon()
                             ? Image.asset('assets/images/no-image.png',
-                                height: 60)
+                                height: 50)
                             : Image.file(
-                                height: 60,
+                                height: 50,
                                 File(
                                     '${UserSettingsEntity().getApplicationIconsPath()}/${appStreamLoop.getAppIcon()}')),
                         const SizedBox(width: 20),
@@ -54,7 +54,7 @@ class ListviewApplicationListComponent extends StatelessWidget {
                               Text(
                                 appStreamLoop.name,
                                 style: TextStyle(
-                                    fontSize: 26,
+                                    fontSize: 24,
                                     color: Theme.of(context)
                                         .textTheme
                                         .headlineLarge!

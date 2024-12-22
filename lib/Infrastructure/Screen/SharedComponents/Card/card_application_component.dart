@@ -44,7 +44,7 @@ class CardApplicationComponent extends StatelessWidget {
                 Expanded(
                     child: Image.file(
                   File(icon),
-                  width: 60,
+                  width: 50,
                 ))
               ])));
     }
@@ -65,7 +65,7 @@ class CardApplicationComponent extends StatelessWidget {
           Expanded(
               child: Image.asset(
             'assets/logos/512x512.png',
-            width: 60,
+            width: 50,
           ))
         ]));
   }

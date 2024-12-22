@@ -17,7 +17,7 @@ class HomeViewModel {
     for (String categoryIdLoop in localCategoryIdList) {
       List<ApplicationEntity> appStreamList = await applicationRepository
           .findListApplicationEntityByCategoryOrderedAndLimited(
-              categoryIdLoop, 9);
+              categoryIdLoop, 11);
 
       applicationEntityListList.add(appStreamList);
     }

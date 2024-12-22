@@ -41,8 +41,9 @@ class BlockAppListComponent extends StatelessWidget {
     widgetList.add(Container(
         width: 170,
         height: 160,
-        child: TextButton(
-          child: Text(LocalizationApi().tr('More')),
+        child: IconButton(
+          icon: Icon(Icons.more_horiz_outlined),
+
           // icon: Icon(Icons.more),
           onPressed: () {
             NavigationEntity.gotToCategoryId(
