@@ -1,6 +1,7 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/grid_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/listview_application_list_component.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:flutter/material.dart';
 
 class ApplicationListContent extends StatefulWidget {
@@ -30,6 +31,8 @@ class _ApplicationListContentState extends State<ApplicationListContent> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
+
     return Scrollbar(
         interactive: false,
         thumbVisibility: true,
@@ -41,6 +44,7 @@ class _ApplicationListContentState extends State<ApplicationListContent> {
                 child: Row(children: [
                   const Expanded(child: SizedBox()),
                   SegmentedButton<AppDisplay>(
+                    style: themeButtonStyle.getSegmentedButtonStyle(),
                     // ToggleButtons above allows multiple or no selection.
                     // Set `multiSelectionEnabled` and `emptySelectionAllowed` to true
                     // to match the behavior of ToggleButtons.
@@ -62,7 +66,10 @@ class _ApplicationListContentState extends State<ApplicationListContent> {
                     segments: appDisplayOptions.map<ButtonSegment<AppDisplay>>(
                         ((AppDisplay, IconData) shirt) {
                       return ButtonSegment<AppDisplay>(
-                          value: shirt.$1, label: Icon(shirt.$2));
+                          value: shirt.$1,
+                          label: Icon(shirt.$2,
+                              color:
+                                  themeButtonStyle.getButtonTextStyle().color));
                     }).toList(),
                   ),
                   const SizedBox(

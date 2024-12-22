@@ -5,9 +5,15 @@ class ThemeTextStyle {
 
   ThemeTextStyle({required this.context});
 
+  Color getBadgetTextColor(bool isSelected) {
+    return Colors.white;
+  }
+
   Color getHeadlineTextColor(bool isSelected) {
     if (Theme.of(context).brightness == Brightness.dark) {
-      return isSelected ? Colors.blueAccent : Colors.white;
+      return isSelected
+          ? const Color.fromARGB(255, 167, 200, 223)
+          : Colors.white;
     }
     return isSelected
         ? Colors.white
@@ -15,8 +21,6 @@ class ThemeTextStyle {
   }
 
   Color getHeadlineBackgroundColor(bool isSelected) {
-    return isSelected
-        ? Theme.of(context).primaryColorDark
-        : Theme.of(context).primaryColorLight;
+    return isSelected ? Theme.of(context).primaryColorDark : Colors.transparent;
   }
 }

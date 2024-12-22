@@ -37,7 +37,6 @@ class _SideMenuWithContentAndSubContentLayoutState
               child: SizedBox(
                 width: 240,
                 child: Card(
-                    semanticContainer: widget.hasSubContent ? true : false,
                     elevation: 4,
                     color: Theme.of(context).primaryColorLight,
                     child: widget.menu),

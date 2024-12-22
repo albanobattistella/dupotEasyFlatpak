@@ -2,6 +2,7 @@ import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/grid_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/listview_application_list_component.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:flutter/material.dart';
 
 class CategoryView extends StatefulWidget {
@@ -69,6 +70,8 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
+
     return stateAppStreamList.isEmpty
         ? const CircularProgressIndicator()
         : Scrollbar(
@@ -82,6 +85,8 @@ class _CategoryViewState extends State<CategoryView> {
                     child: Row(children: [
                       const Expanded(child: SizedBox()),
                       SegmentedButton<AppDisplay>(
+                        style: themeButtonStyle.getSegmentedButtonStyle(),
+
                         // ToggleButtons above allows multiple or no selection.
                         // Set `multiSelectionEnabled` and `emptySelectionAllowed` to true
                         // to match the behavior of ToggleButtons.

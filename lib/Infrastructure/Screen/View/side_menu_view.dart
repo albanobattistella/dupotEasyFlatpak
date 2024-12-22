@@ -2,6 +2,7 @@ import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/side_menu_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -125,6 +126,7 @@ class _SideMenuViewState extends State<SideMenuView> {
   @override
   Widget build(BuildContext context) {
     themeTextStyle = ThemeTextStyle(context: context);
+    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
 
     return ListView(
       padding: const EdgeInsets.all(8),
@@ -156,7 +158,7 @@ class _SideMenuViewState extends State<SideMenuView> {
                     ),
                   ],
                 ))),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Column(
@@ -165,22 +167,16 @@ class _SideMenuViewState extends State<SideMenuView> {
               .toList(),
         ),
         if (stateCartMenuItemList.isNotEmpty)
-          SizedBox(
+          const SizedBox(
             height: 28,
-            child: ColoredBox(
-              color: Theme.of(context).primaryColorLight,
-            ),
           ),
         if (stateCartMenuItemList.isNotEmpty)
           Column(
               children: stateCartMenuItemList
                   .map((menuItemLoop) => getMenuLine(menuItemLoop))
                   .toList()),
-        SizedBox(
+        const SizedBox(
           height: 28,
-          child: ColoredBox(
-            color: Theme.of(context).primaryColorLight,
-          ),
         ),
         Column(
           children: stateBottomMenuItemList
@@ -219,12 +215,15 @@ class _SideMenuViewState extends State<SideMenuView> {
                     ? IconButton(
                         padding: const EdgeInsets.all(0),
                         icon: Badge(
-                            label: Text(menuItemLoop.badge,
-                                style: TextStyle(
-                                    color: themeTextStyle
-                                        .getHeadlineTextColor(isSelected))),
+                            label: Padding(
+                                padding: const EdgeInsets.all(2),
+                                child: Text(menuItemLoop.badge,
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        color: themeTextStyle
+                                            .getBadgetTextColor(isSelected)))),
                             backgroundColor: themeTextStyle
-                                .getHeadlineTextColor(!isSelected),
+                                .getHeadlineBackgroundColor(!isSelected),
                             child: Icon(menuItemLoop.icon,
                                 color: themeTextStyle
                                     .getHeadlineTextColor(isSelected))),
@@ -241,6 +240,8 @@ class _SideMenuViewState extends State<SideMenuView> {
                   LocalizationApi().tr(menuItemLoop.label),
                   style: isSelected
                       ? TextStyle(
+                          color:
+                              themeTextStyle.getHeadlineTextColor(isSelected),
                           backgroundColor: Theme.of(context)
                               .textSelectionTheme
                               .selectionHandleColor)
