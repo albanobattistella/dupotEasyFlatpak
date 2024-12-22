@@ -74,7 +74,7 @@ class _ApplicationState extends State<Application> {
   Widget build(BuildContext context) {
     ThemeData themData = ThemeData(
       useMaterial3: true,
-      primaryColorLight: Colors.blueGrey,
+      primaryColorLight: const Color.fromARGB(221, 59, 59, 59),
       brightness: Brightness.dark,
     );
 

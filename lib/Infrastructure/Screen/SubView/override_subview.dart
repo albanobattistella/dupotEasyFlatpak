@@ -177,27 +177,32 @@ class _OverrideSubviewState extends State<OverrideSubview> {
   }
 
   Widget getSaveButton() {
+    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
+
     return FilledButton.icon(
-      style: ThemeButtonStyle(context: context).getButtonStyle(),
-      onPressed: () async {
-        setState(() {
-          stateIsInstalling = true;
-        });
-        await overrideControl.save(
-            widget.applicationId, stateOverrideFormControlList);
+        style: themeButtonStyle.getButtonStyle(),
+        onPressed: () async {
+          setState(() {
+            stateIsInstalling = true;
+          });
+          await overrideControl.save(
+              widget.applicationId, stateOverrideFormControlList);
 
-        final snackBar = SnackBar(
-          content: Text(LocalizationApi().tr('successfully_saved')),
-        );
+          final snackBar = SnackBar(
+            content: Text(LocalizationApi().tr('successfully_saved')),
+          );
 
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-        setState(() {
-          stateIsInstalling = false;
-        });
-      },
-      label: Text(LocalizationApi().tr('save')),
-      icon: const Icon(Icons.save),
-    );
+          setState(() {
+            stateIsInstalling = false;
+          });
+        },
+        label: Text(LocalizationApi().tr('save'),
+            style: themeButtonStyle.getButtonTextStyle()),
+        icon: Icon(
+          Icons.save,
+          color: themeButtonStyle.getButtonTextStyle().color,
+        ));
   }
 }
