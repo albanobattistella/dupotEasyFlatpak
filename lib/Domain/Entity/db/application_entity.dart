@@ -83,8 +83,14 @@ class ApplicationEntity {
   }
 
   String formatMB(int value) {
+    double mbValue = value / 1000000;
+    if (mbValue < 1) {
+      final f = NumberFormat("0.00");
+      return f.format(mbValue).replaceAll('.00', '');
+    }
+
     final f = NumberFormat("###.00");
-    return f.format(value / 1000000).replaceAll('.00', '');
+    return f.format(mbValue).replaceAll('.00', '');
   }
 
   String getDownloadSize() {
