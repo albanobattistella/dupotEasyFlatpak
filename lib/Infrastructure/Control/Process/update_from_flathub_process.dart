@@ -27,7 +27,7 @@ class UpdateFromFlathubProcess {
 
   Future<void> unarchive(String archivePath, String targetPath) async {
     final inputStream = InputFileStream(archivePath);
-    final archive = ZipDecoder().decodeBuffer(inputStream);
+    final archive = ZipDecoder().decodeStream(inputStream);
 
     await extractArchiveToDisk(archive, targetPath);
   }
