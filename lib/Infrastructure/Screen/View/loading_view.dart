@@ -88,11 +88,11 @@ class _LoadingView extends State<LoadingView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 205, 230, 250),
+        backgroundColor: Theme.of(context).primaryColorLight,
         body: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 200,
               ),
               Image.asset(
@@ -101,6 +101,7 @@ class _LoadingView extends State<LoadingView> with TickerProviderStateMixin {
               ),
               LinearProgressIndicator(
                 value: progressValue,
+                color: Theme.of(context).primaryColorDark,
               )
             ],
           ),

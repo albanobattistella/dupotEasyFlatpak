@@ -131,8 +131,6 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
       applicationId
     ];
 
-    String flatpakCommand = 'flatpak';
-
     Process.start(command.getCommand(commandBin),
             command.getFlatpakSpawnArgumentList(commandBin, commandArgList))
         .then((Process process) {
@@ -254,7 +252,7 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
   @override
   Widget build(BuildContext context) {
     return stateApplicationEntity == null
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
@@ -262,13 +260,13 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
             child: ListView(
               controller: scrollController,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Wrap(
+                  alignment: WrapAlignment.end,
                   children: [
                     getInstallButton(),
                     const SizedBox(width: 20),
                     stateIsInstalling
-                        ? const CircularProgressIndicator()
+                        ? const LinearProgressIndicator()
                         : CloseSubViewButton(
                             handle: widget.handleGoToApplication),
                     const SizedBox(width: 20)
@@ -282,7 +280,7 @@ class _InstallationWithRecipeViewState extends State<InstallWithRecipeSubview> {
 
   Widget getInstallButton() {
     if (stateIsInstalling | !stateDisplayInstallButton) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return FilledButton.icon(

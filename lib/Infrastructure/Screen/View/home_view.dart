@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return stateAppStreamListList.isEmpty
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,

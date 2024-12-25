@@ -10,7 +10,6 @@ import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_reposit
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/install_all_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/override_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/remove_from_cart_button.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_all_button.dart';
 import 'package:flutter/material.dart';
 
 class CartView extends StatefulWidget {
@@ -68,7 +67,6 @@ class _CartViewState extends State<CartView> {
     List<String> applicationRecipeIdList =
         await RecipeApi().getRecipeApplicationIdList();
 
-    List<String> applicationUpdateIdList = [];
     for (String applicationIdLoop in widget.applicationIdListInCart) {
       if (!distinctApplicationIdList.contains(applicationIdLoop)) {
         checkboxList[applicationIdLoop] = false;
@@ -180,7 +178,7 @@ class _CartViewState extends State<CartView> {
                       if (stateApplicationRecipeIdList
                           .contains(applicationEntity.id))
                         Padding(
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                             child: OverrideButton(
                               applicationEntity: applicationEntity,
                               handle: () {

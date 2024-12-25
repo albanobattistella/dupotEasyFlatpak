@@ -1,7 +1,5 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/search_view_model.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Content/application_list_content.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +47,7 @@ class _SearchViewState extends State<SearchView> {
     return Column(children: [
       Expanded(
           child: stateAppStreamList.isEmpty
-              ? SizedBox()
+              ? const SizedBox()
               : ApplicationListContent(
                   handleGoTo: widget.handleGoTo,
                   applicationEntityList: stateAppStreamList))

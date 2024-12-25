@@ -21,7 +21,7 @@ class AboutView extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+          padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
           child: content,
         ),
       ],
@@ -42,19 +42,22 @@ class AboutView extends StatelessWidget {
         getLine(
             context: context,
             title: 'Author',
-            content: Text(' Michael Bertocchi')),
+            content: const Text(' Michael Bertocchi')),
         getSpace(),
         getLine(
           context: context,
           title: 'Website',
           content: TextButton(
-            child: Text('www.dupot.org'),
+            child: const Text('www.dupot.org'),
             onPressed: () {
               launchUrl(Uri.parse('https://www.dupot.org'));
             },
           ),
         ),
-        getLine(context: context, title: 'License', content: Text('LGPL-2.1')),
+        getLine(
+            context: context,
+            title: 'License',
+            content: const Text('LGPL-2.1')),
         getSpace(),
         getLine(context: context, title: 'Version', content: Text(version)),
         getSpace(),

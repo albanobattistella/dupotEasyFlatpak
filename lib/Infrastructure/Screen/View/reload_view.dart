@@ -1,8 +1,3 @@
-import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Api/flathub_api.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Control/Process/update_from_flathub_process.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:flutter/material.dart';
 
 class ReloadView extends StatefulWidget {
@@ -32,6 +27,6 @@ class _ReloadViewState extends State<ReloadView> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox();
+    return const SizedBox();
   }
 }

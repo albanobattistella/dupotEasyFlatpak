@@ -57,9 +57,6 @@ class _ApplicationState extends State<Application> {
 
   @override
   void initState() {
-    print('init application');
-    print('statePage: $statePage');
-
     processInit();
 
     super.initState();
@@ -123,7 +120,7 @@ class _ApplicationState extends State<Application> {
                         hasSubContent: hasSubContent,
                       ))
               ],
-              onDidRemovePage: (page) => print('remove ' + page.toString()),
+              onDidRemovePage: (page) => true,
             )));
   }
 
@@ -217,7 +214,7 @@ class _ApplicationState extends State<Application> {
           applicationId: applicationId);
     }
 
-    throw new Exception('missing content view for statePage $statePage');
+    throw Exception('missing content view for statePage $statePage');
   }
 
   reloadLanguage() {}

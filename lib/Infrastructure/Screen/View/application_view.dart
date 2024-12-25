@@ -12,7 +12,6 @@ import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/remove_from_cart_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/run_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/uninstall_button.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/update_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -149,7 +148,7 @@ class _ApplicationViewState extends State<ApplicationView> {
   @override
   Widget build(BuildContext context) {
     return stateAppStream == null
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
@@ -217,7 +216,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                             children: [
                               getOverrideButton(
                                   stateAppStream!.isAlreadyInstalled,
-                                  stateAppStream!.isOverrided),
+                                  stateAppStream!.hasRecipe),
                               const SizedBox(
                                 height: 2,
                               ),
@@ -318,7 +317,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                             Text("${LocalizationApi().tr('Download_Size')}:",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold)),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(stateAppStream!.getDownloadSize())
                           ],
                         ),
@@ -327,7 +326,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                             Text("${LocalizationApi().tr('Installed_Size')}:",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold)),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(stateAppStream!.getInstalledSize())
                           ],
                         )
@@ -406,7 +405,7 @@ class _ApplicationViewState extends State<ApplicationView> {
 
   Widget getAddToCartButton(bool isAlreadyInstalled) {
     if (isAlreadyInstalled) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     if (widget.applicationIdListInCart.contains(stateAppStream!.id)) {

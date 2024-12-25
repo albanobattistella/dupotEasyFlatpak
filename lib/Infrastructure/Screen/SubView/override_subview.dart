@@ -86,7 +86,7 @@ class _OverrideSubviewState extends State<OverrideSubview> {
   @override
   Widget build(BuildContext context) {
     return stateApplicationEntity == null
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
@@ -94,13 +94,13 @@ class _OverrideSubviewState extends State<OverrideSubview> {
             child: ListView(
               controller: scrollController,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Wrap(
+                  alignment: WrapAlignment.end,
                   children: [
                     getSaveButton(),
                     const SizedBox(width: 20),
                     stateIsInstalling
-                        ? const CircularProgressIndicator()
+                        ? const LinearProgressIndicator()
                         : CloseSubViewButton(
                             handle: widget.handleGoToApplication),
                     const SizedBox(width: 20)
@@ -167,7 +167,7 @@ class _OverrideSubviewState extends State<OverrideSubview> {
                                 );
                               }
 
-                              return SizedBox();
+                              return const SizedBox();
                             }).toList()),
                       ),
                     )),

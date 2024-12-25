@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/close_subview_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_output_component.dart';
 import 'package:flutter/material.dart';
@@ -89,9 +86,6 @@ class _InstallSubviewState extends State<InstallSubview> {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle outputTextStyle =
-        TextStyle(color: Colors.white, fontSize: 14.0);
-
     return Scrollbar(
       interactive: false,
       thumbVisibility: true,
@@ -99,12 +93,12 @@ class _InstallSubviewState extends State<InstallSubview> {
       child: ListView(
         controller: scrollController,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Wrap(
+            alignment: WrapAlignment.end,
             children: [
               const SizedBox(width: 20),
               stateIsInstalling
-                  ? const CircularProgressIndicator()
+                  ? const LinearProgressIndicator()
                   : CloseSubViewButton(handle: widget.handleGoToApplication),
               const SizedBox(width: 20)
             ],

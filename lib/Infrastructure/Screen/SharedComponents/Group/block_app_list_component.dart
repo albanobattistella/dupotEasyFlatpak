@@ -12,6 +12,7 @@ class BlockAppListComponent extends StatelessWidget {
   final Function handleGoTo;
 
   BlockAppListComponent({
+    super.key,
     required this.categoryId,
     required this.appStreamList,
     required this.appPath,
@@ -27,7 +28,7 @@ class BlockAppListComponent extends StatelessWidget {
             '${UserSettingsEntity().getApplicationIconsPath()}/${appStreamLoop.getAppIcon()}';
       }
 
-      return Container(
+      return SizedBox(
           width: 170,
           height: 160,
           child: CardApplicationComponent(
@@ -38,11 +39,11 @@ class BlockAppListComponent extends StatelessWidget {
               handleGoTo: handleGoTo));
     }).toList();
 
-    widgetList.add(Container(
+    widgetList.add(SizedBox(
         width: 170,
         height: 160,
         child: IconButton(
-          icon: Icon(Icons.more_horiz_outlined),
+          icon: const Icon(Icons.more_horiz_outlined),
 
           // icon: Icon(Icons.more),
           onPressed: () {

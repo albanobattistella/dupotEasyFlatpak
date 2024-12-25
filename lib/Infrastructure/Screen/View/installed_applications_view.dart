@@ -77,7 +77,7 @@ class _InstalledApplicationsViewState extends State<InstalledApplicationsView> {
                 child: Row(children: [
                   Text(
                     "${LocalizationApi().tr('Total')} : ${stateAppStreamList.length.toString()}",
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                   const Expanded(child: SizedBox()),
                   SegmentedButton<AppDisplay>(

@@ -2,7 +2,6 @@ import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/View/side_menu_view_model.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/menu_item_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -67,9 +66,9 @@ class _SideMenuViewState extends State<SideMenuView> {
     if (oldWidget.pageSelected != widget.pageSelected ||
         (oldWidget.pageSelected == widget.pageSelected &&
             oldWidget.pageSelected == NavigationEntity.pageCategory &&
-            oldWidget.argumentMapSelected![
+            oldWidget.argumentMapSelected[
                     NavigationEntity.argumentCategoryId]! !=
-                widget.argumentMapSelected![
+                widget.argumentMapSelected[
                     NavigationEntity.argumentCategoryId])) {
       loadData(false);
     } else if (oldWidget.interfaceVersion != widget.interfaceVersion) {
@@ -126,15 +125,14 @@ class _SideMenuViewState extends State<SideMenuView> {
   @override
   Widget build(BuildContext context) {
     themeTextStyle = ThemeTextStyle(context: context);
-    ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
 
     return ListView(
       padding: const EdgeInsets.all(8),
       children: [
-        if (!isActive()) Icon(Icons.do_not_touch_rounded),
+        if (!isActive()) const Icon(Icons.do_not_touch_rounded),
         Card(
             child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Row(
                   children: [
                     const Icon(Icons.search),

@@ -191,7 +191,7 @@ class UserSettingsEntity {
     };
 
     File jsonParameterFile = File(jsonUserSettingsPath);
-    JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
     jsonParameterFile.writeAsStringSync(encoder.convert(
       jsonParameterObj,
     ));

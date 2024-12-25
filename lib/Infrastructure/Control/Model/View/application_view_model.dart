@@ -30,10 +30,6 @@ class ApplicationViewModel {
 
     applicationEntity.hasRecipe = await checkHasRecipe(appId);
 
-    if (applicationEntity.isAlreadyInstalled) {
-      applicationEntity.hasUpdate = await checkHasUpdate(appId);
-    }
-
     return applicationEntity;
   }
 

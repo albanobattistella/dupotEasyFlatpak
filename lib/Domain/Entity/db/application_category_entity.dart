@@ -1,9 +1,13 @@
 class ApplicationCategoryEntity {
+  // ignore: non_constant_identifier_names
   final String appstream_id;
+  // ignore: non_constant_identifier_names
   final String category_id;
 
   ApplicationCategoryEntity({
+    // ignore: non_constant_identifier_names
     required this.appstream_id,
+    // ignore: non_constant_identifier_names
     required this.category_id,
   });
 

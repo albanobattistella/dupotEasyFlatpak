@@ -13,7 +13,7 @@ class CommandApi {
   late String updatesAvailableOutput;
   List<ApplicationUpdate> applicationUpdateAvailableList = [];
   List<String> dbApplicationIdList = [];
-  List<ApplicationInstalledEntity> ApplicationInstalledList = [];
+  List<ApplicationInstalledEntity> applicationInstalledList = [];
 
   static final CommandApi _singleton = CommandApi._internal();
 
@@ -48,9 +48,9 @@ class CommandApi {
 
   List<String> getAppIdUpdateAvailableList() {
     List<String> appIdList = [];
-    for (ApplicationUpdate ApplicationUpdateLoop
+    for (ApplicationUpdate applicationUpdateLoop
         in applicationUpdateAvailableList) {
-      appIdList.add(ApplicationUpdateLoop.id.toLowerCase());
+      appIdList.add(applicationUpdateLoop.id.toLowerCase());
     }
     return appIdList;
   }
@@ -93,10 +93,10 @@ class CommandApi {
 
   bool hasApplicationInstalledVersionDifferentThan(
       String appId, String versionToUpdate) {
-    for (ApplicationInstalledEntity ApplicationInstalledLoop
-        in ApplicationInstalledList) {
-      if (ApplicationInstalledLoop.id == appId &&
-          ApplicationInstalledLoop.version != versionToUpdate) {
+    for (ApplicationInstalledEntity applicationInstalledLoop
+        in applicationInstalledList) {
+      if (applicationInstalledLoop.id == appId &&
+          applicationInstalledLoop.version != versionToUpdate) {
         return true;
       }
     }
@@ -104,9 +104,9 @@ class CommandApi {
   }
 
   bool hasUpdateAvailableByAppId(String appId) {
-    for (ApplicationUpdate ApplicationUpdateAvailableLoop
+    for (ApplicationUpdate applicationUpdateAvailableLoop
         in applicationUpdateAvailableList) {
-      if (ApplicationUpdateAvailableLoop.id == appId.toLowerCase()) {
+      if (applicationUpdateAvailableLoop.id == appId.toLowerCase()) {
         return true;
       }
     }
@@ -114,10 +114,10 @@ class CommandApi {
   }
 
   String getApplicationUpdateVersionByAppId(String appId) {
-    for (ApplicationUpdate ApplicationUpdateAvailableLoop
+    for (ApplicationUpdate applicationUpdateAvailableLoop
         in applicationUpdateAvailableList) {
-      if (ApplicationUpdateAvailableLoop.id == appId.toLowerCase()) {
-        return ApplicationUpdateAvailableLoop.version;
+      if (applicationUpdateAvailableLoop.id == appId.toLowerCase()) {
+        return applicationUpdateAvailableLoop.version;
       }
     }
     throw Exception('Cannot find app version available for id: $appId');
@@ -171,7 +171,7 @@ class CommandApi {
         await runProcess('flatpak', ['list', '--columns=application,version']);
     String ApplicationInstalledOutput = result.stdout.toString();
 
-    ApplicationInstalledList.clear();
+    applicationInstalledList.clear();
 
     List<String> lineList = ApplicationInstalledOutput.split("\n");
     if (lineList.isNotEmpty) {
@@ -180,7 +180,7 @@ class CommandApi {
           List<String> lineLoopList = lineLoop.split("\t");
 
           if (hasApplicationInDatabase(lineLoopList[0])) {
-            ApplicationInstalledList.add(
+            applicationInstalledList.add(
                 ApplicationInstalledEntity(lineLoopList[0], lineLoopList[1]));
           }
         }
@@ -190,18 +190,17 @@ class CommandApi {
 
   Future<FlatpakApplication> isApplicationAlreadyInstalled(
       String applicationId) async {
-    ProcessResult result =
-        await runProcess(flatpakCommand, ['info', applicationId]);
-
-    stdout.write(result.stdout);
-
     var isAlreadyInstalled = false;
 
-    if (result.stdout.toString().length > 2) {
-      isAlreadyInstalled = true;
+    for (ApplicationInstalledEntity applicationEntityLoop
+        in applicationInstalledList) {
+      if (applicationEntityLoop.id == applicationId) {
+        isAlreadyInstalled = true;
+        break;
+      }
     }
 
-    return FlatpakApplication(isAlreadyInstalled, result.stdout.toString());
+    return FlatpakApplication(isAlreadyInstalled, '');
   }
 
   Future<FlatpakOverrideApplication> isApplicationOverrided(
@@ -209,13 +208,7 @@ class CommandApi {
     ProcessResult result = await runProcess(
         flatpakCommand, ['override', '--show', '--user', applicationId]);
 
-    stdout.write(result.stdout);
-
     var isOverrided = false;
-
-    print('stdout override');
-    print(result.stdout.toString());
-    print('stdout override FIN');
 
     if (result.stdout.toString().length > 2) {
       isOverrided = true;

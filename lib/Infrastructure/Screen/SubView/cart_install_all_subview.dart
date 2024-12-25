@@ -1,19 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Api/recipe_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Control/Model/SubView/override_control.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Entity/override_form_control.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Button/close_subview_button.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/Card/card_output_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
 import 'package:flutter/material.dart';
-import 'package:prompt_dialog/prompt_dialog.dart';
 
 class CartInstallAllSubview extends StatefulWidget {
   Function handleGoToApplicationInstalled;
@@ -63,10 +59,9 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
 
     CommandApi command = CommandApi();
     String commandBin = 'flatpak';
-    String flatpakCommand = 'flatpak';
 
     List<String> cartApplicationIdList =
-        new List<String>.from(widget.applicationIdListInCart);
+        List<String>.from(widget.applicationIdListInCart);
 
     for (String applicationIdLoop in cartApplicationIdList) {
       await widget.handleSetApplicationLighted(applicationIdLoop);
@@ -82,7 +77,6 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
           command.getFlatpakSpawnArgumentList(commandBin, commandArgList));
 
       process.stdout.transform(utf8.decoder).listen((data) {
-        print('STDOUT: $data');
         if (mounted) {
           setState(() {
             stateInstallationOutput = data;
@@ -119,11 +113,11 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
       child: ListView(
         controller: scrollController,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Wrap(
+            alignment: WrapAlignment.end,
             children: [
               stateIsInstalling
-                  ? const CircularProgressIndicator()
+                  ? const LinearProgressIndicator()
                   : CloseSubViewButton(
                       handle: widget.handleGoToApplicationInstalled),
               const SizedBox(width: 20)
@@ -142,7 +136,7 @@ class _InstallationWithRecipeViewState extends State<CartInstallAllSubview> {
 
   Widget getInstallButton() {
     if (stateIsInstalling | !stateDisplayInstallButton) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     return FilledButton.icon(

@@ -94,7 +94,7 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
   @override
   Widget build(BuildContext context) {
     return stateApplicationEntity == null
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
@@ -102,13 +102,13 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
             child: ListView(
               controller: scrollController,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                Wrap(
+                  alignment: WrapAlignment.end,
                   children: [
                     getSaveButton(),
                     const SizedBox(width: 20),
                     stateIsInstalling
-                        ? const CircularProgressIndicator()
+                        ? const LinearProgressIndicator()
                         : CloseSubViewButton(handle: widget.handleGoToCart),
                     const SizedBox(width: 20)
                   ],
@@ -174,7 +174,7 @@ class _CartOverrideSubviewState extends State<CartOverrideSubview> {
                                 );
                               }
 
-                              return SizedBox();
+                              return const SizedBox();
                             }).toList()),
                       ),
                     )),

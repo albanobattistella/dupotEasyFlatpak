@@ -1,6 +1,7 @@
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_category_entity.dart';
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
@@ -53,11 +54,11 @@ class ApplicationRepository {
   }
 
   Future<bool> insertApplicationEntity(
-      ApplicationEntity ApplicationEntity) async {
+      ApplicationEntity applicationEntity) async {
     final db = await getDb();
     db.insert(
       constTableApplication,
-      ApplicationEntity.toMap(),
+      applicationEntity.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
@@ -65,12 +66,12 @@ class ApplicationRepository {
   }
 
   Future<bool> insertApplicationEntityList(
-      List<ApplicationEntity> ApplicationEntityList) async {
+      List<ApplicationEntity> applicationEntityList) async {
     final db = await getDb();
 
     await db.transaction((txn) async {
       var batch = txn.batch();
-      for (ApplicationEntity applicationEntityLoop in ApplicationEntityList) {
+      for (ApplicationEntity applicationEntityLoop in applicationEntityList) {
         try {
           batch.insert(constTableApplication, applicationEntityLoop.toMap(),
               conflictAlgorithm: ConflictAlgorithm.replace);
@@ -95,7 +96,7 @@ class ApplicationRepository {
   Future<List<ApplicationEntity>> findAllApplicationEntity() async {
     final db = await getDb();
     // Query the table for all the dogs.
-    final List<Map<String, Object?>> ApplicationEntityList =
+    final List<Map<String, Object?>> applicationEntityList =
         await db.query(constTableApplication);
 
     // Convert the list of each dog's fields into a list of `Dog` objects.
@@ -108,7 +109,7 @@ class ApplicationRepository {
             'description': description as String,
             'lastUpdate': lastUpdate as int,
             'lastReleaseTimestamp': lastReleaseTimestamp as int
-          } in ApplicationEntityList)
+          } in applicationEntityList)
         ApplicationEntity(
             id: id,
             name: name,

@@ -36,8 +36,6 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     loadData();
 
     super.initState();
@@ -49,7 +47,6 @@ class _CategoryViewState extends State<CategoryView> {
       loadData();
     }
 
-    // TODO: implement didUpdateWidget
     super.didUpdateWidget(oldWidget);
   }
 
@@ -73,7 +70,7 @@ class _CategoryViewState extends State<CategoryView> {
     ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
 
     return stateAppStreamList.isEmpty
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,

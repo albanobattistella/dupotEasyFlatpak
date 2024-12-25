@@ -48,6 +48,7 @@ class FlathubApi {
     List<ApplicationEntity> appStreamList = [];
     List<ApplicationCategoryEntity> applicationCategoryEntityList = [];
 
+    // ignore: unused_local_variable
     int limitLoaded = 0;
     for (String appStreamIdLoop in appStreamIdList) {
       if (applicationIdList.contains(appStreamIdLoop.toLowerCase())) {
@@ -89,8 +90,6 @@ class FlathubApi {
     if (httpIconPath.length < 10) {
       return;
     }
-
-    String iconName = p.basename(httpIconPath);
 
     Dio dioDownload = Dio();
 
@@ -196,6 +195,7 @@ class FlathubApi {
       }
     }
 
+    // ignore: non_constant_identifier_names
     String developer_name = '';
     if (rawAppStream.containsKey('developer_name')) {
       developer_name = rawAppStream['developer_name'];

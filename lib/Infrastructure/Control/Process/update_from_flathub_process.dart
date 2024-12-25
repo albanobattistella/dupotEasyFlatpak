@@ -15,19 +15,14 @@ class UpdateFromFlathubProcess {
   UpdateFromFlathubProcess({required this.commandApi});
 
   Future<void> mkdir(String path) async {
-    io.ProcessResult result =
-        await commandApi.runProcessSync('/usr/bin/mkdir', [path]);
-    print(result.stdout);
-    print(result.stderr);
+    await commandApi.runProcessSync('/usr/bin/mkdir', [path]);
   }
 
   Future<void> copyTo(String fromPath, String targetPath) async {
-    io.ProcessResult result = await commandApi.runProcessSync(
+    await commandApi.runProcessSync(
       '/usr/bin/cp',
       [fromPath, targetPath],
     );
-    print(result.stdout);
-    print(result.stderr);
   }
 
   Future<void> unarchive(String archivePath, String targetPath) async {

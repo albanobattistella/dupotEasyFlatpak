@@ -17,7 +17,6 @@ class ScopeForm extends StatefulWidget {
 
 class _ScopeFormState extends State<ScopeForm> {
   updateUserInstallationScope(bool userInstallationScope) {
-    print('update installation scope');
     widget.userSettings.setUserInstallationScopeEnabled(userInstallationScope);
 
     widget.handleUpdateUserSettings(widget.userSettings);

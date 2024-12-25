@@ -1,5 +1,4 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/user_settings_entity.dart';
-import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/darkmode_form.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/language_form.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/View/UserSettings/Form/parameter_page_form.dart';
@@ -30,7 +29,6 @@ class _UserSettingsViewState extends State<UserSettingsView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     loadData();
 
     super.initState();
@@ -58,7 +56,7 @@ class _UserSettingsViewState extends State<UserSettingsView> {
     //scope install
     //installed app page (badge)
     return !isUserSettingsLoaded
-        ? const CircularProgressIndicator()
+        ? const LinearProgressIndicator()
         : Scrollbar(
             interactive: false,
             thumbVisibility: true,
