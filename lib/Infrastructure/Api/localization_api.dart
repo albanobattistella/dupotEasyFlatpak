@@ -6,7 +6,8 @@ class LocalizationApi {
   static final LocalizationApi _singleton = LocalizationApi._internal();
 
   factory LocalizationApi({String newLanguageCode = ''}) {
-    if (newLanguageCode.isNotEmpty) {
+    if (newLanguageCode.isNotEmpty &&
+        _localizedValues.containsKey(newLanguageCode)) {
       _singleton.languageCode = newLanguageCode;
     }
     return _singleton;
@@ -24,11 +25,11 @@ class LocalizationApi {
   void setLanguageCode(String newLanguageCode) {
     if (newLanguageCode.contains('_')) {
       List<String> newLanguageCodeList = newLanguageCode.split('_');
-      languageCode = newLanguageCodeList[0];
+      newLanguageCode = newLanguageCodeList[0];
     }
 
     if (_localizedValues.containsKey(newLanguageCode)) {
-      _singleton.languageCode = newLanguageCode;
+      languageCode = newLanguageCode;
     }
   }
 
@@ -45,7 +46,10 @@ class LocalizationApi {
   static List<String> languages() => _localizedValues.keys.toList();
 
   String tr(String key) {
-    if (!_localizedValues[languageCode]!.containsKey(key)) {
+    if (!_localizedValues.containsKey(languageCode)) {
+      throw Exception(
+          'Missing languageCode "$languageCode" in localization when ask tr("$key") ');
+    } else if (!_localizedValues[languageCode]!.containsKey(key)) {
       throw Exception(
           'Missing localization for key: $key in language $languageCode');
     }

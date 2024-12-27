@@ -7,16 +7,20 @@ import 'package:dupot_easy_flatpak/Infrastructure/Api/command_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Api/localization_api.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/application.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart' as p;
+import 'package:window_manager/window_manager.dart';
 
 void main() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
+
+    await windowManager.ensureInitialized();
 
     final Directory appDocumentsDir = await getApplicationDocumentsDirectory();
     String appDocumentsDirPath = appDocumentsDir.path;
@@ -115,6 +119,18 @@ void main() async {
     sqfliteFfiInit();
 
     databaseFactory = databaseFactoryFfi;
+
+    WindowOptions windowOptions = WindowOptions(
+      size: Size(1280, 600),
+      center: true,
+      backgroundColor: Colors.transparent,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.normal,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      await windowManager.show();
+      await windowManager.focus();
+    });
 
     runApp(const Application());
   } on Exception catch (e) {
