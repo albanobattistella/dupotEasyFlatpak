@@ -80,6 +80,9 @@ class _SideMenuViewState extends State<SideMenuView> {
 
     if (oldWidget.searched != widget.searched) {
       _searchController.text = widget.searched;
+      _searchController.selection = TextSelection.fromPosition(
+        TextPosition(offset: widget.searched.length),
+      );
     }
 
     super.didUpdateWidget(oldWidget);
@@ -142,13 +145,16 @@ class _SideMenuViewState extends State<SideMenuView> {
                     Expanded(
                       child: TextField(
                         enabled: isActive(),
-                        autofocus: _searchController.text.isNotEmpty,
+                        showCursor: true,
+                        autofocus: false,
                         controller: _searchController,
                         style: Theme.of(context).textTheme.titleSmall,
                         decoration: InputDecoration.collapsed(
                           hintText: LocalizationApi().tr('Search...'),
                         ),
                         onChanged: (value) {
+                          _searchController.clearComposing();
+
                           NavigationEntity.goToSearch(
                               handleGoTo: widget.handleGoTo, search: value);
                         },

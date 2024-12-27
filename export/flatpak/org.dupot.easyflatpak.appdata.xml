@@ -64,11 +64,12 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
-    <release date="2024-12-27" version="3.1.8">
+    <release date="2024-12-27" version="3.1.9">
       <description>
         <ul>
           <li>Bugfix</li>
           <li>Modify window manager library</li>
+          <li>Bug fixes</li>
         </ul>
       </description>
     </release>

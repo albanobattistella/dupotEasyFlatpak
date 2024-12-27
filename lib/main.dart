@@ -121,7 +121,7 @@ void main() async {
     databaseFactory = databaseFactoryFfi;
 
     WindowOptions windowOptions = WindowOptions(
-      size: Size(1280, 600),
+      size: Size(1280, 800),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,

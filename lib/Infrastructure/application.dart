@@ -68,6 +68,12 @@ class _ApplicationState extends State<Application> {
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ThemeData themData = ThemeData(
       useMaterial3: true,
@@ -84,10 +90,11 @@ class _ApplicationState extends State<Application> {
 
     return KeyboardListener(
         focusNode: _focusNode,
-        autofocus: true,
+        autofocus: false,
         onKeyEvent: (event) {
           if (getSubPage() == '' &&
               event is KeyDownEvent &&
+              // statePage != NavigationEntity.pageSearch &&
               event.logicalKey.keyLabel.toString().length == 1 &&
               alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
             NavigationEntity.goToSearch(
@@ -380,9 +387,14 @@ class _ApplicationState extends State<Application> {
 
   void goTo({required String page, required Map<String, String> argumentMap}) {
     if (NavigationEntity.hasArgumentSearch(argumentMap)) {
-      setState(() {
-        stateSearched = NavigationEntity.extractArgumentSearch(argumentMap);
-      });
+      String newSearch = NavigationEntity.extractArgumentSearch(argumentMap);
+      if (newSearch != stateSearched) {
+        print('update search to ' +
+            NavigationEntity.extractArgumentSearch(argumentMap));
+        setState(() {
+          stateSearched = NavigationEntity.extractArgumentSearch(argumentMap);
+        });
+      }
     }
 
     if (page != NavigationEntity.pageSearch) {
