@@ -51,6 +51,8 @@ class _ApplicationState extends State<Application> {
 
   String version = '';
 
+  bool stateHasPrevious = false;
+
   final FocusNode _focusNode = FocusNode();
 
   final alphanumeric = RegExp(r'^[a-zA-Z0-9]{1}$');
@@ -121,11 +123,12 @@ class _ApplicationState extends State<Application> {
                   MaterialPage(
                       key: const ValueKey(NavigationEntity.pageHome),
                       child: SideMenuWithContentAndSubContentLayout(
-                        menu: getSideMenuView(),
-                        content: getContentView(statePage, isMain),
-                        subContent: getSubContentView(hasSubContent),
-                        hasSubContent: hasSubContent,
-                      ))
+                          menu: getSideMenuView(),
+                          content: getContentView(statePage, isMain),
+                          subContent: getSubContentView(hasSubContent),
+                          hasSubContent: hasSubContent,
+                          hasPrevious: stateHasPrevious,
+                          handleGoToPrevious: goToPrevious))
               ],
               onDidRemovePage: (page) => true,
             )));
@@ -409,6 +412,8 @@ class _ApplicationState extends State<Application> {
 
       statePage = page;
       stateArgumentMap = argumentMap;
+
+      stateHasPrevious = true;
     });
   }
 }

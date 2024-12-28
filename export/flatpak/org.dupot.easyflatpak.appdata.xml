@@ -64,6 +64,15 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+
+    <release date="2024-12-28" version="3.2.0">
+      <description>
+        <ul>
+          <li>Add back floating button</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-12-27" version="3.1.9">
       <description>
         <ul>

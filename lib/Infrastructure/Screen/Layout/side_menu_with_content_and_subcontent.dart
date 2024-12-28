@@ -5,13 +5,17 @@ class SideMenuWithContentAndSubContentLayout extends StatefulWidget {
   Widget content;
   Widget subContent;
   bool hasSubContent = false;
+  bool hasPrevious;
+  Function handleGoToPrevious;
 
   SideMenuWithContentAndSubContentLayout(
       {super.key,
       required this.menu,
       required this.content,
       required this.subContent,
-      required this.hasSubContent});
+      required this.hasSubContent,
+      required this.hasPrevious,
+      required this.handleGoToPrevious});
 
   @override
   _SideMenuWithContentAndSubContentLayoutState createState() =>
@@ -60,6 +64,14 @@ class _SideMenuWithContentAndSubContentLayoutState
                         child: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             child: widget.subContent))))
-        ]));
+        ]),
+        floatingActionButton: widget.hasPrevious
+            ? FloatingActionButton(
+                backgroundColor: Theme.of(context).secondaryHeaderColor,
+                onPressed: () {
+                  widget.handleGoToPrevious();
+                },
+                child: const Icon(Icons.arrow_back_rounded))
+            : null);
   }
 }
