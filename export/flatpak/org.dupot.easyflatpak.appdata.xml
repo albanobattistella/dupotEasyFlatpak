@@ -65,6 +65,18 @@
   <releases>
 
 
+
+
+
+    <release date="2025-01-05" version="3.2.1">
+      <description>
+        <ul>
+          <li>Update logos</li>
+          <li>Update italian traduction</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2024-12-28" version="3.2.0">
       <description>
         <ul>
