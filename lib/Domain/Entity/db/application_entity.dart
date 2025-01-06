@@ -4,14 +4,16 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
+import 'dart:convert' show utf8;
+
 class ApplicationEntity {
-  final String id;
-  final String name;
-  final String summary;
-  final String httpIcon;
+  String id;
+  late String name;
+  late String summary;
+  String httpIcon;
 
   List<String> categoryIdList = [];
-  String description = '';
+  late String description = '';
 
   Map<String, dynamic> metadataObj = {};
   Map<String, dynamic> urlObj = {};
@@ -35,11 +37,11 @@ class ApplicationEntity {
 
   ApplicationEntity(
       {required this.id,
-      required this.name,
-      required this.summary,
+      required name,
+      required summary,
       required this.httpIcon,
       required this.categoryIdList,
-      required this.description,
+      required description,
       required this.metadataObj,
       required this.urlObj,
       required this.releaseObjList,
@@ -47,7 +49,15 @@ class ApplicationEntity {
       required this.projectLicense,
       required this.developer_name,
       required this.screenshotObjList,
-      required this.lastReleaseTimestamp});
+      required this.lastReleaseTimestamp}) {
+    this.name = decodeText(name);
+    this.summary = decodeText(summary);
+    this.description = decodeText(description);
+  }
+
+  String decodeText(String text) {
+    return utf8.decode(text.codeUnits, allowMalformed: true);
+  }
 
   Map<String, Object?> toMap() {
     return {
