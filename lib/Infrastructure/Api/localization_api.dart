@@ -40,7 +40,8 @@ class LocalizationApi {
   static var _localizedValues = <String, Map<String, String>>{
     'en': {},
     'fr': {},
-    'it': {}
+    'it': {},
+    'es': {}
   };
 
   static List<String> languages() => _localizedValues.keys.toList();

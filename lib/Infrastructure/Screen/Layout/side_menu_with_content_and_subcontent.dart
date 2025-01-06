@@ -39,7 +39,7 @@ class _SideMenuWithContentAndSubContentLayoutState
           Padding(
               padding: const EdgeInsets.all(5),
               child: SizedBox(
-                width: 240,
+                width: 270,
                 child: Card(
                     elevation: 4,
                     color: Theme.of(context).primaryColorLight,

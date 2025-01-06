@@ -65,8 +65,13 @@
   <releases>
 
 
-
-
+    <release date="2025-01-06" version="3.2.2">
+      <description>
+        <ul>
+          <li>Add new Spanish language</li>
+        </ul>
+      </description>
+    </release>
 
     <release date="2025-01-05" version="3.2.1">
       <description>
