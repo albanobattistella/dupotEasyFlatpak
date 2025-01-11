@@ -37,11 +37,11 @@ class ApplicationEntity {
 
   ApplicationEntity(
       {required this.id,
-      required name,
-      required summary,
+      required this.name,
+      required this.summary,
       required this.httpIcon,
       required this.categoryIdList,
-      required description,
+      required this.description,
       required this.metadataObj,
       required this.urlObj,
       required this.releaseObjList,
@@ -49,10 +49,18 @@ class ApplicationEntity {
       required this.projectLicense,
       required this.developer_name,
       required this.screenshotObjList,
-      required this.lastReleaseTimestamp}) {
-    this.name = decodeText(name);
-    this.summary = decodeText(summary);
-    this.description = decodeText(description);
+      required this.lastReleaseTimestamp});
+
+  String getName() {
+    return decodeText(name);
+  }
+
+  String getSummary() {
+    return decodeText(summary);
+  }
+
+  String getDescription() {
+    return decodeText(description);
   }
 
   String decodeText(String text) {

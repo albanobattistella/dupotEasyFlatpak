@@ -96,7 +96,7 @@ class _LoadingView extends State<LoadingView> with TickerProviderStateMixin {
                 height: 200,
               ),
               Image.asset(
-                'assets/logos/512x512.png',
+                'assets/logos/splash.png',
                 width: 200,
               ),
               LinearProgressIndicator(

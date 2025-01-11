@@ -51,7 +51,7 @@ class ListviewApplicationListComponent extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                appStreamLoop.name,
+                                appStreamLoop.getName(),
                                 style: TextStyle(
                                     fontSize: 24,
                                     color: Theme.of(context)
@@ -60,7 +60,7 @@ class ListviewApplicationListComponent extends StatelessWidget {
                                         .color),
                               ),
                               Text(
-                                appStreamLoop.summary,
+                                appStreamLoop.getSummary(),
                               )
                             ],
                           ),

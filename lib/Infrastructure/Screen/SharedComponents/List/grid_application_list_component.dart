@@ -34,8 +34,8 @@ class GridApplicationListComponent extends StatelessWidget {
             height: 150,
             child: CardApplicationComponent(
                 id: appStreamLoop.id,
-                title: appStreamLoop.name,
-                sumary: appStreamLoop.summary,
+                title: appStreamLoop.getName(),
+                sumary: appStreamLoop.getSummary(),
                 icon: icon,
                 handleGoTo: handleGoTo));
       },

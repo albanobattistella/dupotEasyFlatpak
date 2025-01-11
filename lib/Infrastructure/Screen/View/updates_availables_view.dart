@@ -143,7 +143,7 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
                       children: [
                         Text(
                           applicationEntityFound != null
-                              ? applicationEntityFound.name
+                              ? applicationEntityFound.getName()
                               : applicationUpdate.id,
                           style: TextStyle(
                               fontSize: 26,
@@ -154,7 +154,7 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
                         ),
                         Text(
                           applicationEntityFound != null
-                              ? applicationEntityFound.summary
+                              ? applicationEntityFound.getSummary()
                               : '',
                         ),
                         Text(applicationUpdate.version)

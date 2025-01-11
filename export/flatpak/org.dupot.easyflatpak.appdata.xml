@@ -66,6 +66,16 @@
   <releases>
 
 
+
+    <release date="2025-01-11" version="3.2.4">
+      <description>
+        <ul>
+          <li>Update logos</li>
+          <li>Update dislplay non ASCII characters</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2025-01-06" version="3.2.3">
       <description>
         <ul>

@@ -63,7 +63,7 @@ class _UninstallButtonState extends State<UninstallButton> {
                             child: Column(
                               children: [
                                 Text(
-                                    '${LocalizationApi().tr('do_you_confirm_uninstallation_of')} ${widget.applicationEntity.name} ?'),
+                                    '${LocalizationApi().tr('do_you_confirm_uninstallation_of')} ${widget.applicationEntity.getName()} ?'),
                                 const SizedBox(
                                   height: 20,
                                 ),

@@ -41,7 +41,7 @@ class InstallButton extends StatelessWidget {
                         title: Text(LocalizationApi().tr('confirmation_title')),
                         contentPadding: const EdgeInsets.all(20.0),
                         content: Text(
-                            '${LocalizationApi().tr('do_you_confirm_installation_of')} ${applicationEntity.name} ?'),
+                            '${LocalizationApi().tr('do_you_confirm_installation_of')} ${applicationEntity.getName()} ?'),
                       ));
             },
       label: Text(LocalizationApi().tr('install'),

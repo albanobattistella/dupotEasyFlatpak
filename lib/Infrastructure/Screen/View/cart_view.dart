@@ -160,7 +160,7 @@ class _CartViewState extends State<CartView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          applicationEntity.name,
+                          applicationEntity.getName(),
                           style: TextStyle(
                               fontSize: 26,
                               color: Theme.of(context)
@@ -168,7 +168,7 @@ class _CartViewState extends State<CartView> {
                                   .headlineLarge!
                                   .color),
                         ),
-                        Text(applicationEntity.summary),
+                        Text(applicationEntity.getSummary()),
                       ],
                     ),
                   ),

@@ -169,7 +169,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            stateAppStream!.name,
+                            stateAppStream!.getName(),
                             style: const TextStyle(
                                 fontSize: 35, fontWeight: FontWeight.bold),
                           ),
@@ -283,7 +283,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          stateAppStream!.summary,
+                          stateAppStream!.getSummary(),
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -296,7 +296,7 @@ class _ApplicationViewState extends State<ApplicationView> {
                           height: 15,
                         ),
                         HtmlWidget(
-                          stateAppStream!.description,
+                          stateAppStream!.getDescription(),
                         ),
                       ],
                     )),
