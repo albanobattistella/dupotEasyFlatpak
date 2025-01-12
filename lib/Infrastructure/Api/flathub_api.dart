@@ -26,6 +26,13 @@ class FlathubApi {
 
     await applicationRepository.updateApplicationEntity(appStream);
 
+    final io.Directory appDocumentsDir =
+        await getApplicationDocumentsDirectory();
+
+    final appDocumentsDirPath = appDocumentsDir.path;
+
+    downloadIcon(appStream, appDocumentsDirPath);
+
     return true;
   }
 

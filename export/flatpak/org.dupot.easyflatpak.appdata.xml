@@ -67,6 +67,17 @@
 
 
 
+    <release date="2025-01-12" version="3.3.0">
+      <description>
+        <ul>
+          <li>Update applications icons</li>
+          <li>Update application database</li>
+          <li>When update description or data cache application, update last application icon too</li>
+          <li>Update italian traduction</li>
+        </ul>
+      </description>
+    </release>
+
     <release date="2025-01-11" version="3.2.4">
       <description>
         <ul>
