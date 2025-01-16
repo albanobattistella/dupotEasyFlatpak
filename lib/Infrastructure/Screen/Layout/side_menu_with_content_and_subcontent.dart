@@ -50,10 +50,7 @@ class _SideMenuWithContentAndSubContentLayoutState
                   width: 500,
                   child: content,
                 )
-              : Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                      child: content)),
+              : Expanded(child: content),
           if (widget.hasSubContent)
             Expanded(
                 child: Padding(
