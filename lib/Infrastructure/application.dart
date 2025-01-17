@@ -376,10 +376,7 @@ class _ApplicationState extends State<Application> {
   }
 
   void goToPrevious() {
-    setState(() {
-      statePage = statePreviousPage;
-      stateArgumentMap = statePreviousPArgumentMap;
-    });
+    goTo(page: statePreviousPage, argumentMap: statePreviousPArgumentMap);
   }
 
   void reload() {

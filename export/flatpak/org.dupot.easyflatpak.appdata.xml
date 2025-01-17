@@ -65,6 +65,13 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
+    <release date="2025-01-17" version="3.3.2">
+      <description>
+        <ul>
+          <li>Bug fix https://github.com/imikado/dupotEasyFlatpak/issues/31</li>
+        </ul>
+      </description>
+    </release>
 
     <release date="2025-01-16" version="3.3.1">
       <description>
