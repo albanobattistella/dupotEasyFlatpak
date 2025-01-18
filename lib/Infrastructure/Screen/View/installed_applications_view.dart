@@ -66,63 +66,59 @@ class _InstalledApplicationsViewState extends State<InstalledApplicationsView> {
   Widget build(BuildContext context) {
     ThemeButtonStyle themeButtonStyle = ThemeButtonStyle(context: context);
 
-    return Scrollbar(
-        interactive: false,
-        thumbVisibility: true,
-        controller: scrollController,
-        child: Column(
-          children: [
-            Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(children: [
-                  Text(
-                    "${LocalizationApi().tr('Total')} : ${stateAppStreamList.length.toString()}",
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  SegmentedButton<AppDisplay>(
-                    style: themeButtonStyle.getSegmentedButtonStyle(),
+    return Column(
+      children: [
+        Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(children: [
+              Text(
+                "${LocalizationApi().tr('Total')} : ${stateAppStreamList.length.toString()}",
+                style: const TextStyle(fontSize: 18),
+              ),
+              const Expanded(child: SizedBox()),
+              SegmentedButton<AppDisplay>(
+                style: themeButtonStyle.getSegmentedButtonStyle(),
 
-                    // ToggleButtons above allows multiple or no selection.
-                    // Set `multiSelectionEnabled` and `emptySelectionAllowed` to true
-                    // to match the behavior of ToggleButtons.
-                    multiSelectionEnabled: false,
-                    emptySelectionAllowed: false,
+                // ToggleButtons above allows multiple or no selection.
+                // Set `multiSelectionEnabled` and `emptySelectionAllowed` to true
+                // to match the behavior of ToggleButtons.
+                multiSelectionEnabled: false,
+                emptySelectionAllowed: false,
 
-                    // Hide the selected icon to match the behavior of ToggleButtons.
-                    showSelectedIcon: true,
-                    // SegmentedButton uses a Set<T> to track its selection state.
-                    selected: _segmentedButtonSelection,
-                    // This callback updates the set of selected segment values.
-                    onSelectionChanged: (Set<AppDisplay> newSelection) {
-                      setState(() {
-                        _segmentedButtonSelection = newSelection;
-                      });
-                    },
-                    // SegmentedButton uses a List<ButtonSegment<T>> to build its children
-                    // instead of a List<Widget> like ToggleButtons.
-                    segments: appDisplayOptions.map<ButtonSegment<AppDisplay>>(
-                        ((AppDisplay, IconData) shirt) {
-                      return ButtonSegment<AppDisplay>(
-                          value: shirt.$1, label: Icon(shirt.$2));
-                    }).toList(),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  )
-                ])),
-            Expanded(
-              child: _segmentedButtonSelection.first == AppDisplay.grid
-                  ? GridApplicationListComponent(
-                      applicationEntityList: stateAppStreamList,
-                      handleGoTo: widget.handleGoTo,
-                      handleScrollController: scrollController)
-                  : ListviewApplicationListComponent(
-                      applicationEntityList: stateAppStreamList,
-                      handleGoTo: widget.handleGoTo,
-                      handleScrollController: scrollController),
-            )
-          ],
-        ));
+                // Hide the selected icon to match the behavior of ToggleButtons.
+                showSelectedIcon: true,
+                // SegmentedButton uses a Set<T> to track its selection state.
+                selected: _segmentedButtonSelection,
+                // This callback updates the set of selected segment values.
+                onSelectionChanged: (Set<AppDisplay> newSelection) {
+                  setState(() {
+                    _segmentedButtonSelection = newSelection;
+                  });
+                },
+                // SegmentedButton uses a List<ButtonSegment<T>> to build its children
+                // instead of a List<Widget> like ToggleButtons.
+                segments: appDisplayOptions.map<ButtonSegment<AppDisplay>>(
+                    ((AppDisplay, IconData) shirt) {
+                  return ButtonSegment<AppDisplay>(
+                      value: shirt.$1, label: Icon(shirt.$2));
+                }).toList(),
+              ),
+              const SizedBox(
+                width: 10,
+              )
+            ])),
+        Expanded(
+          child: _segmentedButtonSelection.first == AppDisplay.grid
+              ? GridApplicationListComponent(
+                  applicationEntityList: stateAppStreamList,
+                  handleGoTo: widget.handleGoTo,
+                  handleScrollController: scrollController)
+              : ListviewApplicationListComponent(
+                  applicationEntityList: stateAppStreamList,
+                  handleGoTo: widget.handleGoTo,
+                  handleScrollController: scrollController),
+        )
+      ],
+    );
   }
 }

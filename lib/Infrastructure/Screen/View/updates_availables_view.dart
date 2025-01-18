@@ -70,31 +70,27 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-        interactive: false,
-        thumbVisibility: true,
-        controller: scrollController,
-        child: Column(children: [
-          Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  getUpdateAllButton(),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  getUpdateButton()
-                ],
-              )),
-          Expanded(
-              child: ListView(
-                  controller: scrollController,
-                  children: stateApplicationUpdateList
-                      .map((ApplicationUpdate applicationUpdate) =>
-                          getLine(applicationUpdate))
-                      .toList()))
-        ]));
+    return Column(children: [
+      Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              getUpdateAllButton(),
+              const SizedBox(
+                width: 10,
+              ),
+              getUpdateButton()
+            ],
+          )),
+      Expanded(
+          child: ListView(
+              controller: scrollController,
+              children: stateApplicationUpdateList
+                  .map((ApplicationUpdate applicationUpdate) =>
+                      getLine(applicationUpdate))
+                  .toList()))
+    ]);
   }
 
   ApplicationEntity? getApplicationEntity(String id) {

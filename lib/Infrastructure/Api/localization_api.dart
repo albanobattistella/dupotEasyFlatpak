@@ -41,7 +41,8 @@ class LocalizationApi {
     'en': {},
     'fr': {},
     'it': {},
-    'es': {}
+    'es': {},
+    'br': {}
   };
 
   static List<String> languages() => _localizedValues.keys.toList();

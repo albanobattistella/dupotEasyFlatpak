@@ -84,6 +84,7 @@ class _LanguageFormState extends State<LanguageForm> {
                         RadioStringEntity(label: 'French', value: 'fr'),
                         RadioStringEntity(label: 'Italian', value: 'it'),
                         RadioStringEntity(label: 'Spanish', value: 'es'),
+                        RadioStringEntity(label: 'Brazilian', value: 'br'),
                       ],
                       value: widget.userSettings.getUserLanguageCode(),
                       handleUpdateValue: updateLanguage),
