@@ -15,9 +15,11 @@ class RadioStringListSubform extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+        spacing: 0,
         children: radioStringEntityList
             .map(
               (RadioStringEntity radioStringEntityLoop) => ListTile(
+                visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                 titleTextStyle: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).textTheme.headlineLarge!.color),

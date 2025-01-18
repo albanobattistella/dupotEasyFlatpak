@@ -109,6 +109,7 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
     return Card(
         color: Theme.of(context).primaryColorLight,
         child: CheckboxListTile(
+          visualDensity: VisualDensity(horizontal: 0, vertical: -4),
           onChanged: (bool? value) {
             Map<String, bool> checkboxList = stateCheckboxList;
 
@@ -121,10 +122,10 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
           enabled: applicationEntityFound != null,
           value: stateCheckboxList[applicationUpdate.id.toLowerCase()],
           title: Column(
+            spacing: 0,
             children: [
               Row(
                 children: [
-                  const SizedBox(width: 10),
                   applicationEntityFound == null ||
                           !applicationEntityFound.hasAppIcon()
                       ? Image.asset('assets/images/no-image.png', height: 60)
@@ -135,6 +136,7 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
                   const SizedBox(width: 20),
                   Expanded(
                     child: Column(
+                      spacing: 0,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -142,18 +144,19 @@ class _UpdatesAvailablesViewState extends State<UpdatesAvailablesView> {
                               ? applicationEntityFound.getName()
                               : applicationUpdate.id,
                           style: TextStyle(
-                              fontSize: 26,
+                              fontSize: 20,
                               color: Theme.of(context)
                                   .textTheme
                                   .headlineLarge!
                                   .color),
                         ),
                         Text(
-                          applicationEntityFound != null
-                              ? applicationEntityFound.getSummary()
-                              : '',
-                        ),
-                        Text(applicationUpdate.version)
+                            applicationEntityFound != null
+                                ? applicationEntityFound.getSummary()
+                                : '',
+                            style: TextStyle(fontSize: 14)),
+                        Text(applicationUpdate.version,
+                            style: TextStyle(fontSize: 14))
                       ],
                     ),
                   )

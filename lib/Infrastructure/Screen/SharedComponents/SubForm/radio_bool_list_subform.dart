@@ -18,6 +18,7 @@ class RadioBoolListSubform extends StatelessWidget {
         children: radioBoolEntityList
             .map(
               (RadioBoolEntity radioBoolEntityLoop) => ListTile(
+                visualDensity: VisualDensity(horizontal: 0, vertical: -4),
                 titleTextStyle: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).textTheme.headlineLarge!.color),

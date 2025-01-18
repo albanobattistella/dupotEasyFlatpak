@@ -31,7 +31,7 @@ class GridApplicationListComponent extends StatelessWidget {
 
         return SizedBox(
             width: 150,
-            height: 150,
+            height: 120,
             child: CardApplicationComponent(
                 id: appStreamLoop.id,
                 title: appStreamLoop.getName(),
@@ -40,7 +40,7 @@ class GridApplicationListComponent extends StatelessWidget {
                 handleGoTo: handleGoTo));
       },
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200),
+          maxCrossAxisExtent: 180),
     );
   }
 }

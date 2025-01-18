@@ -65,11 +65,12 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
-    <release date="2025-01-18" version="3.4.0">
+    <release date="2025-01-18" version="3.4.1">
       <description>
         <ul>
           <li>Bug fix https://github.com/imikado/dupotEasyFlatpak/issues/24</li>
           <li>Add brazilian traduction</li>
+          <li>Visual improvment</li>
         </ul>
       </description>
     </release>
