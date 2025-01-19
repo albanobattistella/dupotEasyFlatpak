@@ -91,5 +91,6 @@
     "remove_from_cart": "Remover do carrinho",
     "do_you_confirm_installation_of_all": "Confirma a instalação de todos?",
     "install_all": "Instalar tudo",
-    "cart_is_empty": "O carrinho está vazio"
+    "cart_is_empty": "O carrinho está vazio","Name":"Name",
+  "Description":"Description"
   }

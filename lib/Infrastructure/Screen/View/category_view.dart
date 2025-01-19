@@ -1,5 +1,6 @@
 import 'package:dupot_easy_flatpak/Domain/Entity/db/application_entity.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Repository/application_repository.dart';
+import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/datatable_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/grid_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/SharedComponents/List/listview_application_list_component.dart';
 import 'package:dupot_easy_flatpak/Infrastructure/Screen/Theme/theme_button_style.dart';
@@ -16,11 +17,12 @@ class CategoryView extends StatefulWidget {
   State<CategoryView> createState() => _CategoryViewState();
 }
 
-enum AppDisplay { list, grid }
+enum AppDisplay { list, grid, table }
 
 const List<(AppDisplay, IconData)> appDisplayOptions = <(AppDisplay, IconData)>[
   (AppDisplay.list, Icons.view_list),
   (AppDisplay.grid, Icons.view_compact),
+  (AppDisplay.table, Icons.view_column),
 ];
 
 class _CategoryViewState extends State<CategoryView> {
@@ -109,18 +111,28 @@ class _CategoryViewState extends State<CategoryView> {
                       width: 10,
                     )
                   ])),
-              Expanded(
-                child: _segmentedButtonSelection.first == AppDisplay.grid
-                    ? GridApplicationListComponent(
-                        applicationEntityList: stateAppStreamList,
-                        handleGoTo: widget.handleGoTo,
-                        handleScrollController: scrollController)
-                    : ListviewApplicationListComponent(
-                        applicationEntityList: stateAppStreamList,
-                        handleGoTo: widget.handleGoTo,
-                        handleScrollController: scrollController),
-              )
+              Expanded(child: getContent())
             ],
           );
+  }
+
+  Widget getContent() {
+    if (_segmentedButtonSelection.first == AppDisplay.grid) {
+      return GridApplicationListComponent(
+          applicationEntityList: stateAppStreamList,
+          handleGoTo: widget.handleGoTo,
+          handleScrollController: scrollController);
+    }
+    if (_segmentedButtonSelection.first == AppDisplay.list) {
+      return ListviewApplicationListComponent(
+          applicationEntityList: stateAppStreamList,
+          handleGoTo: widget.handleGoTo,
+          handleScrollController: scrollController);
+    }
+
+    return DatatableApplicationListComponent(
+        applicationEntityList: stateAppStreamList,
+        handleGoTo: widget.handleGoTo,
+        handleScrollController: scrollController);
   }
 }

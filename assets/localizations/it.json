@@ -90,5 +90,7 @@
   "remove_from_cart":"Rimuovi dal carrello",
   "do_you_confirm_installation_of_all": "Confermi l'installazione di tutto",
   "install_all":"Installa tutto",
-  "cart_is_empty":"Il carrello è vuoto"
+  "cart_is_empty":"Il carrello è vuoto",
+  "Name":"Name",
+  "Description":"Description"
 }
