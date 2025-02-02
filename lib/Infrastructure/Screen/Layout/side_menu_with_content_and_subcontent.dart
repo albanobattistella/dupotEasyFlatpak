@@ -62,7 +62,7 @@ class _SideMenuWithContentAndSubContentLayoutState
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             child: widget.subContent))))
         ]),
-        floatingActionButton: widget.hasPrevious
+        floatingActionButton: widget.hasPrevious & !widget.hasSubContent
             ? FloatingActionButton(
                 backgroundColor: Theme.of(context).secondaryHeaderColor,
                 onPressed: () {

@@ -96,13 +96,19 @@ class _ApplicationState extends State<Application> {
         onKeyEvent: (event) {
           if (getSubPage() == '' &&
               event is KeyDownEvent &&
-              // statePage != NavigationEntity.pageSearch &&
               event.logicalKey.keyLabel.toString().length == 1 &&
               alphanumeric.hasMatch(event.logicalKey.keyLabel.toString())) {
             NavigationEntity.goToSearch(
                 handleGoTo: goTo,
                 search: stateSearched +
                     event.logicalKey.keyLabel.toString().toLowerCase());
+          } else if (getSubPage() == '' &&
+              event is KeyDownEvent &&
+              stateSearched.isNotEmpty &&
+              event.logicalKey.keyLabel == "Backspace") {
+            NavigationEntity.goToSearch(
+                handleGoTo: goTo,
+                search: stateSearched.substring(0, stateSearched.length - 1));
           }
         },
         child: MaterialApp(
@@ -403,14 +409,30 @@ class _ApplicationState extends State<Application> {
       });
     }
 
-    setState(() {
-      statePreviousPage = statePage;
-      statePreviousPArgumentMap = stateArgumentMap;
+    if ([
+      NavigationEntity.pageCart,
+      NavigationEntity.pageCategory,
+      NavigationEntity.pageHome,
+      NavigationEntity.pageInstalledApplication,
+      NavigationEntity.pageSearch,
+    ].contains(page)) {
+      setState(() {
+        statePreviousPage = page;
+        statePreviousPArgumentMap = argumentMap;
+        stateHasPrevious = true;
+      });
+    } else if ([
+      NavigationEntity.pageUpdateAvailables,
+      NavigationEntity.pageUserSettings,
+    ].contains(page)) {
+      statePreviousPage = '';
+      //statePreviousPArgumentMap = [];
+      stateHasPrevious = false;
+    }
 
+    setState(() {
       statePage = page;
       stateArgumentMap = argumentMap;
-
-      stateHasPrevious = true;
     });
   }
 }
