@@ -79,6 +79,26 @@ class SideMenuViewModel {
     return menuItemList;
   }
 
+  List<MenuItemEntity> getSearchMenuItemEntyList(
+      String pageSelected, String searched) {
+    List<MenuItemEntity> menuItemList = [];
+
+    if (pageSelected == NavigationEntity.pageSearch) {
+      menuItemList.add(MenuItemEntity(
+          label: 'Search',
+          action: () {
+            NavigationEntity.goToSearch(
+                handleGoTo: handleGoTo, search: searched);
+          },
+          pageSelected: NavigationEntity.pageSearch,
+          categoryIdSelected: '',
+          badge: '',
+          icon: Icons.search));
+    }
+
+    return menuItemList;
+  }
+
   Future<List<MenuItemEntity>> getBottomMenuItemEntityList(
       bool shouldCheckUpdates) async {
     if (shouldCheckUpdates) {

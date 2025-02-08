@@ -92,5 +92,6 @@
   "install_all": "Instalar todo",
   "cart_is_empty": "La cesta está vacía",
   "Name":"Nombre",
-  "Description":"Descripción"
+  "Description":"Descripción",
+    "No_result_corresponding_to_this_research":"No result corresponding to this research :("
 }

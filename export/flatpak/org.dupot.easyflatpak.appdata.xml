@@ -65,11 +65,12 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
-    <release date="2025-02-02" version="3.5.2">
+    <release date="2025-02-02" version="3.5.3">
       <description>
         <ul>
           <li>When typing, it start searching applications, and now you can use backspace key too</li>
           <li>Fix bug with floating previous button</li>
+          <li>Improve search behavior</li>
         </ul>
       </description>
     </release>

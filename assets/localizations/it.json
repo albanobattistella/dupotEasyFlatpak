@@ -92,5 +92,6 @@
   "install_all":"Installa tutto",
   "cart_is_empty":"Il carrello è vuoto",
   "Name":"Nome",
-  "Description":"Descrizione"
+  "Description":"Descrizione",
+    "No_result_corresponding_to_this_research":"No result corresponding to this research :("
 }

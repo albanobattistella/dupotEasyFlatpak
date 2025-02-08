@@ -33,6 +33,7 @@ class _SideMenuViewState extends State<SideMenuView> {
   List<MenuItemEntity> stateBottomMenuItemList = [];
 
   List<MenuItemEntity> stateCartMenuItemList = [];
+  List<MenuItemEntity> stateSearchMenuItemList = [];
 
   String statePageSelected = '';
   String stateCategoryIdSelected = '';
@@ -83,6 +84,8 @@ class _SideMenuViewState extends State<SideMenuView> {
       _searchController.selection = TextSelection.fromPosition(
         TextPosition(offset: widget.searched.length),
       );
+
+      loadData(false);
     }
 
     super.didUpdateWidget(oldWidget);
@@ -109,11 +112,11 @@ class _SideMenuViewState extends State<SideMenuView> {
       stateCategoryMenuItemList = categoryMenuItemList;
     });
 
-    List<MenuItemEntity> cartMenuItemList =
+    List<MenuItemEntity> searchMenuItemList =
         SideMenuViewModel(handleGoTo: widget.handleGoTo)
-            .getCartMenuItemEntyList(widget.applicationIdListInCart);
+            .getSearchMenuItemEntyList(widget.pageSelected, widget.searched);
     setState(() {
-      stateCartMenuItemList = cartMenuItemList;
+      stateSearchMenuItemList = searchMenuItemList;
     });
 
     List<MenuItemEntity> bottomMenuItemList =
@@ -170,6 +173,15 @@ class _SideMenuViewState extends State<SideMenuView> {
               .map((menuItemLoop) => getMenuLine(menuItemLoop))
               .toList(),
         ),
+        if (stateSearchMenuItemList.isNotEmpty)
+          const SizedBox(
+            height: 28,
+          ),
+        if (stateSearchMenuItemList.isNotEmpty)
+          Column(
+              children: stateSearchMenuItemList
+                  .map((menuItemLoop) => getMenuLine(menuItemLoop))
+                  .toList()),
         if (stateCartMenuItemList.isNotEmpty)
           const SizedBox(
             height: 28,

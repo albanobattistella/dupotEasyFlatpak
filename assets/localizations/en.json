@@ -92,7 +92,8 @@
   "install_all":"Install all",
   "cart_is_empty":"Cart is empty",
   "Name":"Name",
-  "Description":"Description"
+  "Description":"Description",
+  "No_result_corresponding_to_this_research":"No result corresponding to this research :("
 
   
 

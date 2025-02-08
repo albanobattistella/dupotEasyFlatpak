@@ -129,12 +129,14 @@ class _ApplicationState extends State<Application> {
                   MaterialPage(
                       key: const ValueKey(NavigationEntity.pageHome),
                       child: SideMenuWithContentAndSubContentLayout(
-                          menu: getSideMenuView(),
-                          content: getContentView(statePage, isMain),
-                          subContent: getSubContentView(hasSubContent),
-                          hasSubContent: hasSubContent,
-                          hasPrevious: stateHasPrevious,
-                          handleGoToPrevious: goToPrevious))
+                        menu: getSideMenuView(),
+                        content: getContentView(statePage, isMain),
+                        subContent: getSubContentView(hasSubContent),
+                        hasSubContent: hasSubContent,
+                        hasPrevious: stateHasPrevious,
+                        handleGoToPrevious: goToPrevious,
+                        pageSelected: statePage,
+                      ))
               ],
               onDidRemovePage: (page) => true,
             )));

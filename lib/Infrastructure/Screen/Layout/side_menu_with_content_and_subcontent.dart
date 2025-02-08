@@ -1,3 +1,4 @@
+import 'package:dupot_easy_flatpak/Infrastructure/Entity/navigation_entity.dart';
 import 'package:flutter/material.dart';
 
 class SideMenuWithContentAndSubContentLayout extends StatefulWidget {
@@ -7,6 +8,7 @@ class SideMenuWithContentAndSubContentLayout extends StatefulWidget {
   bool hasSubContent = false;
   bool hasPrevious;
   Function handleGoToPrevious;
+  String pageSelected = '';
 
   SideMenuWithContentAndSubContentLayout(
       {super.key,
@@ -15,7 +17,8 @@ class SideMenuWithContentAndSubContentLayout extends StatefulWidget {
       required this.subContent,
       required this.hasSubContent,
       required this.hasPrevious,
-      required this.handleGoToPrevious});
+      required this.handleGoToPrevious,
+      required this.pageSelected});
 
   @override
   _SideMenuWithContentAndSubContentLayoutState createState() =>
@@ -62,7 +65,9 @@ class _SideMenuWithContentAndSubContentLayoutState
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                             child: widget.subContent))))
         ]),
-        floatingActionButton: widget.hasPrevious & !widget.hasSubContent
+        floatingActionButton: widget.hasPrevious &
+                !widget.hasSubContent &
+                (widget.pageSelected == NavigationEntity.pageApplication)
             ? FloatingActionButton(
                 backgroundColor: Theme.of(context).secondaryHeaderColor,
                 onPressed: () {
