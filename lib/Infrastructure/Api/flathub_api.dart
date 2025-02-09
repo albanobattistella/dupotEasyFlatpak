@@ -61,8 +61,15 @@ class FlathubApi {
       if (applicationIdList.contains(appStreamIdLoop.toLowerCase())) {
         continue;
       }
+
+      print('new appliction on flathub: ' + appStreamIdLoop.toLowerCase());
+
       //print('$appStreamIdLoop missing, should insert');
       ApplicationEntity appStream = await getApplicationEntity(appStreamIdLoop);
+      if (appStream.isEmpty) {
+        appStream.id = appStreamIdLoop;
+        print('app not found on api :(');
+      }
 
       downloadIcon(appStream, appDocumentsDirPath);
 
@@ -127,6 +134,10 @@ class FlathubApi {
   Future<ApplicationEntity> getApplicationEntity(String appSteamId) async {
     var apiContent = await http
         .get(Uri.parse('https://flathub.org/api/v2/appstream/$appSteamId'));
+
+    if (apiContent.statusCode == 404) {
+      return ApplicationEntity.generateEmpty();
+    }
 
     Map<String, dynamic> rawAppStream = jsonDecode(apiContent.body);
 

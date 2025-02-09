@@ -44,10 +44,12 @@ class _LoadingView extends State<LoadingView> with TickerProviderStateMixin {
     final applicatoinRepository = ApplicationRepository();
     //await appStreamFactory.create();
 
+    /*print('start flathub load');
     FlathubApi flathubApi =
         FlathubApi(applicationRepository: applicatoinRepository);
     await flathubApi.load();
-
+    print('end flathub load');
+  */
     setState(() {
       progressValue = 0.50;
     });

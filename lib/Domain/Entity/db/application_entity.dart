@@ -35,6 +35,26 @@ class ApplicationEntity {
 
   bool isEmpty = false;
 
+  static ApplicationEntity generateEmpty() {
+    ApplicationEntity appEmpty = ApplicationEntity(
+        id: '',
+        name: '',
+        summary: '',
+        httpIcon: '',
+        categoryIdList: [],
+        description: '',
+        metadataObj: {},
+        urlObj: {},
+        releaseObjList: [],
+        lastUpdate: 0,
+        projectLicense: '',
+        developer_name: '',
+        screenshotObjList: [],
+        lastReleaseTimestamp: 0);
+    appEmpty.isEmpty = true;
+    return appEmpty;
+  }
+
   ApplicationEntity(
       {required this.id,
       required this.name,
