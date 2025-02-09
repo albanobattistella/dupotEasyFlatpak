@@ -65,13 +65,13 @@
   <content_rating type="oars-1.1"/>
   <releases>
 
-    <release date="2025-02-09" version="3.5.4">
+    <release date="2025-02-09" version="3.5.5">
       <description>
         <ul>
           <li>When typing, it start searching applications, and now you can use backspace key too</li>
           <li>Fix bug with floating previous button</li>
           <li>Improve search behavior</li>
-          <li>Disable flathub automatic load</li>
+          <li>Modify flathub api automatic load</li>
         </ul>
       </description>
     </release>

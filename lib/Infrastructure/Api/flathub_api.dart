@@ -22,7 +22,8 @@ class FlathubApi {
       return false;
     }
 
-    ApplicationEntity appStream = await getApplicationEntity(applicationId);
+    ApplicationEntity appStream =
+        await getApplicationEntityFromApi(applicationId);
 
     await applicationRepository.updateApplicationEntity(appStream);
 
@@ -42,7 +43,7 @@ class FlathubApi {
 
     final appDocumentsDirPath = appDocumentsDir.path;
 
-    List<dynamic> appStreamIdList = await getRawApplicationList();
+    List<String> appStreamIdList = await getRawApplicationList();
 
     applicationRepository.connect();
 
@@ -62,10 +63,15 @@ class FlathubApi {
         continue;
       }
 
+      if (appStreamIdLoop.contains('org.freedesktop.platform')) {
+        continue;
+      }
+
       print('new appliction on flathub: ' + appStreamIdLoop.toLowerCase());
 
       //print('$appStreamIdLoop missing, should insert');
-      ApplicationEntity appStream = await getApplicationEntity(appStreamIdLoop);
+      ApplicationEntity appStream =
+          await getApplicationEntityFromApi(appStreamIdLoop);
       if (appStream.isEmpty) {
         appStream.id = appStreamIdLoop;
         print('app not found on api :(');
@@ -74,22 +80,14 @@ class FlathubApi {
       downloadIcon(appStream, appDocumentsDirPath);
 
       appStreamList.add(appStream);
-      /*if (!await applicationRepository.insertApplicationEntity(appStream)) {
-        print('insert KO appstream');
-      }
-      */
+
       for (String categoryLoop in appStream.categoryIdList) {
         if (categoryList.contains(categoryLoop)) {
           applicationCategoryEntityList.add(ApplicationCategoryEntity(
               appstream_id: appStreamIdLoop, category_id: categoryLoop));
-          /*
-          if (!await applicationRepository.insertAppStreamCategory(
-              appStreamIdLoop, categoryLoop)) {
-            print('  insert KO appStream category');
-          }
-          */
         }
       }
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     await applicationRepository.insertApplicationEntityList(appStreamList);
@@ -113,11 +111,25 @@ class FlathubApi {
             appStream.getAppIcon()));
   }
 
-  Future<List<dynamic>> getRawApplicationList() async {
-    var apiContent =
+  Future<List<String>> getRawApplicationList() async {
+    /* var apiContent =
         await http.get(Uri.parse('https://flathub.org/api/v2/appstream'));
 
     List<dynamic> appStreamIdList = jsonDecode(apiContent.body);
+  */
+
+    var apiContent = await http
+        .get(Uri.parse('https://flathub.org/api/v2/collection/recently-added'));
+
+    Map<String, dynamic> rawAppApplicationAddedObj =
+        jsonDecode(apiContent.body);
+
+    List<String> appStreamIdList = [];
+    for (Map<String, dynamic> rawAppApplicationAddedLoop
+        in rawAppApplicationAddedObj['hits']) {
+      appStreamIdList.add(rawAppApplicationAddedLoop['app_id']!);
+    }
+
     return appStreamIdList;
   }
 
@@ -131,7 +143,8 @@ class FlathubApi {
     return false;
   }
 
-  Future<ApplicationEntity> getApplicationEntity(String appSteamId) async {
+  Future<ApplicationEntity> getApplicationEntityFromApi(
+      String appSteamId) async {
     var apiContent = await http
         .get(Uri.parse('https://flathub.org/api/v2/appstream/$appSteamId'));
 
